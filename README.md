@@ -22,14 +22,14 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `BitCrush.BoardComponent`
 Autores | Thaina Milene de Oliveira
 Objetivo | Criar e manipular o tabuleiro
 Interface | IBoard
 ~~~
 public interface IBoardManager {
   public void assembleBoard();
-  public void printBoard();
+  public void printBoard(Scoreboard Component data);
 }
 public interface IPiecesManager {
   public void movePieces(MovimentComponent xy);
@@ -46,13 +46,56 @@ Interface para gerenciar as ações feitas no tabuleiro.
 
 Método | Objetivo
 -------| --------
-public void assembleBoard(); | tem como objetivo montar um tabuleiro inicial com peças aleatórias
-public void printBoard(Scoreboard data); | tem como objetivo imprimir o tabuleiro e a pontuação e rodada atual
+assembleBoard | tem como objetivo montar um tabuleiro inicial com peças aleatórias
+printBoard | recebe dados do ScoreboardComponent e tem como objetivo imprimir o tabuleiro e a pontuação e rodada atual
 
 ### Interface IPiecesManager
 Interface para gerenciar as ações feitas pelo tabuleiro nas peças.
 
 Método | Objetivo
 -------| --------
-public void movePieces(MovimentComponent xy) | dado as coordenadas fornecidas pelo componente MovimentComponent, o tabuleiro trocará duas peças, se for um movimento válido
-public void transformsPieces(char type); | transforma peças de um tipo normal, em um bonus
+movePieces | dado as coordenadas fornecidas pelo componente MovimentComponent, o tabuleiro trocará duas peças, se for um movimento válido
+transformsPieces | recebe e transforma peças de um tipo normal, em um bonus
+
+# Componente NormalPiecesComponent
+![BoardComponent](NormalPiecesComponent.png)
+
+## Interfaces
+
+Interfaces associadas a esse componente:
+![Interfaces do NormalPiecesComponent](Interfaces_NormalPiecesC.png)
+
+Campo | Valor
+----- | -----
+Classe | `BitCrush.NormalPiecesComponents`
+Autores | Thaina Milene de Oliveira
+Objetivo | Criar peças normais e diversas
+Interface | IPieces
+~~~
+public interface ICheckMoviment {
+  public boolean verifyMoviment(Moviment:xy);
+}
+public interface Atributtes {
+  public void setType(int n);
+  public char getType();
+}
+public interface IPieces extends ICheckMoviment, Atributtes {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface ICheckMoviment
+Interface para verificar se o movimento proposto é válido
+
+Método | Objetivo
+-------| --------
+verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+
+### Interface Atributtes
+Define e retorna o tipo da peça
+
+Método | Objetivo
+-------| --------
+setType | Recebe um inteiro e a partir dele, define o tipo da peça
+getType | Retorna o tipo da peça
