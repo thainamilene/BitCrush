@@ -99,3 +99,132 @@ Método | Objetivo
 -------| --------
 setType | Recebe um inteiro e a partir dele, define o tipo da peça
 getType | Retorna o tipo da peça
+
+# Componente Bonus01Component
+![BoardComponent](Bonus01Component.png)
+
+## Interfaces
+
+Interfaces associadas a esse componente:
+![Interfaces do Bonus01Component](Interfaces_Bonus01C.png)
+
+Campo | Valor
+----- | -----
+Classe | `BitCrush.Bonus01Components`
+Autores | Thaina Milene de Oliveira
+Objetivo | Criar peças normais e diversas
+Interface | IPieces
+~~~
+public interface ICheckMoviment {
+  public boolean verifyMoviment(Moviment:xy);
+}
+public interface Atributtes {
+  public void setType(int n);
+  public char getType();
+}
+public interface IPieces extends ICheckMoviment, Atributtes {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface ICheckMoviment
+Interface para verificar se o movimento proposto é válido
+
+Método | Objetivo
+-------| --------
+verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+
+### Interface Atributtes
+Define e retorna o tipo da peça
+
+Método | Objetivo
+-------| --------
+setType | Recebe um inteiro e define o tipo da peça como bonus01
+getType | Retorna o tipo da peça
+
+# Componente Bonus02Component
+![BoardComponent](Bonus02Component.png)
+
+## Interfaces
+
+Interfaces associadas a esse componente:
+![Interfaces do Bonus02Component](Interfaces_Bonus02C.png)
+
+Campo | Valor
+----- | -----
+Classe | `BitCrush.Bonus02Components`
+Autores | Thaina Milene de Oliveira
+Objetivo | Criar peças normais e diversas
+Interface | IPieces
+~~~
+public interface ICheckMoviment {
+  public boolean verifyMoviment(Moviment:xy);
+}
+public interface Atributtes {
+  public void setType(int n);
+  public char getType();
+}
+public interface IPieces extends ICheckMoviment, Atributtes {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface ICheckMoviment
+Interface para verificar se o movimento proposto é válido
+
+Método | Objetivo
+-------| --------
+verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+
+### Interface Atributtes
+Define e retorna o tipo da peça
+
+Método | Objetivo
+-------| --------
+setType | Recebe um inteiro e define o tipo da peça como bonus02
+getType | Retorna o tipo da peça
+
+# Componente Bonus03Component
+![BoardComponent](Bonus03Component.png)
+
+## Interfaces
+
+Interfaces associadas a esse componente:
+![Interfaces do Bonus03Component](Interfaces_Bonus03C.png)
+
+Campo | Valor
+----- | -----
+Classe | `BitCrush.Bonus03Components`
+Autores | Thaina Milene de Oliveira
+Objetivo | Criar peças normais e diversas
+Interface | IPieces
+~~~
+public interface ICheckMoviment {
+  public boolean verifyMoviment(Moviment:xy);
+}
+public interface Atributtes {
+  public void setType(int n);
+  public char getType();
+}
+public interface IPieces extends ICheckMoviment, Atributtes {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface ICheckMoviment
+Interface para verificar se o movimento proposto é válido
+
+Método | Objetivo
+-------| --------
+verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+
+### Interface Atributtes
+Define e retorna o tipo da peça
+
+Método | Objetivo
+-------| --------
+setType | Recebe um inteiro e define o tipo da peça como bonus03
+getType | Retorna o tipo da peça
