@@ -255,7 +255,7 @@ public interface Atributtes {
   public int getScore();
   public int getRound();
 }
-public interface IPieces extends IScore, IRound, Atributtes {
+public interface IScoreboard extends IScore, IRound, Atributtes {
 }
 ~~~
 
@@ -308,7 +308,7 @@ public interface Atributtes {
   public String getSource2();
   public String getTarget2();
 }
-public interface IPieces extends IMoviment, Atributtes {
+public interface IMovimentC extends IMoviment, Atributtes {
 }
 ~~~
 
