@@ -8,7 +8,8 @@ O BitCrush é um jogo que consiste em trocar duas peças de lugar no tabuleiro p
 
 # Vídeo do Projeto
 [Link do vídeo](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
-[Link Apresentaçãp](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
+
+[Link Apresentação](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
 
 # Diagrama Geral de Componentes
 ![Diagrama geral de componentes](Diagrama_Geral_de_componentes.png)
