@@ -228,3 +228,57 @@ Método | Objetivo
 -------| --------
 setType | Recebe um inteiro e define o tipo da peça como bonus03
 getType | Retorna o tipo da peça
+
+# Componente ScoreboardComponent
+![BoardComponent](ScoreboardComponent.png)
+
+## Interfaces
+
+Interfaces associadas a esse componente:
+![Interfaces do ScoreboardComponent](Interfaces_ScoreboardC.png)
+
+Campo | Valor
+----- | -----
+Classe | `BitCrush.ScoreboardComponents`
+Autores | Thaina Milene de Oliveira
+Objetivo | Criar peças normais e diversas
+Interface | IPieces
+~~~
+public interface IScore {
+  public void sumScore(int n);
+}
+public interface IRound {
+  public void sumRound(boolean v);
+  public void verifyRound();
+}
+public interface Atributtes {
+  public int getScore();
+  public int getRound();
+}
+public interface IPieces extends IScore, IRound, Atributtes {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface IScore
+Manipula pontuação
+
+Método | Objetivo
+-------| --------
+sumScore | recebe um inteiro e o soma a pontuação atual
+
+### Interface IRound
+Gerencia as rodadas
+
+Método | Objetivo
+-------| --------
+sumRound | recebe um boolean e caso seja verdadeiro, soma mais um na rodada
+verifyRound | verifica se a rodada está abaixo de 20, e quando chega na 20ª, encerra o jogo
+
+### Interface Atributtes
+Retorna os valores da pontuação e da rodada atual
+Método | Objetivo
+-------| --------
+getScore | retorna a pontuação atual
+getRound | retorna a rodada atual
