@@ -8,6 +8,7 @@ O BitCrush é um jogo que consiste em trocar duas peças de lugar no tabuleiro p
 
 # Vídeo do Projeto
 [Link do vídeo](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
+[Link Apresentaçãp](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
 
 # Diagrama Geral de Componentes
 ![Diagrama geral de componentes](Diagrama_Geral_de_componentes.png)
@@ -22,17 +23,17 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.BoardComponent`
+Classe | BitCrush.project.BoardComponent
 Autores | Thaina Milene de Oliveira
 Objetivo | Criar e manipular o tabuleiro
 Interface | IBoard
 ~~~
 public interface IBoardManager {
   public void assembleBoard();
-  public void printBoard(Scoreboard Component data);
+  public void printBoard(ScoreboardComponent data);
 }
 public interface IPiecesManager {
-  public void movePieces(MovimentComponent xy);
+  public void movePieces(IMovimentC xy);
   public void transformsPieces(char type);
 }
 public interface IBoard extends IBoardManager, IPiecesManager {
@@ -54,7 +55,7 @@ Interface para gerenciar as ações feitas pelo tabuleiro nas peças.
 
 Método | Objetivo
 -------| --------
-movePieces | dado as coordenadas fornecidas pelo componente MovimentComponent, o tabuleiro trocará duas peças, se for um movimento válido
+movePieces | dado as coordenadas fornecidas pela interface IMovimentC, o tabuleiro trocará duas peças, se for um movimento válido
 transformsPieces | recebe e transforma peças de um tipo normal, em um bonus
 
 # Componente NormalPiecesComponent
@@ -67,7 +68,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.NormalPiecesComponents`
+Classe | BitCrush.project.NormalPiecesComponents
 Autores | Thaina Milene de Oliveira
 Objetivo | Criar peças normais e diversas
 Interface | IPieces
@@ -90,7 +91,7 @@ Interface para verificar se o movimento proposto é válido
 
 Método | Objetivo
 -------| --------
-verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
 
 ### Interface Atributtes
 Define e retorna o tipo da peça
@@ -110,9 +111,9 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.Bonus01Components`
+Classe | BitCrush.project.Bonus01Components
 Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças normais e diversas
+Objetivo | Criar bonus do tipo 01
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
@@ -153,9 +154,9 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.Bonus02Components`
+Classe | BitCrush.project.Bonus02Components
 Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças normais e diversas
+Objetivo | Criar peças do tipo bonus02
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
@@ -196,13 +197,13 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.Bonus03Components`
+Classe | BitCrush.project.Bonus03Components
 Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças normais e diversas
+Objetivo | Criar peças do tipo bonus03
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
-  public boolean verifyMoviment(IMovimentC:xy);
+  public boolean verifyMoviment(IMovimentC xy);
 }
 public interface Atributtes {
   public void setType(int n);
@@ -239,9 +240,9 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.ScoreboardComponents`
+Classe | BitCrush.project.ScoreboardComponents
 Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças normais e diversas
+Objetivo | Gerenciar o placar do jogo
 Interface | IScoreboard
 ~~~
 public interface IScore {
@@ -293,9 +294,9 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `BitCrush.MovimentComponents`
+Classe | BitCrush.project.MovimentComponents
 Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças normais e diversas
+Objetivo | Manipula os movimentos do jogo
 Interface | IMovimentC
 ~~~
 public interface IMoviment {
@@ -319,7 +320,7 @@ Transforma uma string de coordenadas, em vetores de inteiros
 
 Método | Objetivo
 -------| --------
-move | recebe uma string com as coordenadas, e ass transforma em dois vetores de inteiro
+move | recebe uma string com as coordenadas, e as transforma em dois vetores de inteiro
 
 ### Interface Atributtes
 Retorna os vetores com as coordenadas e as strings da coordenada
