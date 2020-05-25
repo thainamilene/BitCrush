@@ -73,7 +73,7 @@ Objetivo | Criar peças normais e diversas
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
-  public boolean verifyMoviment(Moviment:xy);
+  public boolean verifyMoviment(IMovimentC xy);
 }
 public interface Atributtes {
   public void setType(int n);
@@ -116,7 +116,7 @@ Objetivo | Criar peças normais e diversas
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
-  public boolean verifyMoviment(Moviment:xy);
+  public boolean verifyMoviment(IMovimentC xy);
 }
 public interface Atributtes {
   public void setType(int n);
@@ -133,7 +133,7 @@ Interface para verificar se o movimento proposto é válido
 
 Método | Objetivo
 -------| --------
-verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
 
 ### Interface Atributtes
 Define e retorna o tipo da peça
@@ -159,7 +159,7 @@ Objetivo | Criar peças normais e diversas
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
-  public boolean verifyMoviment(Moviment:xy);
+  public boolean verifyMoviment(IMovimentC xy);
 }
 public interface Atributtes {
   public void setType(int n);
@@ -176,7 +176,7 @@ Interface para verificar se o movimento proposto é válido
 
 Método | Objetivo
 -------| --------
-verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
 
 ### Interface Atributtes
 Define e retorna o tipo da peça
@@ -202,7 +202,7 @@ Objetivo | Criar peças normais e diversas
 Interface | IPieces
 ~~~
 public interface ICheckMoviment {
-  public boolean verifyMoviment(Moviment:xy);
+  public boolean verifyMoviment(IMovimentC:xy);
 }
 public interface Atributtes {
   public void setType(int n);
@@ -219,7 +219,7 @@ Interface para verificar se o movimento proposto é válido
 
 Método | Objetivo
 -------| --------
-verifyMoviment | verifica se o movimento fornecido pelo componente MovimentComponent é válido;
+verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
 
 ### Interface Atributtes
 Define e retorna o tipo da peça
@@ -242,7 +242,7 @@ Campo | Valor
 Classe | `BitCrush.ScoreboardComponents`
 Autores | Thaina Milene de Oliveira
 Objetivo | Criar peças normais e diversas
-Interface | IPieces
+Interface | IScoreboard
 ~~~
 public interface IScore {
   public void sumScore(int n);
@@ -281,4 +281,51 @@ Retorna os valores da pontuação e da rodada atual
 Método | Objetivo
 -------| --------
 getScore | retorna a pontuação atual
-getRound | retorna a rodada atual
+getRound | retorna a rodada 
+
+# Componente MovimentComponent
+![BoardComponent](MovimentComponent.png)
+
+## Interfaces
+
+Interfaces associadas a esse componente:
+![Interfaces do MovimentComponent](Interfaces_MovimentC.png)
+
+Campo | Valor
+----- | -----
+Classe | `BitCrush.MovimentComponents`
+Autores | Thaina Milene de Oliveira
+Objetivo | Criar peças normais e diversas
+Interface | IMovimentC
+~~~
+public interface IMoviment {
+  public void move(String move);
+}
+
+public interface Atributtes {
+  public int[] getSource();
+  public int[] getTarget();
+  public String getSource2();
+  public String getTarget2();
+}
+public interface IPieces extends IMoviment, Atributtes {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface IMoviment
+Transforma uma string de coordenadas, em vetores de inteiros
+
+Método | Objetivo
+-------| --------
+move | recebe uma string com as coordenadas, e ass transforma em dois vetores de inteiro
+
+### Interface Atributtes
+Retorna os vetores com as coordenadas e as strings da coordenada
+Método | Objetivo
+-------| --------
+getSource | retorna um vetor de inteiros com a posição inicial da peça
+getTarget | retorna um vetor de inteiros com a posição final da peça 
+getSource2 | retorna uma String com a posição inicial da peça
+getTarget2 | retorna uma String com a posição final da peça 
