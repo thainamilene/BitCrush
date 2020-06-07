@@ -1,4 +1,4 @@
-public interface MovementAttributes {
+public interface TranslateMovementAttributes {
     public int[] getSource();
     public String getSource2();
     public int[] getTarget();

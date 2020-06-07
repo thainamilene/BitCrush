@@ -5,7 +5,7 @@ public class Bonus01Component extends Bonus{
     }
 
     //to do
-    public boolean verifyMovement(IMovementC xy) {
+    public boolean verifyMovement(ITranslateMovementC xy) {
         return false;
     }
 }

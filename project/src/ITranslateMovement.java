@@ -1,3 +1,3 @@
-public interface IMovement {
+public interface ITranslateMovement {
     public void translateMove(String move);
 }

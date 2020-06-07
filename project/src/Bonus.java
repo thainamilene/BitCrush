@@ -3,7 +3,7 @@ public abstract class Bonus implements IPieces{
 
     public abstract void setType(int x);
 
-    public abstract boolean verifyMovement(IMovementC xy);
+    public abstract boolean verifyMovement(ITranslateMovementC xy);
 
     public char getType() {
         return type;

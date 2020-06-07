@@ -1,67 +1,39 @@
-public class MovementComponent implements IMovementC{
-    int[] source;
-    int[] target;
-    String source2;
-    String target2;
+public class MovementComponent implements IMovementAttributes{
+    protected boolean v;
+    protected char movetype;
+    protected int[][] vct;
+    protected int cont;
 
-    public void translateMove(String move) {
-        source2 = move.substring(0,2);
-		target2 = move.substring(3,5);
-        String ini = move.substring(0,1);
-        String fim = move.substring(3,4);
-        translate(ini, source);
-        translate(fim, target);
-        source[0] = Integer.parseInt(move.substring(1,2));
-        target[0] = Integer.parseInt(move.substring(4,5));
-        source[0]--;
-        target[0]--;
+    public MovementComponent() {
+        vct = new int[5][2];
+        v = false;
+        cont = 0;
     }
 
-    private void translate(String str, int[] source) {
-        switch (str) {
-            case "a":
-                source[1] = 0;
-                break;
-            case "b":
-                source[1] = 1;
-                break;
-            case "c":
-                source[1] = 2;
-                break;
-            case "d":
-                source[1] = 3;
-                break;
-            case "e":
-                source[1] = 4;
-                break;
-            case "f":
-                source[1] = 5;
-                break;
-            case "g":
-                source[1] = 6;
-                break;
-            case "h":
-                source[1] = 7;
-                break;
-            case "i":
-                source[1] = 8;
-                break;
+    public void setMovetype(char movetype) {
+        this.movetype = movetype;
+    }
+
+    public void setVct(int[] add) {
+        if (cont < 5) {
+            vct[cont] =  add;
+            cont++;
         }
     }
 
-    public int[] getSource() {
-        return source;
+    public void setV(boolean v) {
+        this.v = v;
     }
 
-    public String getSource2() {
-        return source2;
+    public char getMovetype() {
+        return movetype;
     }
 
-    public int[] getTarget() {
-        return target;
+    public int[][] getVct() {
+        return vct;
     }
 
-    public String getTarget2() {
-        return target2;
+    public boolean isV() {
+        return v;
     }
 }

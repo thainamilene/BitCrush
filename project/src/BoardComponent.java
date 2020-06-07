@@ -8,15 +8,37 @@ public class BoardComponent implements IBoard{
         board = new IPieces[9][9];
     }
 
-    //complete
+    //complete com função de remover
     private void verifyFirstBoard() {
         int[][] line = new int[3][2];
         int[][] column = new int[3][2];
-        for (int i = 0; i < 9; i++) {
+        boolean l, c;
+        for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 9; j++) {
-
+               l = verifyFPieces(line, i, j);
+               c = verifyFPieces(column, j, i);
             }
         }
+    }
+    //modificar talvez
+    private boolean verifyFPieces(int[][] vector, int i, int j) {
+        if (board[i][j].getType() == board[i+1][j].getType() && board[i][j].getType() == board[i+2][j].getType()) {
+            vector[0][0] = i;
+            vector[1][0] = i+1;
+            vector[2][0] = i+2;
+            vector[0][1] = j;
+            vector[1][1] = j+1;
+            vector[2][1] = j+2;
+            return true;
+        }
+        return false;
+    }
+
+    //complete
+    private void destroyNormalPieces(int[][] vector, int n) {
+       /*  for (int i = 0; i < n; i++) {
+
+        }*/
     }
 
     public void assembleBoard(int lv) {
@@ -29,7 +51,7 @@ public class BoardComponent implements IBoard{
                board[i][j].setType(x);
             }
         }
-
+        verifyFirstBoard();
         printBoard();
     }
 
@@ -51,7 +73,7 @@ public class BoardComponent implements IBoard{
     }
 
     // To do
-    public void movePieces(IMovementC xy) {
+    public void movePieces(ITranslateMovementC xy) {
 
     }
 

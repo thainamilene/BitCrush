@@ -1,3 +1,3 @@
 public interface ICheckMoviment {
-    public boolean verifyMovement(IMovementC xy);
+    public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board);
 }
