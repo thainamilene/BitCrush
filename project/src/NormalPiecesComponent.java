@@ -198,6 +198,9 @@ public class NormalPiecesComponent implements IPieces{
                         }
                     }
                 }
+            } else {
+                moves[1].setV(true);
+                moves[1].setMovetype(board.board[xy.getTarget()[0]][xy.getTarget()[1]].getType());
             }
         }
         return moves[0].isV() || moves[1].isV();
