@@ -1,4 +1,4 @@
-public class Bonus01Component extends Bonus {
+public class Bonus01Component extends Pieces {
 
     public void setType(int x) {
         this.type = '1';
@@ -6,6 +6,9 @@ public class Bonus01Component extends Bonus {
 
     @Override
     public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
-        return false;
+        moves[0].setV(true);
+        moves[0].setMovetype(board.board[xy.getTarget()[0]][xy.getTarget()[1]].getType());
+        verifyTargetMovement(xy, board);
+        return true;
     }
 }
