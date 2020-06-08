@@ -1,11 +1,11 @@
-public class Bonus02Component extends Bonus{
+public class Bonus02Component extends Bonus {
 
     public void setType(int x) {
         type = '2';
     }
 
-    //to do
-    public boolean verifyMovement(ITranslateMovementC xy) {
+    @Override
+    public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
         return false;
     }
 }

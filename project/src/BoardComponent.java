@@ -51,7 +51,7 @@ public class BoardComponent implements IBoard{
                board[i][j].setType(x);
             }
         }
-        verifyFirstBoard();
+      //  verifyFirstBoard();
         printBoard();
     }
 

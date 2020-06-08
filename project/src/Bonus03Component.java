@@ -5,7 +5,8 @@ public class Bonus03Component extends Bonus{
     }
 
     //to do
-    public boolean verifyMovement(ITranslateMovementC xy) {
+       @Override
+    public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
         return false;
     }
 }

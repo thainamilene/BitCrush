@@ -1,13 +1,14 @@
 public class MovementComponent implements IMovementAttributes{
-    protected boolean v;
-    protected char movetype;
-    protected int[][] vct;
-    protected int cont;
+    boolean v;
+    char movetype;
+    int[][] vct;
+    int cont;
 
     public MovementComponent() {
         vct = new int[5][2];
         v = false;
         cont = 0;
+        movetype = 'n';
     }
 
     public void setMovetype(char movetype) {

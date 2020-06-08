@@ -4,6 +4,11 @@ public class TranslateMovementComponent implements ITranslateMovementC {
     String source2;
     String target2;
 
+    public TranslateMovementComponent() {
+        source = new int[2];
+        target = new int[2];
+    }
+
     public void translateMove(String move) {
         source2 = move.substring(0,2);
 		target2 = move.substring(3,5);
