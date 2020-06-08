@@ -1,6 +1,6 @@
 public abstract class Pieces implements IPieces {
-    char type;
-    IMovementAttributes[] moves;
+   protected char type;
+   protected IMovementAttributes[] moves;
 
     public Pieces() {
         moves = new IMovementAttributes[2];

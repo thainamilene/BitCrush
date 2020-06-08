@@ -4,10 +4,17 @@ public class Bonus02Component extends Pieces {
         type = '2';
     }
 
+    public Bonus02Component() {
+        super();
+    }
+
     public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
-        moves[0].setV(true);
-        moves[0].setMovetype(board.board[xy.getTarget()[0]][xy.getTarget()[1]].getType());
-        verifyTargetMovement(xy, board);
-        return true;
+      for (int i = 0; i < 2; i++) {
+            moves[i] = new MovementComponent();
+      }
+      moves[0].setV(true);
+      moves[0].setMovetype('2');
+      verifyTargetMovement(xy, board);
+      return true;
     }
 }

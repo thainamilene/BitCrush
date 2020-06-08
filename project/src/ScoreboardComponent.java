@@ -9,10 +9,19 @@ public class ScoreboardComponent implements IScoreboard{
         round = 0;
     }
 
-    //não precisa ser public -- completar
     private void verifyRound() {
         if (round == 20) {
+            printLastScoreboard();
             exit(0);
+        }
+    }
+
+    //arrumar print
+    private void printLastScoreboard() {
+        if (score<200) {
+            System.out.println("Você falhou, sorry");
+        } else {
+            System.out.println("Congratulations");
         }
     }
 
@@ -24,7 +33,7 @@ public class ScoreboardComponent implements IScoreboard{
     }
 
     public void sumScore(int n) {
-        score+=n;
+        score += n;
     }
 
     public int getScore() {

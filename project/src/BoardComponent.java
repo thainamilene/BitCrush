@@ -9,30 +9,57 @@ public class BoardComponent implements IBoard{
     }
 
     //complete com função de remover
-    private void verifyFirstBoard() {
+    private void verifyFirstBoard(int lv, int ver) {
+        int x;
+        System.out.println("entrei aqui lalalalal");
+        Random random = new Random();
         int[][] line = new int[3][2];
         int[][] column = new int[3][2];
-        boolean l, c;
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 9; j++) {
-               l = verifyFPieces(line, i, j);
-               c = verifyFPieces(column, j, i);
+        boolean l = false, c = false, v = false;
+        for (int i = 8; i >= 0; i--) {
+            for (int j = 8; j >= 0; j--) {
+                if (j < 7) {
+                    if(board[i][j].getType() == board[i][j + 1].getType() && board[i][j].getType() == board[i][j + 2].getType()) {
+                        line[0][0] = i;
+                        line[1][0] = i;
+                        line[2][0] = i;
+                        line[0][1] = j;
+                        line[1][1] = j + 1;
+                        line[2][1] = j + 2;
+                        l = true;
+                    }
+                }
+                if (j > 1)
+                    if (board[j][i].getType() == board[j - 1][i].getType() && board[i][j].getType() == board[j - 2][i].getType()) {
+                        column[0][0] = j;
+                        column[1][0] = j + 1;
+                        column[2][0] = j + 2;
+                        column[0][1] = i;
+                        column[1][1] = i;
+                        column[2][1] = i;
+                        c = true;
+                    }
+            }
+            if(l) {
+                v = true;
+                for (int o = 0; o < 3; o++) {
+                    x = random.nextInt(lv);
+                    board[line[o][0]][line[o][1]].setType(x);
+                }
+            } else if (c) {
+                v = true;
+                for (int p = 0; p < 3; p++) {
+                    x = random.nextInt(lv);
+                    board[column[p][0]][column[p][1]].setType(x);
+                }
             }
         }
-    }
-    //modificar talvez
-    private boolean verifyFPieces(int[][] vector, int i, int j) {
-        if (board[i][j].getType() == board[i+1][j].getType() && board[i][j].getType() == board[i+2][j].getType()) {
-            vector[0][0] = i;
-            vector[1][0] = i+1;
-            vector[2][0] = i+2;
-            vector[0][1] = j;
-            vector[1][1] = j+1;
-            vector[2][1] = j+2;
-            return true;
+        if (v) {
+            verifyFirstBoard(lv, 1);
+        } else if (ver == 1) {
+            verifyFirstBoard(lv, 0);
         }
-        return false;
-    }
+     }
 
     //complete
     private void destroyNormalPieces(int[][] vector, int n) {
@@ -51,7 +78,8 @@ public class BoardComponent implements IBoard{
                board[i][j].setType(x);
             }
         }
-      //  verifyFirstBoard();
+        printBoard();
+        verifyFirstBoard(lv, 1);
         printBoard();
     }
 

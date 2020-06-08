@@ -4,7 +4,6 @@ public class NormalPiecesComponent extends Pieces{
         super();
     }
 
-    //to do
     public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
         for (int i = 0; i < 2; i++) {
             moves[i] = new MovementComponent();
@@ -129,13 +128,13 @@ public class NormalPiecesComponent extends Pieces{
             case 7:
                 this.type = '§';
                 break;
-            default:
+            case 8:
                 this.type = 'º';
+                break;
+            default:
+                this.type = 'n';
                 break;
         }
 
-    }
-    public char getType() {
-        return type;
     }
 }
