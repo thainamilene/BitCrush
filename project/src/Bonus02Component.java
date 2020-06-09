@@ -8,7 +8,7 @@ public class Bonus02Component extends Pieces {
         super();
     }
 
-    public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
+    public boolean verifyMovement(ITranslateMovementC xy, IPieces[][] board) {
       for (int i = 0; i < 2; i++) {
             moves[i] = new MovementComponent();
       }

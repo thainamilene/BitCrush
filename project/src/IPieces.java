@@ -1,2 +1,2 @@
-public interface IPieces extends ICheckMoviment, PiecesAtributtes {
+public interface IPieces extends ICheckMoviment, PiecesAttributes {
 }

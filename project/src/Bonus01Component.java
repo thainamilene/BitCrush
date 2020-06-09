@@ -9,7 +9,7 @@ public class Bonus01Component extends Pieces {
     }
 
     @Override
-    public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
+    public boolean verifyMovement(ITranslateMovementC xy, IPieces[][] board) {
        for (int i = 0; i < 2; i++) {
             moves[i] = new MovementComponent();
        }
