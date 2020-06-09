@@ -2,6 +2,7 @@ public class NormalPiecesComponent extends Pieces{
 
     public NormalPiecesComponent() {
         super();
+        this.type = '-';
     }
 
     public boolean verifyMovement(ITranslateMovementC xy, BoardComponent board) {
@@ -105,13 +106,13 @@ public class NormalPiecesComponent extends Pieces{
     public void setType(int x) {
         switch (x) {
             case 0:
-                this.type = '+';
+                this.type = '0';
                 break;
             case 1:
                 this.type = '*';
                 break;
             case 2:
-                this.type = '@';
+                this.type = '3';
                 break;
             case 3:
                 this.type = '$';
@@ -132,7 +133,7 @@ public class NormalPiecesComponent extends Pieces{
                 this.type = 'º';
                 break;
             default:
-                this.type = 'n';
+                this.type = '5';
                 break;
         }
 
