@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class BoardComponent implements IBoard{
@@ -90,15 +91,33 @@ public class BoardComponent implements IBoard{
         boolean v = board[xy.getSource()[0]][xy.getSource()[1]].verifyMovement(xy, board);
         IPieces aux = board[xy.getSource()[0]][xy.getSource()[1]];
         if (v) {
-            if (board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[0].isV()) {
-                if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPiecesComponent) {
-                    destroyNormalPieces(xy.getSource()[0],xy.getSource()[1]);
+
+            if (!(board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPiecesComponent && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent)) {
+                if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
+                   if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
+                       destroyBonus01plus01(xy.getTarget()[0], xy.getTarget()[1]);
+                   } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus02Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus02Component) {
+                       destroyBonus01plus02(xy.getTarget()[0], xy.getTarget()[1], xy.getSource()[0]);
+                   } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus03Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus03Component)
+                       destroyBonus01plus03();
+                } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus02Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus02Component) {
+                    if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus02Component && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus02Component) {
+                        destroyBonus02plus02(xy.getTarget()[0], xy.getTarget()[1]);
+                    } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus03Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus03Component) {
+                        destroyBonus02plus03();
+                    }
+                } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus03Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus03Component) {
+                    destroyBonus03plus03(xy.getTarget()[0], xy.getTarget()[1]);
+                }
+            } if (board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[0].isV()) {
+                if ((board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPiecesComponent)) {
+                    destroyNormalPieces(xy.getSource()[0], xy.getSource()[1], 0);
                 } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component) {
-                    destroyBonus01(xy.getSource()[0],xy.getSource()[1]);
+                    destroyBonus01(xy.getSource()[0], xy.getSource()[1], xy.getTarget()[0], 0);
                 } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus02Component) {
-                    destroyBonus02(xy.getSource()[0], xy.getSource()[1]);
+                    destroyBonus02(xy.getTarget()[0], xy.getTarget()[1], 0);
                 } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus03Component) {
-                    destroyBonus02(xy.getSource()[0], xy.getSource()[1]);
+                    destroyBonus03(xy.getTarget()[0], xy.getTarget()[1], 0);
                 }
             } else {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
@@ -114,13 +133,13 @@ public class BoardComponent implements IBoard{
             }
             if (board[xy.getTarget()[0]][xy.getTarget()[1]].getMoves()[0].isV()) {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
-                    destroyNormalPieces(xy.getTarget()[0],xy.getTarget()[1]);
+                    destroyNormalPieces(xy.getSource()[0], xy.getSource()[1], 1);
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
-                    destroyBonus01(xy.getTarget()[0],xy.getTarget()[1]);
+                    destroyBonus01(xy.getSource()[0], xy.getSource()[1], xy.getTarget()[0], 1);
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus02Component) {
-                    destroyBonus02(xy.getTarget()[0], xy.getTarget()[1]);
+                    destroyBonus02(xy.getSource()[0], xy.getSource()[1], 1);
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus03Component) {
-                    destroyBonus02(xy.getTarget()[0], xy.getTarget()[1]);
+                    destroyBonus03(xy.getSource()[0], xy.getSource()[1], 1);
                 }
             } else {
                  if (aux instanceof NormalPiecesComponent) {
@@ -137,19 +156,249 @@ public class BoardComponent implements IBoard{
         }
     }
 
-    private void destroyBonus01(int l, int c) {
 
+
+    private void destroyNormalPieces(int l, int c, int k) {
+        int i = 0;
+        while (board[l][c].getMoves()[k].getVct()[i] != null) {
+            board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1]].setDead(true);
+            i++;
+        }
+        rebuildBoard(l, c, k);
     }
 
-    private void destroyNormalPieces(int l, int c) {
 
+    private void destroyBonus01(int sl, int c, int tl,  int k) {
+        if (sl == tl) {
+            for (int i = 0; i < 9; i++) {
+                board[sl][i].setDead(true);
+            }
+        } else {
+            for (int i = 0; i < 9; i++) {
+                board[i][c].setDead(true);
+            }
+        }
+        rebuildBoard(sl, c, k);
     }
 
-    //To do
+    private void destroyBonus02(int l, int c, int k) {
+        board[l][c].setDead(true);
+        if (l > 0) {
+            board[l-1][c].setDead(true);
+            if (c > 0) {
+                board[l-1][c-1].setDead(true);
+            }
+            if (c < 8) {
+                board[l-1][c+1].setDead(true);
+            }
+        }
+        if (l < 8) {
+            board[l+1][c].setDead(true);
+            if (c > 0) {
+                board[l+1][c-1].setDead(true);
+            }
+            if (c < 8) {
+                board[l+1][c+1].setDead(true);
+            }
+        }
+        if (c > 0) {
+            board[l][c-1].setDead(true);
+        }
+        if (c < 8) {
+            board[l][c+1].setDead(true);
+        }
+        rebuildBoard(l, c, k);
+    }
+
+    private void destroyBonus03(int l, int c, int k) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j].getType() == board[l][c].getType()) {
+                    board[i][j].setDead(true);
+                }
+            }
+        }
+        rebuildBoard(l, c, k);
+    }
+
+    private void destroyBonus01plus01(int l, int c) {
+        for (int i = 0; i < 9; i++) {
+            board[l][i].setDead(true);
+            board[i][c].setDead(true);
+        }
+        rebuildBoard(l, c, 0);
+    }
+
+    private void destroyBonus01plus02(int sl, int c, int tl) {
+        if (sl == tl) {
+            for (int i = 0; i < 9; i++) {
+                board[sl][i].setDead(true);
+                if (sl>0) {
+                    board[sl - 1][i].setDead(true);
+                }
+                if (sl<8) {
+                    board[sl + 1][i].setDead(true);
+                }
+            }
+        } else {
+            for (int i = 0; i < 9; i++) {
+                board[i][c].setDead(true);
+                if (c>0) {
+                    board[i][c-1].setDead(true);
+                }
+                if (c<8) {
+                    board[i][c+1].setDead(true);
+                }
+            }
+        }
+    }
+
+    private void destroyBonus01plus03() {
+        Random random = new Random();
+        int x = random.nextInt(5);
+        int[][] vct = new int[45][2];
+        int cont = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j].getX() == x) {
+                    board[i][j] = new Bonus01Component();
+                    vct[cont][0] = i;
+                    vct[cont][1] = j;
+                    cont++;
+                }
+            }
+        }
+        for (int i = 0; i < cont; i++) {
+            if (i%2 == 0) {
+                destroyBonus01(vct[i][0], vct[i][1], vct[i][0], 0);
+            } else {
+                destroyBonus01(vct[i][0], vct[i][1], -1, 0);
+            }
+        }
+    }
+
+    private void destroyBonus02plus02(int c, int l) {
+        board[l][c].setDead(true);
+        if (l > 1) {
+            board[l-1][c].setDead(true);
+            board[l-2][c].setDead(true);
+            if (c > 1) {
+                board[l-1][c-1].setDead(true);
+                board[l-1][c-2].setDead(true);
+                board[l-2][c-1].setDead(true);
+                board[l-2][c-2].setDead(true);
+            } else if (c>0) {
+                board[l-1][c-1].setDead(true);
+                board[l-2][c-1].setDead(true);
+            }
+            if (c < 7) {
+                board[l-1][c+1].setDead(true);
+                board[l-1][c+2].setDead(true);
+                board[l-2][c+1].setDead(true);
+                board[l-2][c+2].setDead(true);
+            } else if (c < 8) {
+                board[l-1][c+1].setDead(true);
+                board[l-2][c+1].setDead(true);
+            }
+        } else if (l == 0) {
+            board[l-1][c].setDead(true);
+            if (c > 1) {
+                board[l-1][c-1].setDead(true);
+                board[l-1][c-2].setDead(true);
+            } else if (c>0) {
+                board[l-1][c-1].setDead(true);
+            }
+            if (c < 7) {
+                board[l-1][c+1].setDead(true);
+                board[l-1][c+2].setDead(true);
+            } else if (c < 8) {
+                board[l-1][c+1].setDead(true);
+            }
+        }
+        if (l < 7) {
+            board[l+1][c].setDead(true);
+            board[l+2][c].setDead(true);
+            if (c > 1) {
+                board[l+1][c-1].setDead(true);
+                board[l+1][c-2].setDead(true);
+                board[l+2][c-1].setDead(true);
+                board[l+2][c-2].setDead(true);
+            } else if (c>0) {
+                board[l+1][c-1].setDead(true);
+                board[l+2][c-1].setDead(true);
+            }
+            if (c < 7) {
+                board[l+1][c+1].setDead(true);
+                board[l+1][c+2].setDead(true);
+                board[l+2][c+1].setDead(true);
+                board[l+2][c+2].setDead(true);
+            } else if (c < 8) {
+                board[l+1][c+1].setDead(true);
+                board[l+2][c+1].setDead(true);
+            }
+        } else if (l == 7) {
+            board[l+1][c].setDead(true);
+            if (c > 1) {
+                board[l+1][c-1].setDead(true);
+                board[l+1][c-2].setDead(true);
+            } else if (c>0) {
+                board[l+1][c-1].setDead(true);
+            }
+            if (c < 7) {
+                board[l+1][c+1].setDead(true);
+                board[l+1][c+2].setDead(true);
+            } else if (c < 8) {
+                board[l+1][c+1].setDead(true);
+            }
+        }
+        if (c > 1) {
+            board[l][c-1].setDead(true);
+            board[l][c-2].setDead(true);
+        } else if (c == 1) {
+            board[l][c-1].setDead(true);
+        }
+        if (c < 7) {
+            board[l][c+1].setDead(true);
+            board[l][c+2].setDead(true);
+        } else if (c == 7) {
+            board[l][c+1].setDead(true);
+        }
+    }
+
+    private void destroyBonus02plus03() {
+        Random random = new Random();
+        int x = random.nextInt(5);
+        int[][] vct = new int[45][2];
+        int cont = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j].getX() == x) {
+                    board[i][j] = new Bonus02Component();
+                    vct[cont][0] = i;
+                    vct[cont][1] = j;
+                    cont++;
+                }
+            }
+        }
+        for (int i = 0; i < cont; i++) {
+            destroyBonus02(vct[i][0], vct[i][1], 0);
+        }
+    }
+
+    private void destroyBonus03plus03(int c, int l) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                board[i][j].setDead(true);
+            }
+        }
+        rebuildBoard(l, c, 0);
+    }
+
+    private void rebuildBoard(int l, int c, int k) {
+
+    }
     public void transformsPieces(char type) {
 
-    }
-    private void destroyBonus02(int i, int i1) {
     }
 }
 

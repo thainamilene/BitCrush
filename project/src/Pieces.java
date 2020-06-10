@@ -1,7 +1,8 @@
 public abstract class Pieces implements IPieces {
    protected char type;
-   protected int x;
+   protected int x = -1;
    protected IMovementAttributes[] moves;
+   protected boolean dead = false;
 
     public Pieces() {
         moves = new IMovementAttributes[2];
@@ -128,6 +129,14 @@ public abstract class Pieces implements IPieces {
 
     public char getType() {
         return type;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 
     public IMovementAttributes[] getMoves() {
