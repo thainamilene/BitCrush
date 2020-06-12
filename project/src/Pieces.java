@@ -1,10 +1,13 @@
-public abstract class Pieces implements IPieces {
+import javax.swing.*;
+
+public abstract class Pieces extends JButton implements IPieces {
    protected char type;
    protected int x = -1;
    protected IMovementAttributes[] moves;
    protected boolean dead = false;
 
     public Pieces() {
+        super();
         moves = new IMovementAttributes[2];
     }
 
@@ -14,9 +17,9 @@ public abstract class Pieces implements IPieces {
 
     protected void verifyTargetMovement(ITranslateMovementC xy, IPieces[][] board) {
 
-        for (int i = 0; i < 2; i++) {
+     /*   for (int i = 0; i < 2; i++) {
             moves[i] = new MovementComponent();
-        }
+        }*/
         if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
             if (xy.getTarget()[0] == xy.getSource()[0]) {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceOnTop(xy.getSource()[0], xy.getSource()[1], board) && board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceOnTop(xy.getSource()[0] + 1, xy.getSource()[1], board)) {
@@ -69,7 +72,7 @@ public abstract class Pieces implements IPieces {
                     moves[1].setVct(new int[]{xy.getSource()[0], xy.getSource()[1] + 1});
                     moves[1].setVct(new int[]{xy.getSource()[0], xy.getSource()[1] + 2});
                 }
-                if (board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceInRight(xy.getSource()[0], xy.getSource()[1], board) && board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceInRight(xy.getSource()[0], xy.getSource()[1] - 1, board)) {
+                if (board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceInRight(xy.getSource()[0], xy.getSource()[1], board) && board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceInRight(xy.getSource()[0], xy.getSource()[1] + 1, board)) {
                     if (moves[1].isV()) {
                         moves[1].setMovetype('b');
                     } else {
@@ -111,20 +114,20 @@ public abstract class Pieces implements IPieces {
         }
     }
 
-     protected char getPieceInRight(int xcoordinate, int ycoordinate, IPieces[][] board) {
-        return ycoordinate < 8 ? board[xcoordinate][ycoordinate + 1].getType() : ' ';
+     protected char getPieceInRight(int xCoordinate, int yCoordinate, IPieces[][] board) {
+        return yCoordinate < 8 ? board[xCoordinate][yCoordinate + 1].getType() : ' ';
     }
 
-     protected char getPieceInLeft(int xcoordinate, int ycoordinate, IPieces[][] board) {
-         return ycoordinate > 1 ? board[xcoordinate][ycoordinate - 1].getType() : ' ';
+     protected char getPieceInLeft(int xCoordinate, int yCoordinate, IPieces[][] board) {
+         return yCoordinate > 1 ? board[xCoordinate][yCoordinate - 1].getType() : ' ';
      }
 
-    protected char getPieceOnTop(int xcoordinate, int ycoordinate, IPieces[][] board) {
-        return xcoordinate < 8 ? board[xcoordinate + 1][ycoordinate].getType() : ' ';
+    protected char getPieceOnTop(int xCoordinate, int yCoordinate, IPieces[][] board) {
+        return xCoordinate < 8 ? board[xCoordinate + 1][yCoordinate].getType() : ' ';
     }
 
-    protected char getPieceInBottom(int xcoordinate, int ycoordinate, IPieces[][] board) {
-        return xcoordinate > 0 ? board[xcoordinate - 1][ycoordinate].getType() : ' ';
+    protected char getPieceInBottom(int xCoordinate, int yCoordinate, IPieces[][] board) {
+        return xCoordinate > 0 ? board[xCoordinate - 1][yCoordinate].getType() : ' ';
     }
 
     public char getType() {

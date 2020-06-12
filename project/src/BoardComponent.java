@@ -1,7 +1,7 @@
-import java.util.Arrays;
+import javax.swing.*;
 import java.util.Random;
 
-public class BoardComponent implements IBoard{
+public class BoardComponent extends JPanel implements IBoard{
     public IPieces[][] board;
     public IScoreboard score;
 
@@ -79,7 +79,11 @@ public class BoardComponent implements IBoard{
             System.out.print(i);
             System.out.print(' ');
             for (int j = 0; j < 9; j++) {
-                System.out.print(board[i - 1][j].getType() + " ");
+                if (board[i-1][j].isDead()) {
+                    System.out.print("D ");
+                } else {
+                    System.out.print(board[i - 1][j].getType() + " ");
+                }
             }
             System.out.println(" ");
         }
@@ -91,7 +95,6 @@ public class BoardComponent implements IBoard{
         boolean v = board[xy.getSource()[0]][xy.getSource()[1]].verifyMovement(xy, board);
         IPieces aux = board[xy.getSource()[0]][xy.getSource()[1]];
         if (v) {
-
             if (!(board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPiecesComponent && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent)) {
                 if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
                    if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
@@ -131,7 +134,8 @@ public class BoardComponent implements IBoard{
                 }
                 board[xy.getSource()[0]][xy.getSource()[1]] = board[xy.getTarget()[0]][xy.getTarget()[1]];
             }
-            if (board[xy.getTarget()[0]][xy.getTarget()[1]].getMoves()[0].isV()) {
+            System.out.println("sdfljskldjf = " + board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[1].isV());
+            if (board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[1].isV()) {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
                     destroyNormalPieces(xy.getSource()[0], xy.getSource()[1], 1);
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
@@ -156,17 +160,15 @@ public class BoardComponent implements IBoard{
         }
     }
 
-
-
     private void destroyNormalPieces(int l, int c, int k) {
         int i = 0;
-        while (board[l][c].getMoves()[k].getVct()[i] != null) {
+        board[l][c].setDead(true);
+        while (i!=5 && board[l][c].getMoves()[k].getVct()[i][0] != -1) {
             board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1]].setDead(true);
             i++;
         }
         rebuildBoard(l, c, k);
     }
-
 
     private void destroyBonus01(int sl, int c, int tl,  int k) {
         if (sl == tl) {
@@ -300,7 +302,7 @@ public class BoardComponent implements IBoard{
                 board[l-1][c+1].setDead(true);
                 board[l-2][c+1].setDead(true);
             }
-        } else if (l == 0) {
+        } else if (l == 1) {
             board[l-1][c].setDead(true);
             if (c > 1) {
                 board[l-1][c-1].setDead(true);
@@ -395,8 +397,22 @@ public class BoardComponent implements IBoard{
     }
 
     private void rebuildBoard(int l, int c, int k) {
-
+      /*  int i = 0, j;
+        while (i!=5 && board[l][c].getMoves()[k].getVct()[i][0] != -1) {
+            if (!board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1] + 1].isDead()) {
+               j = board[l][c].getMoves()[k].getVct()[i][1];
+               board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1]] = new NormalPiecesComponent();
+               board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1]].setType(board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1] + 1].getX());
+               while (j!=8) {
+                   board[board[l][c].getMoves()[k].getVct()[i][0]][j]
+                   j++;
+               }
+            }
+            i++;
+            rebuildBoard(l, c, k);
+        }*/
     }
+
     public void transformsPieces(char type) {
 
     }

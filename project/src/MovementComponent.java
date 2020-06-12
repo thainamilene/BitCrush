@@ -9,6 +9,11 @@ public class MovementComponent implements IMovementAttributes{
         v = false;
         cont = 0;
         movetype = 'n';
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                vct[i][j] = -1;
+            }
+        }
     }
 
     public void setMovetype(char movetype) {
