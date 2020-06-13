@@ -1,12 +1,23 @@
 import javax.swing.*;
 import java.util.Random;
+import java.util.Scanner;
 
 public class BoardComponent extends JPanel implements IBoard{
     public IPieces[][] board;
     public IScoreboard score;
 
     public BoardComponent() {
+        score = new ScoreboardComponent();
         board = new IPieces[9][9];
+        Scanner sc = new Scanner(System.in);
+        int level = sc.nextInt();
+        if (level == 1) {
+           assembleBoard(5);
+        } else if (level == 2) {
+           assembleBoard(7);
+        } else {
+           assembleBoard(9);
+        }
     }
 
     private void verifyFirstBoard(int lv) {
@@ -61,7 +72,7 @@ public class BoardComponent extends JPanel implements IBoard{
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 x = random.nextInt(lv);
-                board[i][j] = new NormalPiecesComponent();
+                board[i][j] = new NormalPieces();
                 board[i][j].setType(x);
             }
         }
@@ -95,7 +106,7 @@ public class BoardComponent extends JPanel implements IBoard{
         boolean v = board[xy.getSource()[0]][xy.getSource()[1]].verifyMovement(xy, board);
         IPieces aux = board[xy.getSource()[0]][xy.getSource()[1]];
         if (v) {
-            if (!(board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPiecesComponent && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent)) {
+            if (!(board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPieces && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPieces)) {
                 if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component || board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
                    if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component && board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
                        destroyBonus01plus01(xy.getTarget()[0], xy.getTarget()[1]);
@@ -113,7 +124,7 @@ public class BoardComponent extends JPanel implements IBoard{
                     destroyBonus03plus03(xy.getTarget()[0], xy.getTarget()[1]);
                 }
             } if (board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[0].isV()) {
-                if ((board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPiecesComponent)) {
+                if ((board[xy.getSource()[0]][xy.getSource()[1]] instanceof NormalPieces)) {
                     destroyNormalPieces(xy.getSource()[0], xy.getSource()[1], 0);
                 } else if (board[xy.getSource()[0]][xy.getSource()[1]] instanceof Bonus01Component) {
                     destroyBonus01(xy.getSource()[0], xy.getSource()[1], xy.getTarget()[0], 0);
@@ -123,8 +134,8 @@ public class BoardComponent extends JPanel implements IBoard{
                     destroyBonus03(xy.getTarget()[0], xy.getTarget()[1], 0);
                 }
             } else {
-                if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
-                    board[xy.getSource()[0]][xy.getSource()[1]] = new NormalPiecesComponent();
+                if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPieces) {
+                    board[xy.getSource()[0]][xy.getSource()[1]] = new NormalPieces();
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
                     board[xy.getSource()[0]][xy.getSource()[1]] = new Bonus01Component();
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus02Component) {
@@ -136,7 +147,7 @@ public class BoardComponent extends JPanel implements IBoard{
             }
             System.out.println("sdfljskldjf = " + board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[1].isV());
             if (board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[1].isV()) {
-                if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
+                if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPieces) {
                     destroyNormalPieces(xy.getSource()[0], xy.getSource()[1], 1);
                 } else if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof Bonus01Component) {
                     destroyBonus01(xy.getSource()[0], xy.getSource()[1], xy.getTarget()[0], 1);
@@ -146,8 +157,8 @@ public class BoardComponent extends JPanel implements IBoard{
                     destroyBonus03(xy.getSource()[0], xy.getSource()[1], 1);
                 }
             } else {
-                 if (aux instanceof NormalPiecesComponent) {
-                    board[xy.getTarget()[0]][xy.getTarget()[1]] = new NormalPiecesComponent();
+                 if (aux instanceof NormalPieces) {
+                    board[xy.getTarget()[0]][xy.getTarget()[1]] = new NormalPieces();
                 } else if (aux instanceof Bonus01Component) {
                     board[xy.getTarget()[0]][xy.getTarget()[1]] = new Bonus01Component();
                 } else if (aux instanceof Bonus02Component) {
@@ -162,7 +173,7 @@ public class BoardComponent extends JPanel implements IBoard{
 
     private void destroyNormalPieces(int l, int c, int k) {
         int i = 0;
-        board[l][c].setDead(true);
+     //   board[l][c].setDead(true);
         while (i!=5 && board[l][c].getMoves()[k].getVct()[i][0] != -1) {
             board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1]].setDead(true);
             i++;

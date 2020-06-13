@@ -1,6 +1,8 @@
-public class NormalPiecesComponent extends Pieces{
+public class NormalPieces extends Pieces{
 
-    public NormalPiecesComponent() {
+    IPieces piece;
+
+    public NormalPieces() {
         super();
     }
 
@@ -106,36 +108,37 @@ public class NormalPiecesComponent extends Pieces{
         this.x = x;
         switch (x) {
             case 0:
-                this.type = '0';
+                piece = new Piece01Component();
                 break;
             case 1:
-                this.type = '*';
+                piece = new Piece02Component();
                 break;
             case 2:
-                this.type = '3';
+                piece = new Piece03Component();
                 break;
             case 3:
-                this.type = '$';
+                piece = new Piece04Component();
                 break;
             case 4:
-                this.type = '#';
+                piece = new Piece05Component();
                 break;
             case 5:
-                this.type = '?';
+                piece = new Piece06Component();
                 break;
             case 6:
-                this.type = '&';
+                piece = new Piece07Component();
                 break;
             case 7:
-                this.type = '§';
+                piece = new Piece08Component();
                 break;
             case 8:
-                this.type = 'º';
-                break;
-            default:
-                this.type = '5';
+                piece = new Piece09Component();
                 break;
         }
+        this.type = piece.gettType();
     }
 
+    public char gettType() {
+        return piece.gettType();
+    }
 }

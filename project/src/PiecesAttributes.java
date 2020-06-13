@@ -5,4 +5,6 @@ public interface PiecesAttributes {
     boolean isDead();
     int getX();
     IMovementAttributes[] getMoves();
+    char gettType();
+
 }

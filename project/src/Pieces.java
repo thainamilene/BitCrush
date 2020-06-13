@@ -20,7 +20,7 @@ public abstract class Pieces extends JButton implements IPieces {
      /*   for (int i = 0; i < 2; i++) {
             moves[i] = new MovementComponent();
         }*/
-        if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
+        if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPieces) {
             if (xy.getTarget()[0] == xy.getSource()[0]) {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceOnTop(xy.getSource()[0], xy.getSource()[1], board) && board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceOnTop(xy.getSource()[0] + 1, xy.getSource()[1], board)) {
                     moves[1].setV(true);
@@ -131,7 +131,7 @@ public abstract class Pieces extends JButton implements IPieces {
     }
 
     public char getType() {
-        return type;
+        return this.type;
     }
 
     public void setDead(boolean dead) {
@@ -145,7 +145,8 @@ public abstract class Pieces extends JButton implements IPieces {
     public IMovementAttributes[] getMoves() {
         return moves;
     }
+
     public int getX() {
-        return x;
+       return x;
     }
 }
