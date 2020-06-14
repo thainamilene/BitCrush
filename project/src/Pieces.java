@@ -7,9 +7,12 @@ public abstract class Pieces implements IPieces{
    protected boolean dead = false;
    protected int index;
    protected String imageIcon;
+   protected int[] position;
+   protected IBoard board;
 
     public Pieces() {
         moves = new IMovementAttributes[2];
+        position = new int[2];
     }
 
     public abstract void setType(int x);
@@ -115,11 +118,11 @@ public abstract class Pieces implements IPieces{
         }
     }
 
-     protected char getPieceInRight(int xCoordinate, int yCoordinate, IPieces[][] board) {
+    protected char getPieceInRight(int xCoordinate, int yCoordinate, IPieces[][] board) {
         return yCoordinate < 8 ? board[xCoordinate][yCoordinate + 1].getType() : ' ';
     }
 
-     protected char getPieceInLeft(int xCoordinate, int yCoordinate, IPieces[][] board) {
+    protected char getPieceInLeft(int xCoordinate, int yCoordinate, IPieces[][] board) {
          return yCoordinate > 1 ? board[xCoordinate][yCoordinate - 1].getType() : ' ';
      }
 
@@ -160,9 +163,25 @@ public abstract class Pieces implements IPieces{
 
     public void actionPerformed(ActionEvent actionEvent) {
         System.out.println("kdsofkosdkfosdkfsodkfsok\56");
+        board.translate(position);
+
     }
+
     public abstract void setImageIcon(String imageIcon);
     public String getImageIcon() {
         return imageIcon;
+    }
+
+    public void setPosition(int i, int j) {
+        this.position[0] = i;
+        this.position[1] = j;
+    }
+
+    public int[] getPosition() {
+        return position;
+    }
+
+    public void setBoard(IBoard board) {
+        this.board = board;
     }
 }

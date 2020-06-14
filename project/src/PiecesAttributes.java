@@ -11,4 +11,7 @@ public interface PiecesAttributes {
     int getIndex();
     String getImageIcon();
     void setImageIcon(String imageIcon);
+    void setBoard(IBoard board);
+    void setPosition(int i, int j);
+    int[] getPosition();
 }

@@ -1,45 +1,28 @@
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.util.Random;
 
 public class BoardComponent extends JPanel implements IBoard{
     private static final long serialVersionUID = -2624435075244032415L;
     public IPieces[][] board;
     public IScoreboard score;
+    private ITranslateMovementC move;
+    private int counter;
 
     public BoardComponent(int lv, Container mainPanel) {
-        mainPanel.remove(0);
-        mainPanel.remove(0);
-        mainPanel.remove(0);
-        mainPanel.remove(0);
+        counter = 0;
+        //mainPanel.remove(0);
+        mainPanel.remove(1);
+        mainPanel.remove(1);
+        mainPanel.remove(1);
         mainPanel.setBackground(new Color(0xffffff));
         score = new ScoreboardComponent();
         board = new IPieces[9][9];
         setSize(450,450);
+        setBackground(new Color(0x847C9D));
         assembleBoard(lv, mainPanel);
-    }
-
-    private void setLevel(Window window) {
-      /*  JRadioButton lvl1 = new JRadioButton("Nível 01", true);
-        lvl1.setActionCommand("5");
-        JRadioButton lvl2 = new JRadioButton("Nível 02", true);
-        lvl2.setActionCommand("7");
-        JRadioButton lvl3 = new JRadioButton("Nível 03", true);
-        lvl3.setActionCommand("9");
-        window.add(lvl1, BorderLayout.CENTER);
-        window.add(lvl2, BorderLayout.CENTER);
-        window.add(lvl3, BorderLayout.CENTER);
-        Scanner sc = new Scanner(System.in);
-        int level = sc.nextInt();
-       if (level == 1) {
-           assembleBoard(5);
-        } else if (level == 2) {
-           assembleBoard(7);
-        } else {
-           assembleBoard(9);
-        }
-        sc.close();
-        SwingUtilities.updateComponentTreeUI(this);*/
     }
 
     private void verifyFirstBoard(int lv) {
@@ -91,12 +74,13 @@ public class BoardComponent extends JPanel implements IBoard{
     public void assembleBoard(int lv, Container mainPanel) {
         Random random = new Random();
         int x;
-        int cont = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 x = random.nextInt(lv);
                 board[i][j] = new NormalPiecesComponent();
                 board[i][j].setType(x);
+                board[i][j].setPosition(i, j);
+                board[i][j].setBoard(this);
             }
         }
         verifyFirstBoard(lv);
@@ -125,6 +109,19 @@ public class BoardComponent extends JPanel implements IBoard{
             System.out.println(" ");
         }
         System.out.println("  a b c d e f g h i\n");
+    }
+
+    @Override
+    public void translate(int[] position) {
+        if (counter==0) {
+            move = new TranslateMovementComponent();
+            move.setSource(position);
+            counter ++;
+        } else {
+            move.setTarget(position);
+            counter--;
+            movePieces(move);
+        }
     }
 
     // To do
@@ -171,7 +168,6 @@ public class BoardComponent extends JPanel implements IBoard{
                 }
                 board[xy.getSource()[0]][xy.getSource()[1]] = board[xy.getTarget()[0]][xy.getTarget()[1]];
             }
-            System.out.println("sdfljskldjf = " + board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[1].isV());
             if (board[xy.getSource()[0]][xy.getSource()[1]].getMoves()[1].isV()) {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
                     destroyNormalPieces(xy.getSource()[0], xy.getSource()[1], 1);
@@ -204,6 +200,7 @@ public class BoardComponent extends JPanel implements IBoard{
             board[board[l][c].getMoves()[k].getVct()[i][0]][board[l][c].getMoves()[k].getVct()[i][1]].setDead(true);
             i++;
         }
+        printBoard();
         rebuildBoard(l, c, k);
     }
 

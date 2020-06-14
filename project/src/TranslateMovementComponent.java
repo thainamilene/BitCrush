@@ -64,6 +64,14 @@ public class TranslateMovementComponent implements ITranslateMovementC {
         }
     }
 
+    public void setSource(int[] source) {
+        this.source = source;
+    }
+
+    public void setTarget(int[] target) {
+        this.target = target;
+    }
+
     public int[] getSource() {
         return source;
     }
