@@ -1,4 +1,6 @@
+import java.awt.*;
+
 public interface IBoardManager {
-    void assembleBoard(int lv);
+    void assembleBoard(int lv, Container mainPanel);
     void printBoard();
 }

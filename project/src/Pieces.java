@@ -1,13 +1,14 @@
-import javax.swing.*;
+import java.awt.event.ActionEvent;
 
-public abstract class Pieces extends JButton implements IPieces {
+public abstract class Pieces implements IPieces{
    protected char type;
    protected int x = -1;
    protected IMovementAttributes[] moves;
    protected boolean dead = false;
+   protected int index;
+   protected String imageIcon;
 
     public Pieces() {
-        super();
         moves = new IMovementAttributes[2];
     }
 
@@ -20,7 +21,7 @@ public abstract class Pieces extends JButton implements IPieces {
      /*   for (int i = 0; i < 2; i++) {
             moves[i] = new MovementComponent();
         }*/
-        if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPieces) {
+        if (board[xy.getTarget()[0]][xy.getTarget()[1]] instanceof NormalPiecesComponent) {
             if (xy.getTarget()[0] == xy.getSource()[0]) {
                 if (board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceOnTop(xy.getSource()[0], xy.getSource()[1], board) && board[xy.getTarget()[0]][xy.getTarget()[1]].getType() == getPieceOnTop(xy.getSource()[0] + 1, xy.getSource()[1], board)) {
                     moves[1].setV(true);
@@ -148,5 +149,20 @@ public abstract class Pieces extends JButton implements IPieces {
 
     public int getX() {
        return x;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+    public int getIndex() {
+        return this.index;
+    }
+
+    public void actionPerformed(ActionEvent actionEvent) {
+        System.out.println("kdsofkosdkfosdkfsodkfsok\56");
+    }
+    public abstract void setImageIcon(String imageIcon);
+    public String getImageIcon() {
+        return imageIcon;
     }
 }

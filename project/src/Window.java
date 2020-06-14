@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
-import java.util.jar.Attributes;
 
 public class Window extends JFrame implements ActionListener {
     private static final long serialVersionUID = -1282228310983130932L;
@@ -56,14 +54,43 @@ public class Window extends JFrame implements ActionListener {
     public void setGame() {
         mainPanel.setBackground(new Color(0xffffff));
         mainPanel.remove(0);
-        BoardPanel = new BoardComponent();
-        BoardPanel.setLayout(new GridLayout());
-        mainPanel.add(BoardPanel, BorderLayout.CENTER);
+        JButton lvl1 = buttonStyle(new Color(0x2C67BA), "Nível 01");
+        JButton lvl2 = buttonStyle(new Color(0x2C67BA), "Nível 02");
+        JButton lvl3 = buttonStyle(new Color(0x2C67BA), "Nível 03");
 
-        ScoreboardPanel = new JPanel();
+        JLabel title = new JLabel("Selecione o nível");
+        lvl1.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        BoardPanel = new BoardComponent(5, mainPanel);
+                    }
+                }
+        );
+        lvl2.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        //BoardPanel = new BoardComponent(7);
+                    }
+                }
+        );
+        lvl3.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        BoardPanel = new BoardComponent(9, mainPanel);
+                    }
+                }
+        );
+        mainPanel.remove(0);
+        mainPanel.add(title, BorderLayout.NORTH);
+        mainPanel.add(lvl1, BorderLayout.WEST);
+        mainPanel.add(lvl2, BorderLayout.CENTER);
+        mainPanel.add(lvl3, BorderLayout.EAST);
+/*        ScoreboardPanel = new JPanel();
+        mainPanel.add(BoardPanel, BorderLayout.CENTER);
         ScoreboardPanel.setLayout(new BorderLayout());
-        mainPanel.add(ScoreboardPanel, BorderLayout.NORTH);
-        
+        mainPanel.add(ScoreboardPanel, BorderLayout.NORTH);*/
+        SwingUtilities.updateComponentTreeUI(this);
+
     }
 
     private JButton buttonStyle (Color color, String text) {
@@ -80,11 +107,16 @@ public class Window extends JFrame implements ActionListener {
     }
 
 
-    public void addBoardPanel(Pieces img, int index) {
+    public void addBoardPanel(JPiecesComponent img, int index) {
         BoardPanel.add(img, index);
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
         setGame();
+    }
+    public Component add(Component component) {
+        super.add(component);
+        SwingUtilities.updateComponentTreeUI(this);
+        return component;
     }
 }

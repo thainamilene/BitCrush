@@ -1,8 +1,6 @@
-public class NormalPieces extends Pieces{
+public class NormalPiecesComponent extends Pieces{
 
-    IPieces piece;
-
-    public NormalPieces() {
+    public NormalPiecesComponent() {
         super();
     }
 
@@ -108,37 +106,47 @@ public class NormalPieces extends Pieces{
         this.x = x;
         switch (x) {
             case 0:
-                piece = new Piece01Component();
+                this.type = '0';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece01.png");
                 break;
             case 1:
-                piece = new Piece02Component();
+                this.type = '*';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece02.png");
                 break;
             case 2:
-                piece = new Piece03Component();
+                this.type = '3';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece03.png");
                 break;
             case 3:
-                piece = new Piece04Component();
+                this.type = '$';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece04.png");
                 break;
             case 4:
-                piece = new Piece05Component();
+                this.type = '>';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece05.png");
                 break;
             case 5:
-                piece = new Piece06Component();
+                this.type = '?';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece06.png");
                 break;
             case 6:
-                piece = new Piece07Component();
+                this.type = '&';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece07.png");
                 break;
             case 7:
-                piece = new Piece08Component();
+                this.type = '§';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece08.png");
+
                 break;
             case 8:
-                piece = new Piece09Component();
+                this.type = 'º';
+                setImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece09.png");
                 break;
         }
-        this.type = piece.gettType();
+        this.x = x;
     }
 
-    public char gettType() {
-        return piece.gettType();
+    public void setImageIcon(String imageIcon) {
+        this.imageIcon = imageIcon;
     }
 }

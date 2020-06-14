@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public interface PiecesAttributes {
     void setType(int x);
     char getType();
@@ -5,6 +7,8 @@ public interface PiecesAttributes {
     boolean isDead();
     int getX();
     IMovementAttributes[] getMoves();
-    char gettType();
-
+    void setIndex(int index);
+    int getIndex();
+    String getImageIcon();
+    void setImageIcon(String imageIcon);
 }

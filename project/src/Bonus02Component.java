@@ -1,23 +1,12 @@
-import javax.swing.*;
-
 public class Bonus02Component extends Pieces {
-
-    public void setType(int x) {
-        type = '2';
-    }
-
-    @Override
-    public char gettType() {
-        return 0;
-    }
-
-    public char getType(int i, int l) {
-        return 0;
-    }
 
     public Bonus02Component() {
         super();
-        setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "Images/Bonus02.png"));
+        setImageIcon(Main.class.getResource(".").getPath() + "/Images/Bonus02.png");
+    }
+
+    public void setType(int x) {
+        type = '2';
     }
 
     public boolean verifyMovement(ITranslateMovementC xy, IPieces[][] board) {
@@ -30,7 +19,7 @@ public class Bonus02Component extends Pieces {
       return true;
     }
 
-    protected char getType(int i) {
-        return 0;
+    public void setImageIcon(String imageIcon) {
+        this.imageIcon = imageIcon;
     }
 }
