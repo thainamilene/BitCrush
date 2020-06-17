@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 public class Window extends JFrame implements ActionListener {
     private static final long serialVersionUID = -1282228310983130932L;
-    private JPanel ScoreboardPanel, buttonPanel, imageLabel;
-    public BoardComponent BoardPanel;
+    private JPanel ScoreboardPanel;
+    private BoardComponent BoardPanel;
     Container mainPanel;
 
 
@@ -21,14 +21,14 @@ public class Window extends JFrame implements ActionListener {
         mainPanel = getContentPane();
         mainPanel.setBounds(0,0,0,0);
         mainPanel.setLayout(new BorderLayout());
-        imageLabel = new JPanel();
+        JPanel imageLabel = new JPanel();
         imageLabel.setLayout(new BorderLayout());
         mainPanel.add(imageLabel, BorderLayout.CENTER);
 
         imageLabel.setSize(450, 555);
         JLabel images = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/Bitcrush.png"));
         imageLabel.add(images);
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         mainPanel.add(imageLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -108,7 +108,6 @@ public class Window extends JFrame implements ActionListener {
         button.setSize(150, 450);
         button.setMargin(new Insets(-3,-3,-3,-3));
         button.setBorderPainted(true);
-        button.setFocusPainted(false);
         return button;
     }
 

@@ -11,12 +11,11 @@ public class JPiecesComponent extends JButton {
 
     private void style() {
         setSize(50 , 50);
-        setBorderPainted(false);
-        setBackground(new Color(0x657B88));
+        setBorderPainted(true);
+        setBackground(new Color(0x847C9D));
     }
     public void setPieces (IPieces pieces) {
         this.pieces = pieces;
-        System.out.println(pieces.getImageIcon());
         ImageIcon image = new ImageIcon(pieces.getImageIcon());
         super.setIcon(image);
         this.addActionListener(pieces);

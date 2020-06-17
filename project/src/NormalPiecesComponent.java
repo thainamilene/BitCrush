@@ -5,9 +5,7 @@ public class NormalPiecesComponent extends Pieces{
     }
 
     public boolean verifyMovement(ITranslateMovementC xy, IPieces[][] board) {
-        for (int i = 0; i < 2; i++) {
-            moves[i] = new MovementComponent();
-        }
+
         if ((xy.getSource()[0] != xy.getTarget()[0]) || (xy.getSource()[1] != xy.getTarget()[1])) {
             if (xy.getSource()[0] == xy.getTarget()[0]) { //pecas se movendo na mesma linha
                 if (getType() == getPieceOnTop(xy.getTarget()[0], xy.getTarget()[1], board) && getType() == getPieceOnTop(xy.getTarget()[0] + 1, xy.getTarget()[1], board)) {
@@ -48,6 +46,7 @@ public class NormalPiecesComponent extends Pieces{
                     } else if (getType() == getPieceOnTop(xy.getTarget()[0], xy.getTarget()[1], board) && getType() == getPieceInBottom(xy.getTarget()[0], xy.getTarget()[1], board)) {
                         moves[0].setV(true);
                         moves[0].setMovetype('c');
+                        moves[0].setVct(xy.getTarget());
                         moves[0].setVct(new int[]{xy.getTarget()[0] + 1, xy.getTarget()[1]});
                         moves[0].setVct(new int[]{xy.getTarget()[0] - 1, xy.getTarget()[1]});
                     }
@@ -68,8 +67,8 @@ public class NormalPiecesComponent extends Pieces{
                         moves[0].setMovetype('l');
                     }
                     moves[0].setVct(xy.getTarget());
-                    moves[0].setVct(new int[]{xy.getTarget()[0], xy.getTarget()[1] - 1});
-                    moves[0].setVct(new int[]{xy.getTarget()[0], xy.getTarget()[1] - 2});
+                    moves[0].setVct(new int[]{xy.getTarget()[0], xy.getTarget()[1] + 1});
+                    moves[0].setVct(new int[]{xy.getTarget()[0], xy.getTarget()[1] + 2});
                 }
                 if (moves[0].getMovetype() != 'b') {
                     if (getType() == getPieceOnTop(xy.getTarget()[0], xy.getTarget()[1], board) && getType() == getPieceOnTop(xy.getTarget()[0] + 1, xy.getTarget()[1], board)) {
@@ -91,6 +90,7 @@ public class NormalPiecesComponent extends Pieces{
                     } else if (getType() == getPieceInLeft(xy.getTarget()[0], xy.getTarget()[1], board) && getType() == getPieceInRight(xy.getTarget()[0], xy.getTarget()[1], board)) {
                         moves[0].setV(true);
                         moves[0].setMovetype('l');
+                        moves[0].setVct(xy.getTarget());
                         moves[0].setVct(new int[]{xy.getTarget()[0], xy.getTarget()[1] + 1});
                         moves[0].setVct(new int[]{xy.getTarget()[0], xy.getTarget()[1] - 1});
                     }

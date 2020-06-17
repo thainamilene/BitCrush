@@ -10,7 +10,7 @@ public class TranslateMovementComponent implements ITranslateMovementC {
     }
 
     public void translateMove(String move) {
-        source2 = move.substring(0,2);
+    /*    source2 = move.substring(0,2);
 		target2 = move.substring(3,5);
         String ini = move.substring(0,1);
         String fim = move.substring(3,4);
@@ -25,15 +25,15 @@ public class TranslateMovementComponent implements ITranslateMovementC {
             target = source;
             source = aux;
         }
-        if (source[0] > target[0]) { // garantir que o  target esta sempre em cima do source se não estiverem na mesma linha
+        if (source[0] > target[0]) { // garantir que o  target esta sempre em baixo do source se não estiverem na mesma linha
             int[] aux = target;
             target = source;
             source = aux;
-        }
+        }*/
     }
 
     private void translateString(String str, int[] source) {
-        switch (str) {
+        /*switch (str) {
             case "a":
                 source[1] = 0;
                 break;
@@ -61,7 +61,7 @@ public class TranslateMovementComponent implements ITranslateMovementC {
             case "i":
                 source[1] = 8;
                 break;
-        }
+        }*/
     }
 
     public void setSource(int[] source) {
@@ -70,6 +70,20 @@ public class TranslateMovementComponent implements ITranslateMovementC {
 
     public void setTarget(int[] target) {
         this.target = target;
+        compareSourceAndTarget();
+    }
+
+    private void compareSourceAndTarget() {
+        if (source[1] > target[1]) { //garantir que o target esta sempre a direita do source se não estiverem na mesma coluna
+            int[] aux = target;
+            target = source;
+            source = aux;
+        }
+        if (source[0] > target[0]) { // garantir que o  target esta sempre em baixo do source se não estiverem na mesma linha
+            int[] aux = target;
+            target = source;
+            source = aux;
+        }
     }
 
     public int[] getSource() {
