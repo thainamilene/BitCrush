@@ -242,6 +242,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 }
             }
         }
+        rebuildBoard();
         SwingUtilities.updateComponentTreeUI(mainPanel);
         printBoard();
     }
@@ -267,6 +268,78 @@ public class BoardComponent extends JPanel implements IBoard {
         }
     }
 
+    private void rebuildBoard() {
+        for (int i = 80; i >= 0; i--) {
+            if (board[i].getX() == -1) {
+                if (i > 8) {
+                    System.out.println(i + " ");
+                    int j = 9;
+                    IPieces aux = new NormalPiecesComponent(),
+                            aux2 = new NormalPiecesComponent();
+                    while (i - j > 0) {
+                        if (board[i - j].getX() != -1) {
+                            if (board[i - j] instanceof NormalPiecesComponent) {
+                                aux.setType(board[i - j].getX());
+                                aux.setIndex(board[i - j].getIndex());
+                            } else if (board[i - j] instanceof Bonus01Component) {
+                                aux = new Bonus01Component();
+                                aux.setIndex(board[i - j].getIndex());
+                            } else if (board[i - j] instanceof Bonus02Component) {
+                                aux = new Bonus02Component();
+                                aux.setIndex(board[i - j].getIndex());
+                            } else {
+                                aux = new Bonus03Component();
+                                aux.setIndex(board[i - j].getIndex());
+                            }
+                            if (board[i] instanceof NormalPiecesComponent) {
+                                aux2.setType(board[i].getX());
+                                aux2.setIndex(board[i].getIndex());
+                            } else if (board[i] instanceof Bonus01Component) {
+                                aux2 = new Bonus01Component();
+                                aux2.setIndex(board[i].getIndex());
+                            } else if (board[i] instanceof Bonus02Component) {
+                                aux2 = new Bonus02Component();
+                                aux2.setIndex(board[i].getIndex());
+                            } else {
+                                aux2 = new Bonus03Component();
+                                aux2.setIndex(board[i].getIndex());
+                            }
+
+                            if (aux instanceof NormalPiecesComponent) {
+                                board[i] = new NormalPiecesComponent();
+                            } else if (aux instanceof Bonus01Component) {
+                                board[i] = new Bonus01Component();
+                            } else if (aux instanceof Bonus02Component) {
+                                board[i] = new Bonus02Component();
+                            } else {
+                                board[i] = new Bonus03Component();
+                            }
+
+                            if (aux2 instanceof NormalPiecesComponent) {
+                                board[i - j] = new NormalPiecesComponent();
+                            } else if (aux2 instanceof Bonus01Component) {
+                                board[i - j] = new Bonus01Component();
+                            } else if (aux2 instanceof Bonus02Component) {
+                                board[i - j] = new Bonus02Component();
+                            } else {
+                                board[i - j] = new Bonus03Component();
+                            }
+                            changesPieces(aux2, aux);
+                            changesPieces(aux, aux2);
+                            remove(aux.getIndex());
+                            add(board[i - j].getButton(), i - j);
+                            remove(aux2.getIndex());
+                            add(board[i].getButton(), i);
+                            break;
+                        }
+                        j += 9;
+                    }
+
+                }
+            }
+        }
+    }
+
     private void destroyBonus03plus03() {
     }
 
@@ -287,8 +360,8 @@ public class BoardComponent extends JPanel implements IBoard {
 
     private void changesPieces (IPieces piece1, IPieces piece2) {
         board[piece2.getIndex()].setType(piece1.getX());
-        System.out.println(piece1.getX());
         board[piece2.getIndex()].setIndex(piece2.getIndex());
         board[piece2.getIndex()].setBoard(this);
+        SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 }

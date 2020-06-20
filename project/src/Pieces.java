@@ -17,6 +17,7 @@ public abstract class Pieces implements IPieces {
         moves = new IMovementAttributes[2];
         moves[0] = new MovementComponent();
         moves[1] = new MovementComponent();
+        button.addActionListener(this);
     }
 
     public abstract void setType (int x);
@@ -40,7 +41,6 @@ public abstract class Pieces implements IPieces {
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println(index);
         Board.translate(index);
     }
 
@@ -67,7 +67,7 @@ public abstract class Pieces implements IPieces {
         return (xIndex%9)!=0 ? board[xIndex-1].getType() : ' ';
     }
     protected char getPieceInRight (int xIndex) {
-        return ((xIndex+1)%9 != 0 || xIndex == 0) ? board[xIndex + 1].getType() : ' ';
+        return (xIndex+1)%9 != 0 || xIndex == 0 ? board[xIndex + 1].getType() : ' ';
     }
     protected char getPieceInBottom (int xIndex) {
         return xIndex < 72 ? board[xIndex + 9].getType() : ' ';

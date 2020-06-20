@@ -52,19 +52,8 @@ public class NormalPiecesComponent extends Pieces {
                 button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece09.png"));
                 break;
         }
-        button.addActionListener(this);
     }
 
-    public char getType() {
-        return type;
-    }
-
-    public void setDead(boolean dead) {
-    }
-
-    public boolean isDead() {
-        return false;
-    }
 
     public boolean verifyMovement(int target) {
         moves[0] = new MovementComponent();
