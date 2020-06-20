@@ -11,4 +11,6 @@ public interface IMovementAttributes {
     int[][] getVct();
 
     boolean isV();
+
+    void remove();
 }

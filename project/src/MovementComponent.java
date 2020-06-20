@@ -42,4 +42,8 @@ public class MovementComponent implements IMovementAttributes{
     public boolean isV() {
         return v;
     }
+
+    public void remove() {
+        cont --;
+    }
 }
