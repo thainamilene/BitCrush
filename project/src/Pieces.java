@@ -6,10 +6,9 @@ public abstract class Pieces implements IPieces {
     protected int x;
     protected char type;
     protected int index;
-    protected int[] position;
     protected JButton button;
     protected IBoard Board;
-    protected IPieces[][] board;
+    protected IPieces[] board;
     protected IMovementAttributes[] moves;
 
     public Pieces() {
@@ -22,7 +21,7 @@ public abstract class Pieces implements IPieces {
 
     public abstract void setType (int x);
 
-    public abstract boolean verifyMovement(ITranslateMovementC xy);
+    public abstract boolean verifyMovement(int target);
 
     public void setIndex(int index) {
         this.index = index;
@@ -36,17 +35,13 @@ public abstract class Pieces implements IPieces {
         return type;
     }
 
-    public void setPosition(int i, int j) {
-        position = new int[]{i, j};
-    }
-
     public JButton getButton() {
         return button;
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println(position[0] + ", " + position[1]);
-        Board.translate(position);
+        System.out.println(index);
+        Board.translate(index);
     }
 
     public void setBoard(IBoard Board) {
@@ -54,12 +49,8 @@ public abstract class Pieces implements IPieces {
         this.board = Board.getBoard();
     }
 
-    public int[] getPosition() {
-        return position;
-    }
-
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public IMovementAttributes[] getMoves() {
@@ -72,20 +63,114 @@ public abstract class Pieces implements IPieces {
         button.setBackground(new Color(0x847C9D));
     }
 
-    protected char getPieceInLeft (int line, int column) {
-        return column > 0 ? board[line][column - 1].getType() : ' ';
+    protected char getPieceInLeft (int xIndex) {
+        return (xIndex%9)!=0 ? board[xIndex-1].getType() : ' ';
     }
-    protected char getPieceInRight (int line, int column) {
-        return column < 8 ? board[line][column + 1].getType() : ' ';
+    protected char getPieceInRight (int xIndex) {
+        return ((xIndex+1)%9 != 0 || xIndex == 0) ? board[xIndex + 1].getType() : ' ';
     }
-     protected char getPieceInBottom (int line, int column) {
-        return line < 8 ? board[line + 1][column].getType() : ' ';
+    protected char getPieceInBottom (int xIndex) {
+        return xIndex < 72 ? board[xIndex + 9].getType() : ' ';
     }
-     protected char getPieceOnTop (int line, int column) {
-        return line > 0 ? board[line - 1][column].getType() : ' ';
+    protected char getPieceOnTop (int xIndex) {
+        return xIndex > 8 ? board[xIndex - 9].getType() : ' ';
     }
 
-    protected void verifyTargetMovement(ITranslateMovementC xy) {
-
+    protected void verifyTargetMovement(int target) {
+        if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
+                if (board[target].getType() == getPieceOnTop(index) && board[target].getType() == getPieceOnTop(index - 9)) {
+                    moves[1].setV(true);
+                    moves[1].setMoveType('c');
+                    moves[1].setVct(index);
+                    moves[1].setVct(index - 9);
+                    moves[1].setVct(index - 18);
+                    if (board[target].getType() == getPieceInBottom(index)) {
+                        moves[1].setMoveType('1');
+                        moves[1].setVct(index + 9);
+                    }
+                }
+                if (board[target].getType() == getPieceInBottom(index) && board[target].getType() == getPieceInBottom(index + 9)) {
+                    if (moves[1].isV()) {
+                        moves[1].setMoveType('b');
+                        moves[1].setVct(index + 18);
+                    } else {
+                        moves[1].setV(true);
+                        moves[1].setMoveType('c');
+                        moves[1].setVct(index);
+                        moves[1].setVct(index + 9);
+                        moves[1].setVct(index + 18);
+                        if (board[target].getType() == getPieceOnTop(index)) {
+                            moves[1].setMoveType('1');
+                            moves[1].setVct(index - 9);
+                        }
+                    }
+                } else if (!moves[1].isV() && board[target].getType() == getPieceOnTop(index) && board[target].getType() == getPieceInBottom(index)) {
+                    moves[1].setV(true);
+                    moves[1].setMoveType('c');
+                    moves[1].setVct(index);
+                    moves[1].setVct(index + 9);
+                    moves[1].setVct(index - 9);
+                }
+                if (moves[1].getMovetype() != 'b') {
+                    if (board[target].getType() == getPieceInLeft(index) && board[target].getType() == getPieceInLeft(index - 1)) {
+                        if (moves[1].isV()) {
+                            moves[1].setMoveType('2');
+                        } else {
+                            moves[1].setV(true);
+                            moves[1].setMoveType('l');
+                            moves[1].setVct(index);
+                        }
+                        moves[1].setVct(index - 1);
+                        moves[1].setVct(index - 2);
+                    }
+                }
+            } else {
+                if (board[target].getType() == getPieceInRight(index) && board[target].getType() == getPieceInRight(index + 1)) {
+                    moves[1].setV(true);
+                    moves[1].setMoveType('l');
+                    moves[1].setVct(index);
+                    moves[1].setVct(index + 1);
+                    moves[1].setVct(index + 2);
+                    if (board[target].getType() == getPieceInLeft(index)) {
+                        moves[1].setMoveType('1');
+                        moves[1].setVct(index - 1);
+                    }
+                }
+                if (board[target].getType() == getPieceInLeft(index) && board[target].getType() == getPieceInLeft(index - 1)) {
+                    if (moves[1].isV()) {
+                        moves[1].setMoveType('b');
+                        moves[1].setVct(index - 2);
+                    } else {
+                        moves[1].setV(true);
+                        moves[1].setMoveType('l');
+                        moves[1].setVct(index);
+                        moves[1].setVct(index - 1);
+                        moves[1].setVct(index - 2);
+                        if (board[target].getType() == getPieceInRight(index)) {
+                            moves[1].setMoveType('1');
+                            moves[1].setVct(index + 1);
+                        }
+                    }
+                } else if (!moves[1].isV() && board[target].getType() == getPieceInLeft(index) && board[target].getType() == getPieceInRight(index)) {
+                    moves[1].setV(true);
+                    moves[1].setMoveType('l');
+                    moves[1].setVct(index);
+                    moves[1].setVct(index + 1);
+                    moves[1].setVct(index - 1);
+                }
+                if (moves[1].getMovetype() != 'b') {
+                    if (board[target].getType() == getPieceOnTop(index) && board[target].getType() == getPieceOnTop(index - 9)) {
+                        if (moves[1].isV()) {
+                            moves[1].setMoveType('2');
+                        } else {
+                            moves[1].setV(true);
+                            moves[1].setMoveType('c');
+                            moves[1].setVct(index);
+                        }
+                        moves[1].setVct(index - 9);
+                        moves[1].setVct(index - 18);
+                    }
+                }
+            }
     }
 }

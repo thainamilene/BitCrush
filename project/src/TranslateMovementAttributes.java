@@ -1,8 +1,6 @@
 public interface TranslateMovementAttributes {
-    int[] getSource();
-    String getSource2();
-    int[] getTarget();
-    String getTarget2();
-    void setTarget(int[] target);
-    void setSource(int[] source);
+    int getSource();
+    int getTarget();
+    void setTarget(int target);
+    void setSource(int source);
 }

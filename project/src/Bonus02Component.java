@@ -13,6 +13,11 @@ public class Bonus02Component extends Pieces {
         this.type = '*';
     }
 
+    @Override
+    public boolean verifyMovement(int target) {
+        return false;
+    }
+
     public char getType() {
         return 0;
     }
@@ -43,10 +48,6 @@ public class Bonus02Component extends Pieces {
 
     public String getImageIcon() {
         return null;
-    }
-
-    public boolean verifyMovement(ITranslateMovementC xy) {
-        return false;
     }
 
     public void setImageIcon(String imageIcon) {

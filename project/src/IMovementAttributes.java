@@ -2,13 +2,13 @@ public interface IMovementAttributes {
 
      void setMoveType(char moveType);
 
-    void setVct(int[] add);
+    void setVct(int index);
 
     void setV(boolean v);
 
     char getMovetype();
 
-    int[][] getVct();
+    int[] getVct();
 
     boolean isV();
 

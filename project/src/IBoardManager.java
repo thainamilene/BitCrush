@@ -1,7 +1,7 @@
 public interface IBoardManager {
     void printBoard();
 
-    void translate(int[] position);
+    void translate(int position);
 
-    IPieces[][] getBoard();
+    IPieces[] getBoard();
 }

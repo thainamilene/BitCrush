@@ -10,7 +10,5 @@ public interface PiecesAttributes {
     void setIndex(int index);
     int getIndex();
     void setBoard(IBoard Board);
-    void setPosition(int i, int j);
-    int[] getPosition();
     JButton getButton();
 }

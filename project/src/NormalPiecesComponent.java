@@ -10,6 +10,10 @@ public class NormalPiecesComponent extends Pieces {
     public void setType(int x) {
         this.x = x;
         switch (x) {
+            case -1:
+                this.type = 'D';
+                button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/field.png"));
+                break;
             case 0:
                 this.type = '1';
                 button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Piece01.png"));
@@ -62,10 +66,107 @@ public class NormalPiecesComponent extends Pieces {
         return false;
     }
 
-    public boolean verifyMovement(ITranslateMovementC xy) {
-        if (((index - board[xy.getTarget()[0]][xy.getTarget()[1]].getIndex())*(index - board[xy.getTarget()[0]][xy.getTarget()[1]].getIndex()) == 1) || ((index - board[xy.getTarget()[0]][xy.getTarget()[1]].getIndex())*(index - board[xy.getTarget()[0]][xy.getTarget()[1]].getIndex()) == 81)) {
-
+    public boolean verifyMovement(int target) {
+        moves[0] = new MovementComponent();
+        moves[1] = new MovementComponent();
+        if (((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) || ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 81)) {
+            if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
+                if (type == getPieceOnTop(target) && type == getPieceOnTop(target - 9)) {
+                    moves[0].setV(true);
+                    moves[0].setMoveType('c');
+                    moves[0].setVct(target);
+                    moves[0].setVct(target - 9);
+                    moves[0].setVct(target - 18);
+                    if (type == getPieceInBottom(target)) {
+                        moves[0].setMoveType('1');
+                        moves[0].setVct(target + 9);
+                    }
+                }
+                if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
+                    if (moves[0].isV()) {
+                        moves[0].setMoveType('b');
+                        moves[0].setVct(target + 18);
+                    } else {
+                        moves[0].setV(true);
+                        moves[0].setMoveType('c');
+                        moves[0].setVct(target);
+                        moves[0].setVct(target + 9);
+                        moves[0].setVct(target + 18);
+                        if (type == getPieceOnTop(target)) {
+                            moves[0].setMoveType('1');
+                            moves[0].setVct(target - 9);
+                        }
+                    }
+                } else if (!moves[0].isV() && type == getPieceOnTop(target) && type == getPieceInBottom(target)) {
+                    moves[0].setV(true);
+                    moves[0].setMoveType('c');
+                    moves[0].setVct(target);
+                    moves[0].setVct(target + 9);
+                    moves[0].setVct(target - 9);
+                }
+                if (moves[0].getMovetype() != 'b') {
+                    if (type == getPieceInRight(target) && type == getPieceInRight(target + 1)) {
+                        if (moves[0].isV()) {
+                            moves[0].setMoveType('2');
+                        } else {
+                            moves[0].setV(true);
+                            moves[0].setMoveType('l');
+                            moves[0].setVct(target);
+                        }
+                        moves[0].setVct(target + 1);
+                        moves[0].setVct(target + 2);
+                    }
+                }
+            } else {
+                if (type == getPieceInRight(target) && type == getPieceInRight(target + 1)) {
+                    moves[0].setV(true);
+                    moves[0].setMoveType('l');
+                    moves[0].setVct(target);
+                    moves[0].setVct(target + 1);
+                    moves[0].setVct(target + 2);
+                    if (type == getPieceInLeft(target)) {
+                        moves[0].setMoveType('1');
+                        moves[0].setVct(target - 1);
+                    }
+                }
+                if (type == getPieceInLeft(target) && type == getPieceInLeft(target - 1)) {
+                    if (moves[0].isV()) {
+                        moves[0].setMoveType('b');
+                        moves[0].setVct(target - 2);
+                    } else {
+                        moves[0].setV(true);
+                        moves[0].setMoveType('l');
+                        moves[0].setVct(target);
+                        moves[0].setVct(target - 1);
+                        moves[0].setVct(target - 2);
+                        if (type == getPieceInRight(target)) {
+                            moves[0].setMoveType('1');
+                            moves[0].setVct(target + 1);
+                        }
+                    }
+                } else if (!moves[0].isV() && type == getPieceInLeft(target) && type == getPieceInRight(target)) {
+                    moves[0].setV(true);
+                    moves[0].setMoveType('l');
+                    moves[0].setVct(target);
+                    moves[0].setVct(target + 1);
+                    moves[0].setVct(target - 1);
+                }
+                if (moves[0].getMovetype() != 'b') {
+                    if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
+                        if (moves[0].isV()) {
+                            moves[0].setMoveType('2');
+                        } else {
+                            moves[0].setV(true);
+                            moves[0].setMoveType('c');
+                            moves[0].setVct(target);
+                        }
+                        moves[0].setVct(target + 9);
+                        moves[0].setVct(target + 18);
+                    }
+                }
+            }
+            verifyTargetMovement(target);
         }
-        return true;
+        return moves[0].isV() || moves[1].isV();
     }
 }

@@ -2,15 +2,13 @@
 public class MovementComponent implements IMovementAttributes{
     boolean v;
     char moveType;
-    int[][] vct;
+    int[] vct;
     int cont;
 
     public MovementComponent() {
-        vct = new int[5][2];
+        vct = new int[5];
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 2; j++) {
-                vct[i][j] = -1;
-            }
+            vct[i] = -1;
         }
         cont = 0;
         v = false;
@@ -21,8 +19,8 @@ public class MovementComponent implements IMovementAttributes{
         this.moveType = moveType;
     }
 
-    public void setVct(int[] add) {
-        vct[cont] = add;
+    public void setVct(int index) {
+        vct[cont] = index;
         cont ++;
     }
 
@@ -34,7 +32,7 @@ public class MovementComponent implements IMovementAttributes{
         return moveType;
     }
 
-    public int[][] getVct() {
+    public int[] getVct() {
         return vct;
     }
 
