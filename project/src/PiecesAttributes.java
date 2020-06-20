@@ -9,9 +9,8 @@ public interface PiecesAttributes {
     IMovementAttributes[] getMoves();
     void setIndex(int index);
     int getIndex();
-    String getImageIcon();
-    void setImageIcon(String imageIcon);
-    void setBoard(IBoard board);
+    void setBoard(IBoard Board);
     void setPosition(int i, int j);
     int[] getPosition();
+    JButton getButton();
 }

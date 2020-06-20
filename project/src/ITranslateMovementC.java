@@ -1,3 +1,3 @@
-public interface ITranslateMovementC extends ITranslateMovement, TranslateMovementAttributes {
+public interface ITranslateMovementC extends  TranslateMovementAttributes {
 
 }

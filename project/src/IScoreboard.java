@@ -1,2 +1,2 @@
-public interface IScoreboard extends IScore, IRound, ScoreboardAtributtes{
+public interface IScoreboard extends IScore, IRound, ScoreboardAttributes {
 }

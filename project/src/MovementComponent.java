@@ -1,30 +1,29 @@
+
 public class MovementComponent implements IMovementAttributes{
     boolean v;
-    char movetype;
+    char moveType;
     int[][] vct;
     int cont;
 
     public MovementComponent() {
         vct = new int[5][2];
-        v = false;
-        cont = 0;
-        movetype = 'n';
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 2; j++) {
                 vct[i][j] = -1;
             }
         }
+        cont = 0;
+        v = false;
+        moveType = ' ';
     }
 
-    public void setMovetype(char movetype) {
-        this.movetype = movetype;
+    public void setMoveType(char moveType) {
+        this.moveType = moveType;
     }
 
     public void setVct(int[] add) {
-        if (cont < 5) {
-            vct[cont] =  add;
-            cont++;
-        }
+        vct[cont] = add;
+        cont ++;
     }
 
     public void setV(boolean v) {
@@ -32,7 +31,7 @@ public class MovementComponent implements IMovementAttributes{
     }
 
     public char getMovetype() {
-        return movetype;
+        return moveType;
     }
 
     public int[][] getVct() {

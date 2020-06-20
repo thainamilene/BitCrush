@@ -5,9 +5,8 @@ import java.awt.event.ActionListener;
 
 public class Window extends JFrame implements ActionListener {
     private static final long serialVersionUID = -1282228310983130932L;
-    private JPanel ScoreboardPanel;
-    private BoardComponent BoardPanel;
     Container mainPanel;
+    private BoardComponent BoardPanel;
 
 
     public Window() {
@@ -21,19 +20,20 @@ public class Window extends JFrame implements ActionListener {
         mainPanel = getContentPane();
         mainPanel.setBounds(0,0,0,0);
         mainPanel.setLayout(new BorderLayout());
+
         JPanel imageLabel = new JPanel();
         imageLabel.setLayout(new BorderLayout());
-        mainPanel.add(imageLabel, BorderLayout.CENTER);
-
         imageLabel.setSize(450, 555);
-        JLabel images = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/Bitcrush.png"));
+        mainPanel.add(imageLabel, BorderLayout.CENTER);
+        JLabel images = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Bitcrush.png"));
         imageLabel.add(images);
+
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout());
+        buttonPanel.setSize(450, 50);
         mainPanel.add(imageLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        buttonPanel.setLayout(new GridLayout());
-        buttonPanel.setSize(450, 50);
         JButton rules = buttonStyle(new Color(0x2C67BA), "Ver Regras");
         rules.addActionListener(
                 new ActionListener() {
@@ -75,7 +75,7 @@ public class Window extends JFrame implements ActionListener {
         lvl3.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
-                        BoardPanel = new BoardComponent(9, mainPanel);
+                        BoardPanel = new BoardComponent(8, mainPanel);
                     }
                 }
         );
@@ -88,10 +88,6 @@ public class Window extends JFrame implements ActionListener {
         mainPanel.add(lvl3, BorderLayout.EAST);
         JLabel name = titleStyle(Main.class.getResource(".").getPath() +  "/Images/name.png", 50);
         mainPanel.add(name, BorderLayout.SOUTH);
-/*        ScoreboardPanel = new JPanel();
-        mainPanel.add(BoardPanel, BorderLayout.CENTER);
-        ScoreboardPanel.setLayout(new BorderLayout());
-        mainPanel.add(ScoreboardPanel, BorderLayout.NORTH);*/
         SwingUtilities.updateComponentTreeUI(this);
 
     }
@@ -124,14 +120,10 @@ public class Window extends JFrame implements ActionListener {
         return button;
     }
 
-
-    public void addBoardPanel(JPiecesComponent img, int index) {
-        BoardPanel.add(img, index);
-    }
-
     public void actionPerformed(ActionEvent actionEvent) {
         setGame();
     }
+
     public Component add(Component component) {
         super.add(component);
         SwingUtilities.updateComponentTreeUI(this);

@@ -1,25 +1,71 @@
+import java.awt.event.ActionEvent;
+
 public class Bonus02Component extends Pieces {
+
 
     public Bonus02Component() {
         super();
-        setImageIcon(Main.class.getResource(".").getPath() + "/Images/Bonus02.png");
+        style();
     }
+
 
     public void setType(int x) {
-        type = '2';
+        this.type = '*';
     }
 
-    public boolean verifyMovement(ITranslateMovementC xy, IPieces[][] board) {
-      for (int i = 0; i < 2; i++) {
-            moves[i] = new MovementComponent();
-      }
-      moves[0].setV(true);
-      moves[0].setMovetype('2');
-      verifyTargetMovement(xy, board);
-      return true;
+    public char getType() {
+        return 0;
+    }
+
+    public void setDead(boolean dead) {
+
+    }
+
+    public boolean isDead() {
+        return false;
+    }
+
+    public int getX() {
+        return 0;
+    }
+
+    public IMovementAttributes[] getMoves() {
+        return new IMovementAttributes[0];
+    }
+
+    public void setIndex(int index) {
+
+    }
+
+    public int getIndex() {
+        return 0;
+    }
+
+    public String getImageIcon() {
+        return null;
+    }
+
+    public boolean verifyMovement(ITranslateMovementC xy) {
+        return false;
     }
 
     public void setImageIcon(String imageIcon) {
-        this.imageIcon = imageIcon;
+
+    }
+
+    public void setBoard(IBoard board) {
+
+    }
+
+    public void setPosition(int i, int j) {
+
+    }
+
+    public int[] getPosition() {
+        return new int[0];
+    }
+
+    public void actionPerformed(ActionEvent actionEvent) {
+
     }
 }

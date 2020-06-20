@@ -1,6 +1,6 @@
 public interface IMovementAttributes {
 
-     void setMovetype(char type);
+     void setMoveType(char moveType);
 
     void setVct(int[] add);
 
