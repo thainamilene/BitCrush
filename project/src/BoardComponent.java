@@ -128,27 +128,27 @@ public class BoardComponent extends JPanel implements IBoard {
         if ((!(board[xy.getSource()] instanceof NormalPiecesComponent) && !(board[xy.getTarget()] instanceof NormalPiecesComponent))) {
             if (board[xy.getSource()] instanceof Bonus01Component) {
                 if (board[xy.getTarget()] instanceof Bonus01Component) {
-                    destroyBonus01plus01();
+                    destroyBonus01plus01(xy.getSource(), xy.getTarget());
                 } else if (board[xy.getTarget()] instanceof Bonus02Component) {
-                    destroyBonus01plus02();
+                    destroyBonus01plus02(xy.getSource(), xy.getTarget());
                 } else if (board[xy.getTarget()] instanceof Bonus03Component) {
-                    destroyBonus01plus03();
+                    destroyBonus01plus03(xy.getSource(), xy.getTarget());
                 }
             } else if (board[xy.getSource()] instanceof Bonus02Component) {
                 if (board[xy.getTarget()] instanceof Bonus01Component) {
-                    destroyBonus01plus02();
+                    destroyBonus01plus02(xy.getTarget(), xy.getSource());
                 } else if (board[xy.getTarget()] instanceof Bonus02Component) {
-                    destroyBonus02plus02();
+                    destroyBonus02plus02(xy.getSource(), xy.getTarget());
                 } else if (board[xy.getTarget()] instanceof Bonus03Component) {
-                    destroyBonus02plus03();
+                    destroyBonus02plus03(xy.getSource(), xy.getTarget());
                 }
             } else if (board[xy.getSource()] instanceof Bonus03Component) {
                 if (board[xy.getTarget()] instanceof Bonus01Component) {
-                    destroyBonus01plus03();
+                    destroyBonus01plus03(xy.getTarget(), xy.getSource());
                 } else if (board[xy.getTarget()] instanceof Bonus02Component) {
-                    destroyBonus02plus03();
+                    destroyBonus02plus03(xy.getTarget(), xy.getSource());
                 } else if (board[xy.getTarget()] instanceof Bonus03Component) {
-                    destroyBonus03plus03();
+                    destroyBonus03plus03(xy.getSource(), xy.getTarget());
                 }
             }
             score.sumRound(true);
@@ -204,12 +204,12 @@ public class BoardComponent extends JPanel implements IBoard {
                 } else if (aux instanceof Bonus02Component) {
                     if (board[xy.getSource()].getMoves()[0].isV()) {
                         s = true;
-                        destroyBonus02();
+                        destroyBonus02(xy.getTarget(),xy.getSource());
                     }
                 } else {
                     if (board[xy.getSource()].getMoves()[0].isV()) {
                         s = true;
-                        destroyBonus03();
+                        destroyBonus03(xy.getTarget(),xy.getSource());
                     }
                 }
 
@@ -226,12 +226,12 @@ public class BoardComponent extends JPanel implements IBoard {
                 } else if (aux2 instanceof Bonus02Component) {
                      if (board[xy.getSource()].getMoves()[1].isV()) {
                         t = true;
-                        destroyBonus02();
+                        destroyBonus02(xy.getSource(), xy.getTarget());
                     }
                 } else {
                     if (board[xy.getSource()].getMoves()[1].isV()) {
                         t = true;
-                        destroyBonus03();
+                        destroyBonus03(xy.getSource(), xy.getTarget());
                     }
                 }
 
@@ -476,24 +476,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 add(board[s].getButton(), aux);
             }
             score.sumScore(7);
-        } else if (i == 5 &&  board[s].getMoves()[k].getMovetype() == 't') {
-            if (k == 0) {
-                int aux = board[t].getIndex();
-                remove(aux);
-                board[t] = new Bonus02Component();
-                board[t].setIndex(aux);
-                board[t].setBoard(this);
-                add(board[t].getButton(), aux);
-            } else {
-                int aux = board[s].getIndex();
-                remove(aux);
-                board[s] = new Bonus02Component();
-                board[s].setIndex(aux);
-                board[s].setBoard(this);
-                add(board[s].getButton(), aux);
-            }
-            score.sumScore(10);
-        } else if (i == 5 && board[s].getMoves()[k].getMovetype() == 'b') {
+        } else if (board[s].getMoves()[k].getMovetype() == 'b') {
             if (k == 0) {
                 int aux = board[t].getIndex();
                 remove(aux);
@@ -510,6 +493,23 @@ public class BoardComponent extends JPanel implements IBoard {
                 add(board[s].getButton(), aux);
             }
             score.sumScore(12);
+        } else if (i == 5) {
+            if (k == 0) {
+                int aux = board[t].getIndex();
+                remove(aux);
+                board[t] = new Bonus02Component();
+                board[t].setIndex(aux);
+                board[t].setBoard(this);
+                add(board[t].getButton(), aux);
+            } else {
+                int aux = board[s].getIndex();
+                remove(aux);
+                board[s] = new Bonus02Component();
+                board[s].setIndex(aux);
+                board[s].setBoard(this);
+                add(board[s].getButton(), aux);
+            }
+            score.sumScore(10);
         } else {
             score.sumScore(5);
         }
@@ -536,28 +536,281 @@ public class BoardComponent extends JPanel implements IBoard {
         }
     }
 
-    private void destroyBonus02() {
+    private void destroyBonus02(int s, int t) {
+        score.sumScore(25);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+        board[s].setType(-1);
+        add(board[t].getButton(), t);
+        if (verifyPieceBottom(s) != ' ') {
+            board[s+9].setType(-1);
+        }
+        if (verifyPieceTop(s) != ' ') {
+            board[s-9].setType(-1);
+        }
+        if (verifyPieceLeft(s) != ' ') {
+            board[s-1].setType(-1);
+        }
+         if (verifyPieceRight(s) != ' ') {
+            board[s+1].setType(-1);
+        }
+         if (verifyPieceRight(s-9) != ' ') {
+            board[s-8].setType(-1);
+         }
+         if (verifyPieceLeft(s-9) != ' ') {
+            board[s-10].setType(-1);
+         }
+         if (verifyPieceRight(s+9) != ' ') {
+            board[s+10].setType(-1);
+         }
+         if (verifyPieceLeft(s+9) != ' ') {
+            board[s+8].setType(-1);
+         }
     }
 
-    private void destroyBonus03() {
+    private void destroyBonus03(int s, int t) {
+        score.sumScore(5);
+        board[s].setType(-1);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+        add(board[t].getButton(), t);
+        for (int i = 0; i < 81; i++) {
+            if (board[s].getX() == board[i].getX()) {
+                board[i].setType(-1);
+                score.sumScore(1);
+            }
+        }
     }
 
-    private void destroyBonus01plus01() {
+    private void destroyBonus01plus01(int s, int t) {
+        score.sumScore(25);
+        int line = (s/9) * 9;
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+        add(board[t].getButton(), t);
+        remove(s);
+        board[s] = new NormalPiecesComponent();
+        board[s].setType(-1);
+        board[s].setIndex(s);
+        add(board[s].getButton(), s);
+        for (int i = 0; i < 9; i++) {
+            board[line + i].setType(-1);
+        }
+        int column = s - line;
+        for (int i = 0; i < 9; i++) {
+            board[column + i * 9].setType(-1);
+        }
     }
 
-    private void destroyBonus01plus02() {
+    private void destroyBonus01plus02(int s, int t) {
+        score.sumScore(40);
+        int line = (s/9) * 9;
+        remove(s);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+
+        board[s] = new NormalPiecesComponent();
+        board[s].setType(-1);
+        board[s].setIndex(s);
+
+        add(board[t].getButton(), t);
+        add(board[s].getButton(), s);
+        if ((s - t) * (s - t) == 81) {
+            for (int i = 0; i < 9; i++) {
+                board[line+i].setType(-1);
+            }
+            if (s > 8) {
+                for (int i = 0; i < 9; i++) {
+                    board[line-9+i].setType(-1);
+                }
+            }
+            if (s < 72) {
+                for (int i = 0; i < 9; i++) {
+                    board[line+9+i].setType(-1);
+                }
+            }
+        } else {
+            int column = s - line;
+            for (int i = 0; i < 9; i++) {
+                board[column + i*9].setType(-1);
+            }
+             if (s % 9 == 0) {
+                for (int i = 0; i < 9; i++) {
+                    board[column - 1 + i*9].setType(-1);
+                }
+            }
+            if ((s + 1) % 9 == 0) {
+                for (int i = 0; i < 9; i++) {
+                    board[column + 1 + i*9].setType(-1);
+                }
+            }
+        }
     }
 
-    private void destroyBonus01plus03() {
+    private void destroyBonus01plus03(int s, int t) {
+        score.sumScore(10);
+        remove(s);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+
+        board[s] = new NormalPiecesComponent();
+        board[s].setType(-1);
+        board[s].setIndex(s);
+
+        add(board[t].getButton(), t);
+        add(board[s].getButton(), s);
+        int x = new Random().nextInt(lv);
+        for (int i = 0; i < 81; i++) {
+            if (board[i].getX() == x) {
+               if (i < 80) {
+                   destroyBonus01(i + 1, i);
+               } else {
+                   destroyBonus01(i - 1, i);
+               }
+            }
+        }
     }
 
-    private void destroyBonus02plus02() {
+    private void destroyBonus02plus02(int s, int t) {
+        score.sumScore(40);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+        board[s].setType(-1);
+        remove(s);
+        board[s] = new NormalPiecesComponent();
+        board[s].setType(-1);
+        board[s].setIndex(s);
+        add(board[t].getButton(), t);
+        add(board[s].getButton(), s);
+
+        if (verifyPieceBottom(s) != ' ') {
+            board[s+9].setType(-1);
+        }
+        if (verifyPieceTop(s) != ' ') {
+            board[s-9].setType(-1);
+        }
+        if (verifyPieceLeft(s) != ' ') {
+            board[s-1].setType(-1);
+        }
+         if (verifyPieceRight(s) != ' ') {
+            board[s+1].setType(-1);
+        }
+         if (verifyPieceRight(s-9) != ' ') {
+            board[s-8].setType(-1);
+         }
+         if (verifyPieceLeft(s-9) != ' ') {
+            board[s-10].setType(-1);
+         }
+         if (verifyPieceRight(s+9) != ' ') {
+            board[s+10].setType(-1);
+         }
+         if (verifyPieceLeft(s+9) != ' ') {
+            board[s+8].setType(-1);
+         }
+         if (verifyPieceLeft(s - 1) != ' ') {
+            board[s - 2].setType(-1);
+         }
+         if (verifyPieceRight(s + 1) != ' ') {
+            board[s + 2].setType(-1);
+         }
+         if (verifyPieceBottom(s + 9) != ' ') {
+            board[s + 18].setType(-1);
+         }
+         if (verifyPieceTop(s - 9) != ' ') {
+            board[s - 18].setType(-1);
+         }
+         if (verifyPieceTop(s + 2) != ' ') {
+            board[s - 7].setType(-1);
+         }
+         if (verifyPieceBottom(s + 2) != ' ') {
+            board[s + 9].setType(-1);
+         }
+         if (verifyPieceTop(s - 2) != ' ') {
+            board[s - 9].setType(-1);
+         }
+         if (verifyPieceBottom(s - 2) != ' ') {
+            board[s + 7].setType(-1);
+         }
+         if (verifyPieceRight(s - 18) != ' ') {
+            board[s - 17].setType(-1);
+         }
+         if (verifyPieceLeft(s - 18) != ' ') {
+            board[s - 19].setType(-1);
+         }
+         if (verifyPieceRight(s + 18) != ' ') {
+            board[s + 19].setType(-1);
+         }
+         if (verifyPieceLeft(s + 18) != ' ') {
+            board[s + 17].setType(-1);
+         }
+         if (verifyPieceLeft(s - 19) != ' ') {
+            board[s - 20].setType(-1);
+         }
+         if (verifyPieceLeft(s + 17) != ' ') {
+            board[s - 16].setType(-1);
+         }
+         if (verifyPieceRight(s - 17) != ' ') {
+            board[s - 16].setType(-1);
+         }
+         if (verifyPieceRight(s + 19) != ' ') {
+            board[s + 20].setType(-1);
+         }
     }
 
-    private void destroyBonus02plus03() {
+    private void destroyBonus02plus03(int s, int t) {
+        score.sumScore(10);
+        remove(s);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+
+        board[s] = new NormalPiecesComponent();
+        board[s].setType(-1);
+        board[s].setIndex(s);
+
+        add(board[t].getButton(), t);
+        add(board[s].getButton(), s);
+        int x = new Random().nextInt(lv);
+        for (int i = 0; i < 81; i++) {
+            if (board[i].getX() == x) {
+               if (i < 80) {
+                   destroyBonus02(i + 1, i);
+               } else {
+                   destroyBonus02(i - 1, i);
+               }
+            }
+        }
     }
 
-    private void destroyBonus03plus03() {
+    private void destroyBonus03plus03(int s, int t) {
+        score.sumScore(100);
+        remove(t);
+        board[t] = new NormalPiecesComponent();
+        board[t].setType(-1);
+        board[t].setIndex(t);
+        board[s].setType(-1);
+        remove(s);
+        board[s] = new NormalPiecesComponent();
+        board[s].setType(-1);
+        board[s].setIndex(s);
+        add(board[t].getButton(), t);
+        add(board[s].getButton(), s);
+        for (int i = 0; i < 81; i++) {
+            board[i].setType(-1);
+        }
     }
 
     private void rebuildBoard() {
