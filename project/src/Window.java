@@ -7,7 +7,10 @@ public class Window extends JFrame implements ActionListener {
     private static final long serialVersionUID = -1282228310983130932L;
     Container mainPanel;
     private BoardComponent BoardPanel;
-
+    private int cont = 0;
+    private JButton back, jump, next;
+    private JPanel buttons;
+    boolean v = false;
 
     public Window() {
         super();
@@ -38,6 +41,7 @@ public class Window extends JFrame implements ActionListener {
         rules.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
+                     cont = 0;
                       rules();
                     }
                 }
@@ -50,6 +54,133 @@ public class Window extends JFrame implements ActionListener {
     }
 
     private void rules() {
+        mainPanel.remove(0);
+        mainPanel.remove(0);
+        System.out.println("dska");
+        buttons = new JPanel(new GridLayout());
+        back = buttonStyle(new Color(0x4496EC),"Voltar");
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                cont --;
+                tips();
+            }
+        });
+        jump = buttonStyle(new Color(0x2C67BA),"Pular");
+        jump.addActionListener(this);
+        next = buttonStyle(new Color(0x4496EC),"Próxima");
+        next.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                cont ++;
+                tips();
+            }
+        });
+        buttons.add(back);
+        buttons.add(jump);
+        buttons.add(next);
+        JLabel tip01 = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip01.png"));
+        mainPanel.add(buttons, BorderLayout.SOUTH);
+        mainPanel.add(tip01, BorderLayout.CENTER);
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+
+    private void tips() {
+        if (cont == -1) {
+            mainPanel.remove(1);
+            mainPanel.remove(0);
+            visual();
+        }
+        if (cont == 0) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip01.png")));
+            back.setBackground(new Color(0x2C67BA));
+            jump.setBackground(new Color(0x4496EC));
+            next.setBackground(new Color(0x2C67BA));
+        }
+        if (cont == 1) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip02.png")));
+            back.setBackground(new Color(0x2C67BA));
+            jump.setBackground(new Color(0x4496EC));
+            next.setBackground(new Color(0x2C67BA));
+        }
+        if (cont == 2) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip03.png")));
+            back.setBackground(new Color(0x457B3A));
+            jump.setBackground(new Color(0x67AC5B));
+            next.setBackground(new Color(0x457B3A));
+        }
+        if (cont == 3) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip04.png")));
+            back.setBackground(new Color(0x457B3A));
+            jump.setBackground(new Color(0x67AC5B));
+            next.setBackground(new Color(0x457B3A));
+        }
+        if (cont == 4) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip05.png")));
+            back.setBackground(new Color(0x457B3A));
+            jump.setBackground(new Color(0x67AC5B));
+            next.setBackground(new Color(0x457B3A));
+        }
+        if (cont == 5) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip06.png")));
+            back.setBackground(new Color(0x457B3A));
+            jump.setBackground(new Color(0x67AC5B));
+            next.setBackground(new Color(0x457B3A));
+        }
+        if (cont == 6) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip07.png")));
+            back.setBackground(new Color(0x457B3A));
+            jump.setBackground(new Color(0x67AC5B));
+            next.setBackground(new Color(0x457B3A));
+        }
+        if (cont == 7) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip08.png")));
+            back.setBackground(new Color(0x74564A));
+            jump.setBackground(new Color(0xE25341));
+            next.setBackground(new Color(0x74564A));
+        }
+        if (cont == 8) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip09.png")));
+            back.setBackground(new Color(0x457B3A));
+            jump.setBackground(new Color(0x67AC5B));
+            next.setBackground(new Color(0x457B3A));
+        }
+        if (cont == 9) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip10.png")));
+            back.setBackground(new Color(0x2C67BA));
+            jump.setBackground(new Color(0x4496EC));
+            next.setBackground(new Color(0x2C67BA));
+        }
+        if (cont == 10) {
+            mainPanel.remove(1);
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip11.png")));
+            back.setBackground(new Color(0xB63830));
+            jump.setBackground(new Color(0xD73964));
+            next.setBackground(new Color(0xB63830));
+            if (v) {
+                buttons.add(next);
+                jump.setText("Pular");
+            }
+        }
+        if (cont == 11) {
+            v = true;
+            mainPanel.remove(1);
+            buttons.remove(next);
+            jump.setText("Jogar");
+            mainPanel.add(new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip12.png")));
+            back.setBackground(new Color(0xF8D859));
+            jump.setBackground(new Color(0xF6C244));
+        }
+        SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
     public void setGame() {

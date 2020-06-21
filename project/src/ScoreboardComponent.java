@@ -1,9 +1,15 @@
-import javax.swing.*;
-
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import static java.lang.System.exit;
 
 
@@ -60,7 +66,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
         button.setFont(font);
         button.setFocusPainted(false);
         button.setForeground(new Color(0xffffff));
-        button.setBackground(new Color(0x2C67BA));
+        button.setBackground(new Color(0xD73964));
         button.addActionListener(this);
         mainPanel.add(button, BorderLayout.SOUTH);
     }
@@ -82,12 +88,12 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
         }
         jRound.setText(String.valueOf(round));
         SwingUtilities.updateComponentTreeUI(mainPanel);
-        verifyRound();
     }
 
     public void sumScore(int n) {
         score += n;
         jScore.setText(String.valueOf(score));
+        verifyRound();
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
