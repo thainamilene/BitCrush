@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
-import java.util.Timer;
 
 public class BoardComponent extends JPanel implements IBoard {
     private static final long serialVersionUID = -2624435075244032415L;
@@ -20,7 +19,6 @@ public class BoardComponent extends JPanel implements IBoard {
         mainPanel.remove(1);
         mainPanel.remove(1);
         mainPanel.remove(1);
-        mainPanel.setBackground(new Color(0xffffff));
         score = new ScoreboardComponent();
         board = new Pieces[81];
         setSize(450, 450);
@@ -92,7 +90,6 @@ public class BoardComponent extends JPanel implements IBoard {
         return true;
     }
 
-
     public void printBoard() {
         int c = 0;
          for (int i=0; i < 9; i++) {
@@ -151,8 +148,11 @@ public class BoardComponent extends JPanel implements IBoard {
                     destroyBonus03plus03();
                 }
             }
+            score.sumRound(true);
         } else {
-            if (board[xy.getSource()].verifyMovement(xy.getTarget())) {
+            boolean v = board[xy.getSource()].verifyMovement(xy.getTarget());
+            score.sumRound(v);
+            if (v) {
                 System.out.println(true);
                 IPieces aux = new NormalPiecesComponent();
                 IPieces aux2 = new NormalPiecesComponent();
@@ -444,13 +444,13 @@ public class BoardComponent extends JPanel implements IBoard {
     public void transformsPieces(char type) {}
 
     private void destroyNormalPieces(int s, int k, int t) {
-        int i = 0,  cont = 0;
+        int i = 0;
         while (i<5 && board[s].getMoves()[k].getVct()[i] != -1) {
             board[board[s].getMoves()[k].getVct()[i]].setType(-1);
             i ++;
         }
+
         if (i == 4) {
-            cont ++;
             int aux;
             if (k == 0) {
                 aux = board[t].getIndex();
@@ -467,9 +467,8 @@ public class BoardComponent extends JPanel implements IBoard {
                 board[s].setBoard(this);
                 add(board[s].getButton(), aux);
             }
-        }
-        if (i == 5 &&  board[s].getMoves()[k].getMovetype() == 't') {
-            cont ++;
+            score.sumScore(7);
+        } else if (i == 5 &&  board[s].getMoves()[k].getMovetype() == 't') {
             if (k == 0) {
                 int aux = board[t].getIndex();
                 remove(aux);
@@ -485,9 +484,8 @@ public class BoardComponent extends JPanel implements IBoard {
                 board[s].setBoard(this);
                 add(board[s].getButton(), aux);
             }
-        }
-        if (i == 5 && board[s].getMoves()[k].getMovetype() == 'b') {
-            cont ++;
+            score.sumScore(10);
+        } else if (i == 5 && board[s].getMoves()[k].getMovetype() == 'b') {
             if (k == 0) {
                 int aux = board[t].getIndex();
                 remove(aux);
@@ -503,8 +501,10 @@ public class BoardComponent extends JPanel implements IBoard {
                 board[s].setBoard(this);
                 add(board[s].getButton(), aux);
             }
+            score.sumScore(12);
+        } else {
+            score.sumScore(5);
         }
-        System.out.println(cont);
     }
 
     private void destroyBonus01(int s, int t) {

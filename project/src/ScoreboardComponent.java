@@ -1,16 +1,18 @@
+import javax.swing.*;
+
 import static java.lang.System.exit;
 
-public class ScoreboardComponent implements IScoreboard{
+public class ScoreboardComponent extends JLabel implements IScoreboard{
     int score;
     int round;
 
     public ScoreboardComponent() {
         score = 0;
-        round = 0;
+        round = 0;;
     }
 
     private void verifyRound() {
-        if (round == 20) {
+        if (round > 20) {
             printLastScoreboard();
             exit(0);
         }
@@ -34,6 +36,7 @@ public class ScoreboardComponent implements IScoreboard{
 
     public void sumScore(int n) {
         score += n;
+        System.out.println("score: " + score);
     }
 
     public int getScore() {
