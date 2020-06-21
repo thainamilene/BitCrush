@@ -191,17 +191,17 @@ public class BoardComponent extends JPanel implements IBoard {
                     aux2.setIndex(board[xy.getTarget()].getIndex());
                 }
 
-                if (board[xy.getSource()] instanceof NormalPiecesComponent) {
+                if (aux instanceof NormalPiecesComponent) {
                     if (board[xy.getSource()].getMoves()[0].isV()) {
                         s = true;
                         destroyNormalPieces(xy.getSource(), 0, xy.getTarget());
                     }
-                } else if (board[xy.getSource()] instanceof Bonus01Component) {
+                } else if (aux instanceof Bonus01Component) {
                     if (board[xy.getSource()].getMoves()[0].isV()) {
                         s = true;
                         destroyBonus01(xy.getTarget(),xy.getSource());
                     }
-                } else if (board[xy.getSource()] instanceof Bonus02Component) {
+                } else if (aux instanceof Bonus02Component) {
                     if (board[xy.getSource()].getMoves()[0].isV()) {
                         s = true;
                         destroyBonus02();
@@ -213,17 +213,17 @@ public class BoardComponent extends JPanel implements IBoard {
                     }
                 }
 
-                if (board[xy.getTarget()] instanceof NormalPiecesComponent) {
+                if (aux2 instanceof NormalPiecesComponent) {
                     if (board[xy.getSource()].getMoves()[1].isV()) {
                         t = true;
                         destroyNormalPieces(xy.getSource(), 1, xy.getTarget());
                     }
-                } else if (board[xy.getTarget()] instanceof Bonus01Component) {
+                } else if (aux2 instanceof Bonus01Component) {
                      if (board[xy.getSource()].getMoves()[1].isV()) {
                         t = true;
                         destroyBonus01(xy.getSource(), xy.getTarget());
                     }
-                } else if (board[xy.getTarget()] instanceof Bonus02Component) {
+                } else if (aux2 instanceof Bonus02Component) {
                      if (board[xy.getSource()].getMoves()[1].isV()) {
                         t = true;
                         destroyBonus02();
@@ -245,10 +245,10 @@ public class BoardComponent extends JPanel implements IBoard {
             }
         }
         rebuildBoard();
-        SwingUtilities.updateComponentTreeUI(mainPanel);
         printBoard();
         verifyBoard();
         haveMovement();
+        SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
     private void haveMovement() {
@@ -330,6 +330,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 if (i > 17) {
                     if (board[i].getType() == board[i - 9].getType() && board[i].getType() == board[i - 18].getType()) {
                         v = true;
+                        score.sumScore(5);
 //                        if (i > 35) {
 //                            if (board[i].getType() == board[i - 27].getType()) {
 //                                if (i > 44) {
@@ -357,6 +358,8 @@ public class BoardComponent extends JPanel implements IBoard {
                 if (i < 63) {
                     if (board[i].getType() == board[i + 9].getType() && board[i].getType() == board[i + 18].getType()) {
                         v = true;
+                        score.sumScore(5);
+
 //                        if (i < 54) {
 //                            if (board[i].getType() == board[i + 27].getType()) {
 //                                if (i < 45) {
@@ -384,6 +387,8 @@ public class BoardComponent extends JPanel implements IBoard {
                 if ((i % 9) != 0 && (i - 1) % 9 != 0) {
                     if (board[i].getType() == board[i - 1].getType() && board[i].getType() == board[i - 2].getType()) {
                         v = true;
+                        score.sumScore(5);
+
 //                        if ((i - 2) % 9 != 0) {
 //                            if (board[i].getType() == board[i - 3].getType()) {
 //                                if ((i - 3) % 9 != 0) {
@@ -411,6 +416,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 if ((i + 1) % 9 != 0 && (i + 2) % 9 != 0) {
                     if (board[i].getType() == board[i + 1].getType() && board[i].getType() == board[i + 2].getType()) {
                         v = true;
+                        score.sumScore(5);
 //                        if ((i + 3) % 9 != 0) {
 //                            if (board[i].getType() == board[i + 4].getType()) {
 //                                if ((i + 5) % 9 != 0) {
@@ -438,7 +444,6 @@ public class BoardComponent extends JPanel implements IBoard {
             }
         }
         if (v) {
-            //verifyBoard();
             rebuildBoard();
             verifyBoard();
         }
@@ -511,19 +516,20 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus01(int s, int t) {
+        score.sumScore(10);
         int line = (s/9) * 9;
+        board[s].setType(-1);
+        remove(t);
         board[t] = new NormalPiecesComponent();
         board[t].setType(-1);
-        board[s].setType(-1);
         board[t].setIndex(t);
+        add(board[t].getButton(), t);
         if ((s - t) * (s - t) == 81) {
-            System.out.println("line" + line);
             for (int i = 0; i < 9; i++) {
                 board[line+i].setType(-1);
             }
         } else {
-            int column = t - line;
-            System.out.println("column" + column);
+            int column = s - line;
             for (int i = 0; i < 9; i++) {
                 board[column + i*9].setType(-1);
             }
@@ -569,12 +575,21 @@ public class BoardComponent extends JPanel implements IBoard {
                             } else if (board[i - j] instanceof Bonus01Component) {
                                 aux = new Bonus01Component();
                                 aux.setIndex(board[i - j].getIndex());
+                                if (board[i - j].getX() == -1) {
+                                    aux.setType(-1);
+                                }
                             } else if (board[i - j] instanceof Bonus02Component) {
                                 aux = new Bonus02Component();
                                 aux.setIndex(board[i - j].getIndex());
+                                if (board[i - j].getX() == -1) {
+                                    aux.setType(-1);
+                                }
                             } else {
                                 aux = new Bonus03Component();
                                 aux.setIndex(board[i - j].getIndex());
+                                if (board[i - j].getX() == -1) {
+                                    aux.setType(-1);
+                                }
                             }
                             if (board[i] instanceof NormalPiecesComponent) {
                                 aux2.setType(board[i].getX());
@@ -582,12 +597,21 @@ public class BoardComponent extends JPanel implements IBoard {
                             } else if (board[i] instanceof Bonus01Component) {
                                 aux2 = new Bonus01Component();
                                 aux2.setIndex(board[i].getIndex());
+                                if (board[i].getX() == -1) {
+                                    aux.setType(-1);
+                                }
                             } else if (board[i] instanceof Bonus02Component) {
                                 aux2 = new Bonus02Component();
                                 aux2.setIndex(board[i].getIndex());
+                                if (board[i].getX() == -1) {
+                                    aux.setType(-1);
+                                }
                             } else {
                                 aux2 = new Bonus03Component();
                                 aux2.setIndex(board[i].getIndex());
+                                if (board[i].getX() == -1) {
+                                    aux.setType(-1);
+                                }
                             }
 
                             if (aux instanceof NormalPiecesComponent) {

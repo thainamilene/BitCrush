@@ -94,6 +94,9 @@ public class NormalPiecesComponent extends Pieces {
                     moves[0].setVct(target - 9);
                 }
                 if (moves[0].getMovetype() != 'b') {
+                    if (moves[0].getMovetype() == '4') {
+                        moves[0].remove();
+                    }
                     if (type == getPieceInRight(target) && type == getPieceInRight(target + 1)) {
                         if (moves[0].isV()) {
                             moves[0].setMoveType('2');
@@ -141,6 +144,9 @@ public class NormalPiecesComponent extends Pieces {
                     moves[0].setVct(target - 1);
                 }
                 if (moves[0].getMovetype() != 'b') {
+                    if (moves[0].getMovetype() == '4') {
+                        moves[0].remove();
+                    }
                     if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
                         if (moves[0].isV()) {
                             moves[0].setMoveType('2');

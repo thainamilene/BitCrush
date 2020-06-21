@@ -42,6 +42,7 @@ public abstract class Pieces implements IPieces {
 
     public void actionPerformed(ActionEvent actionEvent) {
         System.out.println("index: " + index);
+        System.out.println("type: " + type);
         Board.translate(index);
     }
 
@@ -114,6 +115,9 @@ public abstract class Pieces implements IPieces {
                     moves[1].setVct(index - 9);
                 }
                 if (moves[1].getMovetype() != 'b') {
+                    if (moves[1].getMovetype() == '4') {
+                        moves[1].remove();
+                    }
                     if (board[target].getType() == getPieceInLeft(index) && board[target].getType() == getPieceInLeft(index - 1)) {
                         if (moves[1].isV()) {
                             moves[1].setMoveType('2');
@@ -161,6 +165,9 @@ public abstract class Pieces implements IPieces {
                     moves[1].setVct(index - 1);
                 }
                 if (moves[1].getMovetype() != 'b') {
+                    if (moves[1].getMovetype() == '4') {
+                        moves[1].remove();
+                    }
                     if (board[target].getType() == getPieceOnTop(index) && board[target].getType() == getPieceOnTop(index - 9)) {
                         if (moves[1].isV()) {
                             moves[1].setMoveType('2');
@@ -175,7 +182,6 @@ public abstract class Pieces implements IPieces {
                 }
             }
         } else {
-            System.out.println(board[target].getClass());
             moves[1].setV(true);
             moves[1].setMoveType(board[target].getType());
         }

@@ -69,11 +69,9 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
         if (score<200) {
             JLabel lose = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lose.png"));
             mainPanel.add(lose, BorderLayout.CENTER);
-            System.out.println("loser");
         } else {
             JLabel win = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/win.png"));
             mainPanel.add(win, BorderLayout.CENTER);
-            System.out.println("Congratulations");
         }
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
@@ -91,7 +89,6 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
         score += n;
         jScore.setText(String.valueOf(score));
         SwingUtilities.updateComponentTreeUI(mainPanel);
-        System.out.println("score: " + score);
     }
 
     public int getScore() {

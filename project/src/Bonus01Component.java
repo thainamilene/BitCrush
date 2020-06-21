@@ -9,11 +9,12 @@ public class Bonus01Component extends Pieces {
     }
 
     public void setType(int x) {
-        this.x = x;
         if (x == -1) {
+            this.x = -1;
             type = 'D';
             button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/field.png"));
         } else {
+            this.x = x;
             type = '+';
             button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Bonus01.png"));
         }
