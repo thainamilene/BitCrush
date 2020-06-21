@@ -5,7 +5,7 @@ import java.util.Random;
 public class BoardComponent extends JPanel implements IBoard {
     private static final long serialVersionUID = -2624435075244032415L;
     public IPieces[] board;
-    public IScoreboard score;
+    public ScoreboardComponent score;
     private ITranslateMovementC move;
     private int counter;
     private final Container mainPanel;
@@ -13,13 +13,16 @@ public class BoardComponent extends JPanel implements IBoard {
 
 
     public BoardComponent(int lv, Container mainPanel) {
+        super();
         counter = 0;
         this.lv = lv;
         this.mainPanel = mainPanel;
-        mainPanel.remove(1);
-        mainPanel.remove(1);
-        mainPanel.remove(1);
-        score = new ScoreboardComponent();
+        mainPanel.remove(0);
+        mainPanel.remove(0);
+        mainPanel.remove(0);
+        mainPanel.remove(0);
+        score = new ScoreboardComponent(mainPanel);
+        mainPanel.add(score, BorderLayout.NORTH);
         board = new Pieces[81];
         setSize(450, 450);
         setBackground(new Color(0x847C9D));
