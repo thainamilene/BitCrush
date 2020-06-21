@@ -41,6 +41,7 @@ public abstract class Pieces implements IPieces {
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
+        System.out.println("index: " + index);
         Board.translate(index);
     }
 
@@ -77,7 +78,8 @@ public abstract class Pieces implements IPieces {
     }
 
     protected void verifyTargetMovement(int target) {
-        if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
+        if (board[target] instanceof  NormalPiecesComponent) {
+            if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
                 if (board[target].getType() == getPieceOnTop(index) && board[target].getType() == getPieceOnTop(index - 9)) {
                     moves[1].setV(true);
                     moves[1].setMoveType('c');
@@ -172,5 +174,10 @@ public abstract class Pieces implements IPieces {
                     }
                 }
             }
+        } else {
+            System.out.println(board[target].getClass());
+            moves[1].setV(true);
+            moves[1].setMoveType(board[target].getType());
+        }
     }
 }

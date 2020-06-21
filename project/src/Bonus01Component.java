@@ -1,70 +1,33 @@
-import java.awt.event.ActionEvent;
+import javax.swing.*;
 
 public class Bonus01Component extends Pieces {
 
     public Bonus01Component() {
         super();
         style();
+        setType(0);
     }
 
     public void setType(int x) {
-        type = '+';
+        this.x = x;
+        if (x == -1) {
+            type = 'D';
+            button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/field.png"));
+        } else {
+            type = '+';
+            button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Bonus01.png"));
+        }
     }
 
-    @Override
     public boolean verifyMovement(int target) {
+        if (((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) || ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 81)) {
+            moves[0] = new MovementComponent();
+            moves[1] = new MovementComponent();
+            moves[0].setMoveType('1');
+            moves[0].setV(true);
+            verifyTargetMovement(target);
+            return true;
+        }
         return false;
-    }
-
-    public char getType() {
-        return 0;
-    }
-
-    public void setDead(boolean dead) {
-
-    }
-
-    public boolean isDead() {
-        return false;
-    }
-
-    public int getX() {
-        return 0;
-    }
-
-    public IMovementAttributes[] getMoves() {
-        return new IMovementAttributes[0];
-    }
-
-    public void setIndex(int index) {
-
-    }
-
-    public int getIndex() {
-        return 0;
-    }
-
-    public String getImageIcon() {
-        return null;
-    }
-
-    public void setImageIcon(String imageIcon) {
-
-    }
-
-    public void setBoard(IBoard board) {
-
-    }
-
-    public void setPosition(int i, int j) {
-
-    }
-
-    public int[] getPosition() {
-        return new int[0];
-    }
-
-    public void actionPerformed(ActionEvent actionEvent) {
-
     }
 }
