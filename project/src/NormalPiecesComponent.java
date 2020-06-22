@@ -54,7 +54,6 @@ public class NormalPiecesComponent extends Pieces {
         }
     }
 
-
     public boolean verifyMovement(int target) {
         moves[0] = new MovementComponent();
         moves[1] = new MovementComponent();

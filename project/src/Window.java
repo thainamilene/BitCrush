@@ -17,7 +17,6 @@ public class Window extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         visual();
     }
-
     private void visual() {
         setSize(450, 580);;
         mainPanel = getContentPane();
@@ -183,7 +182,7 @@ public class Window extends JFrame implements ActionListener {
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
-    public void setGame() {
+    private void setGame() {
         mainPanel.remove(0);
         JButton lvl1 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl1.png"));
         JButton lvl2 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl2.png"));
@@ -230,7 +229,7 @@ public class Window extends JFrame implements ActionListener {
         return label;
     }
 
-     private JButton button2Style(ImageIcon image) {
+    private JButton button2Style(ImageIcon image) {
         JButton button = new JButton(image);
         button.setSize(150, 450);
         button.setMargin(new Insets(-3,-3,-3,-3));
@@ -253,11 +252,5 @@ public class Window extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent actionEvent) {
         setGame();
-    }
-
-    public Component add(Component component) {
-        super.add(component);
-        SwingUtilities.updateComponentTreeUI(this);
-        return component;
     }
 }

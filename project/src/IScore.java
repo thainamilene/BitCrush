@@ -1,3 +1,3 @@
 public interface IScore {
-    public void sumScore(int n);
+    void sumScore(int n);
 }

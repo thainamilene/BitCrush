@@ -68,12 +68,15 @@ public abstract class Pieces implements IPieces {
     protected char getPieceInLeft (int xIndex) {
         return (xIndex%9)!=0 ? board[xIndex-1].getType() : ' ';
     }
+
     protected char getPieceInRight (int xIndex) {
         return (xIndex+1)%9 != 0 || xIndex == 0 ? board[xIndex + 1].getType() : ' ';
     }
+
     protected char getPieceInBottom (int xIndex) {
         return xIndex < 72 ? board[xIndex + 9].getType() : ' ';
     }
+
     protected char getPieceOnTop (int xIndex) {
         return xIndex > 8 ? board[xIndex - 9].getType() : ' ';
     }

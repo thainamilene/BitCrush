@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+
 import static java.lang.System.exit;
 
 
@@ -24,6 +26,25 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
         super();
         style();
         this.mainPanel = mainPanel;
+    }
+
+    public void sumRound(boolean v) {
+        if (v) {
+            round ++;
+        }
+        jRound.setText(String.valueOf(round));
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+
+    public void sumScore(int n) {
+        score += n;
+        jScore.setText(String.valueOf(score));
+        verifyRound();
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+
+    public void actionPerformed(ActionEvent actionEvent) {
+        exit(0);
     }
 
     private void style() {
@@ -49,15 +70,11 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
 
     private void verifyRound() {
         if (round == 20) {
-            mainPanel.remove(0);
-            mainPanel.remove(0);
-            mainPanel.remove(0);
-            addEndButtons();
             end();
         }
     }
 
-    private void addEndButtons() {
+    private void addFinalButtons() {
         JButton button = new JButton("Sair");
         Font font = new Font("Sans Serif", Font.BOLD, 25);
         button.setSize(450, 50);
@@ -72,7 +89,11 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
     }
 
     private void end() {
-        if (score<200) {
+        while (mainPanel.getComponents().length != 0) {
+            mainPanel.remove(0);
+        }
+        addFinalButtons();
+        if (score<300) {
             JLabel lose = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lose.png"));
             mainPanel.add(lose, BorderLayout.CENTER);
         } else {
@@ -80,32 +101,5 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
             mainPanel.add(win, BorderLayout.CENTER);
         }
         SwingUtilities.updateComponentTreeUI(mainPanel);
-    }
-
-    public void sumRound(boolean v) {
-        if (v) {
-            round ++;
-        }
-        jRound.setText(String.valueOf(round));
-        SwingUtilities.updateComponentTreeUI(mainPanel);
-    }
-
-    public void sumScore(int n) {
-        score += n;
-        jScore.setText(String.valueOf(score));
-        verifyRound();
-        SwingUtilities.updateComponentTreeUI(mainPanel);
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getRound() {
-        return round;
-    }
-
-    public void actionPerformed(ActionEvent actionEvent) {
-        exit(0);
     }
 }

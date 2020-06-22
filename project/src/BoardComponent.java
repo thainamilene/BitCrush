@@ -11,7 +11,6 @@ public class BoardComponent extends JPanel implements IBoard {
     private final Container mainPanel;
     private final int lv;
 
-
     public BoardComponent(int lv, Container mainPanel) {
         super();
         counter = 0;
@@ -28,6 +27,36 @@ public class BoardComponent extends JPanel implements IBoard {
         setBackground(new Color(0x847C9D));
         super.setLayout(new GridLayout(9, 9));
         assembleBoard();
+    }
+
+    public void printBoard() {
+        int c = 0;
+         for (int i=0; i < 9; i++) {
+            System.out.print(i);
+            System.out.print(' ');
+            for (int j = 0; j < 9; j++) {
+                System.out.print(board[c].getType() + " ");
+                c++;
+            }
+            System.out.println(" ");
+        }
+        System.out.println("  a b c d e f g h i\n");
+    }
+
+    public void translate(int position) {
+         if (counter==0) {
+            move = new TranslateMovementComponent();
+            move.setSource(position);
+            counter ++;
+        } else {
+            move.setTarget(position);
+            counter--;
+            movePieces(move);
+        }
+    }
+
+    public IPieces[] getBoard() {
+        return board;
     }
 
     private void assembleBoard() {
@@ -49,7 +78,7 @@ public class BoardComponent extends JPanel implements IBoard {
         printBoard();
     }
 
-    private void verifyFirstBoard() {         
+    private void verifyFirstBoard() {
         Random random = new Random();
         boolean v = false;
         for (int i = 0; i < 81; i++) {
@@ -84,44 +113,13 @@ public class BoardComponent extends JPanel implements IBoard {
         char aux = board[i].getType();
         board[i].setType(x);
         if (board[i].getType() == aux) {
-            if (x > 0) { 
+            if (x > 0) {
                 board[i].setType(x - 1);
             } else {
             board[i].setType(x + 1);
             }
         }
         return true;
-    }
-
-    public void printBoard() {
-        int c = 0;
-         for (int i=0; i < 9; i++) {
-            System.out.print(i);
-            System.out.print(' ');
-            for (int j = 0; j < 9; j++) {
-                System.out.print(board[c].getType() + " ");
-                c++;
-            }
-            System.out.println(" ");
-        }
-        System.out.println("  a b c d e f g h i\n");
-    }
-
-    public void translate(int position) {
-         if (counter==0) {
-            move = new TranslateMovementComponent();
-            move.setSource(position);
-            counter ++;
-        } else {
-            move.setTarget(position);
-            counter--;
-            movePieces(move);
-            System.out.println("---------------------------------------------------------------------");
-        }
-    }
-
-    public IPieces[] getBoard() {
-        return board;
     }
 
     private void movePieces(ITranslateMovementC xy) {
@@ -320,7 +318,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private char verifyPieceRight(int i) {
-        return (i + 1) % 9 != 0 ? board[i].getType() : ' ';
+        return ((i + 1) % 9 != 0) ? board[i].getType() : ' ';
     }
 
     private void verifyBoard() {
@@ -331,25 +329,6 @@ public class BoardComponent extends JPanel implements IBoard {
                     if (board[i].getType() == board[i - 9].getType() && board[i].getType() == board[i - 18].getType()) {
                         v = true;
                         score.sumScore(5);
-//                        if (i > 35) {
-//                            if (board[i].getType() == board[i - 27].getType()) {
-//                                if (i > 44) {
-//                                    if (board[i].getType() == board[i - 36].getType()) {
-//                                        board[i - 36] = new Bonus03Component();
-//                                        board[i - 36].setIndex(i - 36);
-//                                        board[i - 36].setBoard(this);
-//                                    } else {
-//                                        board[i - 27] = new Bonus02Component();
-//                                        board[i - 27].setIndex(i - 27);
-//                                        board[i - 27].setBoard(this);
-//                                    }
-//                                } else {
-//                                    board[i - 27] = new Bonus02Component();
-//                                    board[i - 27].setIndex(i - 27);
-//                                    board[i - 27].setBoard(this);
-//                                }
-//                            }
-//                        }
                         board[i].setType(-1);
                         board[i - 9].setType(-1);
                         board[i - 18].setType(-1);
@@ -359,26 +338,6 @@ public class BoardComponent extends JPanel implements IBoard {
                     if (board[i].getType() == board[i + 9].getType() && board[i].getType() == board[i + 18].getType()) {
                         v = true;
                         score.sumScore(5);
-
-//                        if (i < 54) {
-//                            if (board[i].getType() == board[i + 27].getType()) {
-//                                if (i < 45) {
-//                                    if (board[i].getType() == board[i + 36].getType()) {
-//                                        board[i + 36] = new Bonus03Component();
-//                                        board[i + 36].setIndex(i + 36);
-//                                        board[i + 36].setBoard(this);
-//                                    } else {
-//                                        board[i + 27] = new Bonus02Component();
-//                                        board[i + 27].setIndex(i + 27);
-//                                        board[i + 27].setBoard(this);
-//                                    }
-//                                } else {
-//                                    board[i + 27] = new Bonus02Component();
-//                                    board[i + 27].setIndex(i + 27);
-//                                    board[i + 27].setBoard(this);
-//                                }
-//                            }
-//                        }
                         board[i].setType(-1);
                         board[i + 9].setType(-1);
                         board[i + 18].setType(-1);
@@ -388,26 +347,6 @@ public class BoardComponent extends JPanel implements IBoard {
                     if (board[i].getType() == board[i - 1].getType() && board[i].getType() == board[i - 2].getType()) {
                         v = true;
                         score.sumScore(5);
-
-//                        if ((i - 2) % 9 != 0) {
-//                            if (board[i].getType() == board[i - 3].getType()) {
-//                                if ((i - 3) % 9 != 0) {
-//                                    if (board[i].getType() == board[i - 4].getType()) {
-//                                        board[i - 4] = new Bonus03Component();
-//                                        board[i - 4].setIndex(i - 4);
-//                                        board[i - 4].setBoard(this);
-//                                    } else {
-//                                        board[i - 3] = new Bonus02Component();
-//                                        board[i - 3].setIndex(i - 3);
-//                                        board[i - 3].setBoard(this);
-//                                    }
-//                                } else {
-//                                    board[i - 3] = new Bonus02Component();
-//                                    board[i - 3].setIndex(i - 3);
-//                                    board[i - 3].setBoard(this);
-//                                }
-//                            }
-//                        }
                         board[i].setType(-1);
                         board[i - 1].setType(-1);
                         board[i - 2].setType(-1);
@@ -417,25 +356,6 @@ public class BoardComponent extends JPanel implements IBoard {
                     if (board[i].getType() == board[i + 1].getType() && board[i].getType() == board[i + 2].getType()) {
                         v = true;
                         score.sumScore(5);
-//                        if ((i + 3) % 9 != 0) {
-//                            if (board[i].getType() == board[i + 4].getType()) {
-//                                if ((i + 5) % 9 != 0) {
-//                                    if (board[i].getType() == board[i + 5].getType()) {
-//                                        board[i + 5] = new Bonus03Component();
-//                                        board[i + 5].setIndex(i + 5);
-//                                        board[i + 5].setBoard(this);
-//                                    } else {
-//                                        board[i + 4] = new Bonus02Component();
-//                                        board[i + 4].setIndex(i + 4);
-//                                        board[i + 4].setBoard(this);
-//                                    }
-//                                } else {
-//                                    board[i + 4] = new Bonus02Component();
-//                                    board[i + 4].setIndex(i + 4);
-//                                    board[i + 4].setBoard(this);
-//                                }
-//                            }
-//                        }
                         board[i].setType(-1);
                         board[i + 2].setType(-1);
                         board[i + 3].setType(-1);
@@ -448,8 +368,6 @@ public class BoardComponent extends JPanel implements IBoard {
             verifyBoard();
         }
     }
-
-    public void transformsPieces(char type) {}
 
     private void destroyNormalPieces(int s, int k, int t) {
         int i = 0;

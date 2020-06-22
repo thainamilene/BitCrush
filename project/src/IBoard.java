@@ -1,2 +1,5 @@
-public interface IBoard extends IBoardManager, IPiecesManager {
+public interface IBoard {
+    void printBoard();
+    void translate(int position);
+    IPieces[] getBoard();
 }

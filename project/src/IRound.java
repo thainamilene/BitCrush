@@ -1,3 +1,3 @@
 public interface IRound {
-    public void sumRound(boolean v);
+    void sumRound(boolean v);
 }

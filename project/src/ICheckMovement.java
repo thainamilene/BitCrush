@@ -1,3 +1,3 @@
 public interface ICheckMovement {
-    public boolean verifyMovement(int target);
+    boolean verifyMovement(int target);
 }
