@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
-
 public class BoardComponent extends JPanel implements IBoard {
     private static final long serialVersionUID = -2624435075244032415L;
     private final IPieces[] board;
@@ -116,7 +114,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 }
             }
         }
-        if (v) { //verifica ate que nao haja mais
+        if (v) { //verifica ate que nao tenha mais
             verifyFirstBoard();
         }
     }
@@ -518,6 +516,7 @@ public class BoardComponent extends JPanel implements IBoard {
     private void destroyBonus03(int s, int t) {
         /*elimina todas as pecas de um tipo do tabuleiro*/
         score.sumScore(5);
+        int aux = board[s].getX();
         board[s].setType(-1);
         remove(t);
         board[t] = new NormalPiecesComponent();
@@ -525,7 +524,7 @@ public class BoardComponent extends JPanel implements IBoard {
         board[t].setIndex(t);
         add(board[t].getButton(), t);
         for (int i = 0; i < 81; i++) {
-            if (board[s].getX() == board[i].getX()) {
+            if (aux == board[i].getX()) {
                 board[i].setType(-1);
                 score.sumScore(1);
             }
