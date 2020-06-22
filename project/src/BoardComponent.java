@@ -1,5 +1,4 @@
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -161,6 +160,9 @@ public class BoardComponent extends JPanel implements IBoard {
             score.sumRound(true);
         } else {
             boolean v = board[xy.getSource()].verifyMovement(xy.getTarget());
+            if (!v) {
+                throw new UselessMovement();
+            }
             score.sumRound(v);
             if (v) {
                 IPieces aux = new NormalPiecesComponent();

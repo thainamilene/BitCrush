@@ -163,9 +163,6 @@ public class NormalPiecesComponent extends Pieces {
             }
             verifyTargetMovement(target); //verifica o movimento da segunda peca selecionada
         }
-        if (!(moves[0].isV() || moves[1].isV())) {
-            throw new UselessMovement();
-        }
         return moves[0].isV() || moves[1].isV(); //se um dos dois movimentos sao verdadeiro, entao o movimento final e valido
     }
 }

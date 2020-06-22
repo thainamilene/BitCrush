@@ -1,4 +1,4 @@
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
@@ -7,7 +7,7 @@ public abstract class Pieces implements IPieces {
     protected char type;
     protected int index;
     protected JButton button;
-    protected IBoard Board;
+    public IBoard Board;
     protected IPieces[] board;
     protected IMovementAttributes[] moves;
 
@@ -43,8 +43,13 @@ public abstract class Pieces implements IPieces {
     public void actionPerformed(ActionEvent actionEvent) {
         try {
             Board.translate(index); //envia ao tabuleiro o indice da peca clicada
-        } catch (InvalidPlay nonAdjacentPieces) {
-            nonAdjacentPieces.printStackTrace();
+        } catch (NonAdjacentPieces error) {
+            System.out.println(error.getMessage());
+
+        } catch (UselessMovement error) {
+            System.out.println(error.getMessage());
+        } catch (Exception error) {
+            System.out.println("erro: " + error.getMessage());
         }
     }
 
