@@ -10,17 +10,15 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-
 import static java.lang.System.exit;
 
 
 public class ScoreboardComponent extends JPanel implements IScoreboard, ActionListener {
     private static final long serialVersionUID = 6251202006907429652L;
     private final Container mainPanel;
-    int score = 0;
-    int round = 0;
-    JLabel jScore, jRound;
+    private int score = 0;
+    private int round = 0;
+    private JLabel jScore, jRound;
 
     public ScoreboardComponent(Container mainPanel) {
         super();
@@ -29,6 +27,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
     }
 
     public void sumRound(boolean v) {
+        /*Soma as rodadas se a jogada for válida*/
         if (v) {
             round ++;
         }
@@ -37,6 +36,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
     }
 
     public void sumScore(int n) {
+        /*Soma um valor a pontuacao atual*/
         score += n;
         jScore.setText(String.valueOf(score));
         verifyRound();
@@ -44,7 +44,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        exit(0);
+        exit(0); //encerra o programa
     }
 
     private void style() {
@@ -70,11 +70,12 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
 
     private void verifyRound() {
         if (round == 20) {
-            end();
+            end(); //termina o jogo
         }
     }
 
-    private void addFinalButtons() {
+    private void addFinalButton() {
+        /*adiciona o botao de sair*/
         JButton button = new JButton("Sair");
         Font font = new Font("Sans Serif", Font.BOLD, 25);
         button.setSize(450, 50);
@@ -89,11 +90,11 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
     }
 
     private void end() {
-        while (mainPanel.getComponents().length != 0) {
+        while (mainPanel.getComponents().length != 0) { //remove todos os componentes restantes do mainPanel
             mainPanel.remove(0);
         }
-        addFinalButtons();
-        if (score<300) {
+        addFinalButton(); //adiciona o botao de sair
+        if (score<300) { //verifica se ganhou ou perdeu o jogo
             JLabel lose = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lose.png"));
             mainPanel.add(lose, BorderLayout.CENTER);
         } else {

@@ -1,11 +1,15 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.util.Random;
 
 public class BoardComponent extends JPanel implements IBoard {
     private static final long serialVersionUID = -2624435075244032415L;
-    public IPieces[] board;
-    public ScoreboardComponent score;
+    private IPieces[] board;
+    private ScoreboardComponent score;
     private ITranslateMovementC move;
     private int counter;
     private final Container mainPanel;
@@ -44,11 +48,11 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     public void translate(int position) {
-         if (counter==0) {
+         if (counter == 0) { //quando clica na primeira peca
             move = new TranslateMovementComponent();
             move.setSource(position);
             counter ++;
-        } else {
+        } else { //quando clica na segunda peca
             move.setTarget(position);
             counter--;
             movePieces(move);
@@ -60,17 +64,19 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void assembleBoard() {
+        /*monta o tabuleiro inicial*/
         Random random = new Random();
         int x;
         for (int i = 0; i < 81; i++) {
             board[i] = new NormalPiecesComponent();
-            x = random.nextInt(lv);
-            board[i].setType(x);
+            x = random.nextInt(lv); //cria um numero aleatorio que gerara uma peca
+            board[i].setType(x);    //o lv e definido pelo nivel que a pessoa escolher: nivel 01 - lv = 05; nivel 02 - lv = 07; nivel 03 - lv = 09
             board[i].setIndex(i);
             board[i].setBoard(this);
         }
-        verifyFirstBoard();
+        verifyFirstBoard(); // verifica se ja ha combinacoes de 3 pecas no tabuleiro e ha elimina
         for (int i = 0; i < 81; i++) {
+            /*adiciona os botoes no tabuleiro*/
             this.add(board[i].getButton(), i);
         }
         mainPanel.add(this, BorderLayout.CENTER);
@@ -79,6 +85,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void verifyFirstBoard() {
+        /* verifica se ja ha combinacoes de 3 pecas no tabuleiro inicial e ha elimina*/
         Random random = new Random();
         boolean v = false;
         for (int i = 0; i < 81; i++) {
@@ -103,12 +110,13 @@ public class BoardComponent extends JPanel implements IBoard {
                 }
             }
         }
-        if (v) {
+        if (v) { //verifica ate que nao haja mais
             verifyFirstBoard();
         }
     }
 
     private boolean removePiecesInFirstBoard(Random random, int i) {
+        /* substitui as pecas do primeiro tabuleiro*/
         int x = random.nextInt(lv);
         char aux = board[i].getType();
         board[i].setType(x);
@@ -123,6 +131,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void movePieces(ITranslateMovementC xy) {
+        /*Verifica se o movimento e valido, e caso seja, elimina as pecas que devem ser eliminadas*/
         if ((!(board[xy.getSource()] instanceof NormalPiecesComponent) && !(board[xy.getTarget()] instanceof NormalPiecesComponent))) {
             if (board[xy.getSource()] instanceof Bonus01Component) {
                 if (board[xy.getTarget()] instanceof Bonus01Component) {
@@ -250,6 +259,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void haveMovement() {
+        /*Verifica se ha movimento possivel apos a jogada*/
         for (int i = 0; i < 81; i++) {
             if (i > 17) {
                 if (board[i].getType() == board[i-9].getType()) {
@@ -284,6 +294,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void reassembleBoard() {
+        /*quando nao ha movimento possivel no tabuleiro, ele remonta o tabuleiro, substituindo todas as pecas normais*/
         Random random = new Random();
         int x;
         for (int i = 0; i < 81; i++) {
@@ -306,22 +317,27 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private char verifyPieceTop(int i) {
+        /*Verifica se a peca em cima existe e retorna o char que define o tipo dela */
         return i > 8 ? board[i].getType() : ' ';
     }
 
     private char verifyPieceBottom(int i) {
+        /*Verifica se a peca embaixo existe e retorna o char que define o tipo dela */
         return i < 72 ? board[i].getType() : ' ';
     }
 
     private char verifyPieceLeft(int i) {
+        /*Verifica se a peca na esquerda existe e retorna o char que define o tipo dela */
         return i % 9 != 0 ? board[i].getType() : ' ';
     }
 
     private char verifyPieceRight(int i) {
+        /*Verifica se a peca na direita existe e retorna o char que define o tipo dela */
         return ((i + 1) % 9 != 0) ? board[i].getType() : ' ';
     }
 
     private void verifyBoard() {
+        /*Verifica se apos a rodada, combinacoes extras foram criadas no tabuleiro e as elimina*/
         boolean v = false;
         for (int i = 80; i >= 0; i--) {
             if (board[i] instanceof NormalPiecesComponent) {
@@ -357,8 +373,8 @@ public class BoardComponent extends JPanel implements IBoard {
                         v = true;
                         score.sumScore(5);
                         board[i].setType(-1);
+                        board[i + 1].setType(-1);
                         board[i + 2].setType(-1);
-                        board[i + 3].setType(-1);
                     }
                 }
             }
@@ -370,6 +386,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyNormalPieces(int s, int k, int t) {
+        /*define as pecas a serem mortas como o tipo morta (setType(-1), e verifica se a peca deve trnasformar-se em um bonus*/
         int i = 0;
         while (i<5 && board[s].getMoves()[k].getVct()[i] != -1) {
             board[board[s].getMoves()[k].getVct()[i]].setType(-1);
@@ -434,6 +451,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus01(int s, int t) {
+        /*elimina uma linha ou coluna*/
         score.sumScore(10);
         int line = (s/9) * 9;
         board[s].setType(-1);
@@ -455,6 +473,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus02(int s, int t) {
+        /*elimina todas as pecas ao redor de um especifica*/
         score.sumScore(25);
         remove(t);
         board[t] = new NormalPiecesComponent();
@@ -489,6 +508,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus03(int s, int t) {
+        /*elimina todas as pecas de um tipo do tabuleiro*/
         score.sumScore(5);
         board[s].setType(-1);
         remove(t);
@@ -505,6 +525,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus01plus01(int s, int t) {
+        /*elimina uma linha e coluna*/
         score.sumScore(25);
         int line = (s/9) * 9;
         remove(t);
@@ -527,6 +548,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus01plus02(int s, int t) {
+        /*elimina 3 linhas ou 3 colunas*/
         score.sumScore(40);
         int line = (s/9) * 9;
         remove(s);
@@ -574,6 +596,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus01plus03(int s, int t) {
+        /*transforma todas as pecas de um tipo aleatoriamente em uma do tipo bonus 01 e as eliminam*/
         score.sumScore(10);
         remove(s);
         remove(t);
@@ -600,6 +623,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus02plus02(int s, int t) {
+        /*transforma todas as pecas de um tipo aleatoriamente em uma do tipo bonus 02 e as eliminam*/
         score.sumScore(40);
         remove(t);
         board[t] = new NormalPiecesComponent();
@@ -714,6 +738,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyBonus03plus03(int s, int t) {
+        /*elimina todas as pecas do tabuleiro*/
         score.sumScore(100);
         remove(t);
         board[t] = new NormalPiecesComponent();
@@ -732,6 +757,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void rebuildBoard() {
+        /*elimina as pecas "setadas" com -1, desliza para baixo as pecas de cima e cria novas quando necessario*/
         for (int i = 80; i >= 0; i--) {
             if (board[i].getX() == -1) {
                 if (i > 8) {
@@ -830,6 +856,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void changesPieces (IPieces piece1, IPieces piece2) {
+        /*muda duas pecas de lugar*/
         board[piece2.getIndex()].setType(piece1.getX());
         board[piece2.getIndex()].setIndex(piece2.getIndex());
         board[piece2.getIndex()].setBoard(this);

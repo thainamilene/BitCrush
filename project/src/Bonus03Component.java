@@ -1,15 +1,12 @@
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 public class Bonus03Component extends Pieces {
-
 
     public Bonus03Component() {
         super();
         style();
         setType(0);
     }
-
-
 
     public void setType(int x) {
         if (x == -1) {
@@ -25,12 +22,13 @@ public class Bonus03Component extends Pieces {
 
     public boolean verifyMovement(int target) {
        if (((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) || ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 81)) {
+           /*verifica se as pecas a serem movidas sao adjacentes*/
             moves[0] = new MovementComponent();
             moves[1] = new MovementComponent();
             moves[0].setMoveType('b');
             moves[0].setV(true);
             verifyTargetMovement(target);
-            return true;
+            return true; //movimentos com os bonus sao sempre validos
         }
         return false;
     }

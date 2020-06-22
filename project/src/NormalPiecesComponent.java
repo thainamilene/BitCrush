@@ -1,4 +1,4 @@
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 public class NormalPiecesComponent extends Pieces {
 
@@ -8,6 +8,7 @@ public class NormalPiecesComponent extends Pieces {
     }
 
     public void setType(int x) {
+        /*Recebe um inteiro aleatorio e a partir dele define o tipo de peca*/
         this.x = x;
         switch (x) {
             case -1:
@@ -55,6 +56,7 @@ public class NormalPiecesComponent extends Pieces {
     }
 
     public boolean verifyMovement(int target) {
+        /*verifica se o movimento da primeira peca e valido, verificando o arredor da peca, comparando o tipo da peca atual, com as que estao ao redor dela*/
         moves[0] = new MovementComponent();
         moves[1] = new MovementComponent();
         if (((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) || ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 81)) {
@@ -93,10 +95,10 @@ public class NormalPiecesComponent extends Pieces {
                     moves[0].setVct(target - 9);
                 }
                 if (moves[0].getMovetype() != 'b') {
-                    if (moves[0].getMovetype() == '4') {
-                        moves[0].remove();
-                    }
                     if (type == getPieceInRight(target) && type == getPieceInRight(target + 1)) {
+                        if (moves[0].getMovetype() == '1') {
+                            moves[0].remove();
+                        }
                         if (moves[0].isV()) {
                             moves[0].setMoveType('2');
                         } else {
@@ -108,7 +110,7 @@ public class NormalPiecesComponent extends Pieces {
                         moves[0].setVct(target + 2);
                     }
                 }
-            } else {
+            } else { //pecas se movendo na mesma coluna
                 if (type == getPieceInRight(target) && type == getPieceInRight(target + 1)) {
                     moves[0].setV(true);
                     moves[0].setMoveType('l');
@@ -143,10 +145,10 @@ public class NormalPiecesComponent extends Pieces {
                     moves[0].setVct(target - 1);
                 }
                 if (moves[0].getMovetype() != 'b') {
-                    if (moves[0].getMovetype() == '4') {
-                        moves[0].remove();
-                    }
                     if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
+                        if (moves[0].getMovetype() == '1') {
+                            moves[0].remove();
+                        }
                         if (moves[0].isV()) {
                             moves[0].setMoveType('2');
                         } else {
@@ -159,8 +161,8 @@ public class NormalPiecesComponent extends Pieces {
                     }
                 }
             }
-            verifyTargetMovement(target);
+            verifyTargetMovement(target); //verifica o movimento da segunda peca selecionada
         }
-        return moves[0].isV() || moves[1].isV();
+        return moves[0].isV() || moves[1].isV(); //se um dos dois movimentos sao verdadeiro, entao o movimento final e valido
     }
 }

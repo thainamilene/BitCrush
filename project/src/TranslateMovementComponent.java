@@ -1,6 +1,6 @@
 public class TranslateMovementComponent implements ITranslateMovementC {
-    int source;
-    int target;
+    private int source; //index da primeira peca selecionada
+    private int target; //index da primeira segunda selecionada
 
     public void setSource(int source) {
         this.source = source;
@@ -20,7 +20,7 @@ public class TranslateMovementComponent implements ITranslateMovementC {
     }
 
     private void compareSourceAndTarget() {
-        if (source > target) { //garantir que o source esta sempre a esquerda ou em cima do target
+        if (source > target) { //garante que o source esta sempre a esquerda ou em cima do target (o source sempre tera o index menor que o target)
             int aux = target;
             target = source;
             source = aux;

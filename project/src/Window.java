@@ -1,11 +1,16 @@
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Window extends JFrame implements ActionListener {
     private static final long serialVersionUID = -1282228310983130932L;
-    Container mainPanel;
+    private Container mainPanel;
     private BoardComponent BoardPanel;
     private int cont = 0;
     private JButton back, jump, next;
@@ -17,12 +22,15 @@ public class Window extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         visual();
     }
+
     private void visual() {
-        setSize(450, 580);;
+        this.setSize(450, 580);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         mainPanel = getContentPane();
         mainPanel.setBounds(0,0,0,0);
         mainPanel.setLayout(new BorderLayout());
-
+        /*Criando a página inicial*/
         JPanel imageLabel = new JPanel();
         imageLabel.setLayout(new BorderLayout());
         imageLabel.setSize(450, 555);
@@ -41,7 +49,7 @@ public class Window extends JFrame implements ActionListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
                      cont = 0;
-                      rules();
+                     rules();
                     }
                 }
         );
@@ -49,29 +57,30 @@ public class Window extends JFrame implements ActionListener {
         play.addActionListener(this);
         buttonPanel.add(rules);
         buttonPanel.add(play);
-        setVisible(true);
+        this.setVisible(true);
     }
 
     private void rules() {
+        /*Criando a primeira página de dicas*/
+
         mainPanel.remove(0);
         mainPanel.remove(0);
-        System.out.println("dska");
         buttons = new JPanel(new GridLayout());
         back = buttonStyle(new Color(0x4496EC),"Voltar");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 cont --;
-                tips();
+                tips(); //Volta para a dica anterior
             }
         });
         jump = buttonStyle(new Color(0x2C67BA),"Pular");
-        jump.addActionListener(this);
+        jump.addActionListener(this); //Pula as dicas e inicializa o jogo
         next = buttonStyle(new Color(0x4496EC),"Próxima");
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 cont ++;
-                tips();
+                tips(); //Vai para a proxima dica
             }
         });
         buttons.add(back);
@@ -84,6 +93,8 @@ public class Window extends JFrame implements ActionListener {
     }
 
     private void tips() {
+        /* De acordo com o contador vai para a pagina especifica*/
+
         if (cont == -1) {
             mainPanel.remove(1);
             mainPanel.remove(0);
@@ -183,29 +194,32 @@ public class Window extends JFrame implements ActionListener {
     }
 
     private void setGame() {
+        /* Inicializa o jogo */
         mainPanel.remove(0);
         JButton lvl1 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl1.png"));
         JButton lvl2 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl2.png"));
         JButton lvl3 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl3.png"));
 
+        /*seleciona os niveis*/
+
         lvl1.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
-                        BoardPanel = new BoardComponent(5, mainPanel);
+                        BoardPanel = new BoardComponent(5, mainPanel); //cria o campo celular que se da o jogo
                     }
                 }
         );
         lvl2.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
-                        BoardPanel = new BoardComponent(7, mainPanel);
+                        BoardPanel = new BoardComponent(7, mainPanel); //cria o campo celular que se da o jogo
                     }
                 }
         );
         lvl3.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
-                        BoardPanel = new BoardComponent(8, mainPanel);
+                        BoardPanel = new BoardComponent(8, mainPanel); //cria o campo celular que se da o jogo
                     }
                 }
         );
@@ -251,6 +265,6 @@ public class Window extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        setGame();
+        setGame(); //inicializa o jogo
     }
 }
