@@ -55,7 +55,7 @@ public class NormalPiecesComponent extends Pieces {
         }
     }
 
-    public boolean verifyMovement(int target) {
+    public boolean verifyMovement(int target) throws UselessMovement {
         /*verifica se o movimento da primeira peca e valido, verificando o arredor da peca, comparando o tipo da peca atual, com as que estao ao redor dela*/
         moves[0] = new MovementComponent();
         moves[1] = new MovementComponent();
@@ -162,6 +162,9 @@ public class NormalPiecesComponent extends Pieces {
                 }
             }
             verifyTargetMovement(target); //verifica o movimento da segunda peca selecionada
+        }
+        if (!(moves[0].isV() || moves[1].isV())) {
+            throw new UselessMovement();
         }
         return moves[0].isV() || moves[1].isV(); //se um dos dois movimentos sao verdadeiro, entao o movimento final e valido
     }

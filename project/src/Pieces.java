@@ -22,7 +22,7 @@ public abstract class Pieces implements IPieces {
 
     public abstract void setType (int x);
 
-    public abstract boolean verifyMovement(int target);
+    public abstract boolean verifyMovement(int target) throws InvalidPlay;
 
     public void setIndex(int index) {
         this.index = index;
@@ -41,7 +41,11 @@ public abstract class Pieces implements IPieces {
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        Board.translate(index); //envia ao tabuleiro o indice da peca clicada
+        try {
+            Board.translate(index); //envia ao tabuleiro o indice da peca clicada
+        } catch (InvalidPlay nonAdjacentPieces) {
+            nonAdjacentPieces.printStackTrace();
+        }
     }
 
     public void setBoard(IBoard Board) {

@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class BoardComponent extends JPanel implements IBoard {
     private static final long serialVersionUID = -2624435075244032415L;
-    private IPieces[] board;
-    private ScoreboardComponent score;
+    private final IPieces[] board;
+    private final ScoreboardComponent score;
     private ITranslateMovementC move;
     private int counter;
     private final Container mainPanel;
@@ -47,7 +47,7 @@ public class BoardComponent extends JPanel implements IBoard {
         System.out.println("  a b c d e f g h i\n");
     }
 
-    public void translate(int position) {
+    public void translate(int position) throws InvalidPlay {
          if (counter == 0) { //quando clica na primeira peca
             move = new TranslateMovementComponent();
             move.setSource(position);
@@ -130,7 +130,7 @@ public class BoardComponent extends JPanel implements IBoard {
         return true;
     }
 
-    private void movePieces(ITranslateMovementC xy) {
+    private void movePieces(ITranslateMovementC xy) throws InvalidPlay {
         /*Verifica se o movimento e valido, e caso seja, elimina as pecas que devem ser eliminadas*/
         if ((!(board[xy.getSource()] instanceof NormalPiecesComponent) && !(board[xy.getTarget()] instanceof NormalPiecesComponent))) {
             if (board[xy.getSource()] instanceof Bonus01Component) {
@@ -163,7 +163,6 @@ public class BoardComponent extends JPanel implements IBoard {
             boolean v = board[xy.getSource()].verifyMovement(xy.getTarget());
             score.sumRound(v);
             if (v) {
-                System.out.println(true);
                 IPieces aux = new NormalPiecesComponent();
                 IPieces aux2 = new NormalPiecesComponent();
                 boolean s = false,

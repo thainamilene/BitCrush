@@ -1,3 +1,3 @@
 public interface ICheckMovement {
-    boolean verifyMovement(int target);
+    boolean verifyMovement(int target) throws InvalidPlay;
 }
