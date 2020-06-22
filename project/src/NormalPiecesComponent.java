@@ -55,7 +55,7 @@ public class NormalPiecesComponent extends Pieces {
         }
     }
 
-    public boolean verifyMovement(int target) throws UselessMovement {
+    public boolean verifyMovement(int target) {
         /*verifica se o movimento da primeira peca e valido, verificando o arredor da peca, comparando o tipo da peca atual, com as que estao ao redor dela*/
         moves[0] = new MovementComponent();
         moves[1] = new MovementComponent();

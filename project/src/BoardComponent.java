@@ -1,9 +1,8 @@
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.Random;
+
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 public class BoardComponent extends JPanel implements IBoard {
     private static final long serialVersionUID = -2624435075244032415L;
@@ -46,15 +45,23 @@ public class BoardComponent extends JPanel implements IBoard {
         System.out.println("  a b c d e f g h i\n");
     }
 
-    public void translate(int position) throws InvalidPlay {
-         if (counter == 0) { //quando clica na primeira peca
-            move = new TranslateMovementComponent();
-            move.setSource(position);
-            counter ++;
-        } else { //quando clica na segunda peca
-            move.setTarget(position);
-            counter--;
-            movePieces(move);
+    public void translate(int position){
+         try {
+             if (counter == 0) { //quando clica na primeira peca
+                move = new TranslateMovementComponent();
+                move.setSource(position);
+                counter ++;
+            } else { //quando clica na segunda peca
+                counter--;
+                move.setTarget(position);
+                movePieces(move);
+            }
+         } catch (NonAdjacentPieces error) {
+            JOptionPane.showMessageDialog(mainPanel, new ImageIcon(Main.class.getResource(".").getPath() + "/Images/image1.png"), "SELECIONE PEÇAS ADJACENTES", JOptionPane.PLAIN_MESSAGE);
+         } catch (UselessMovement error) {
+            JOptionPane.showMessageDialog(mainPanel, new ImageIcon(Main.class.getResource(".").getPath() + "/Images/image2.png"), "MOVIMENTO INVÁLIDO", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception error) {
+            System.out.println("erro: " + error.getMessage());
         }
     }
 
@@ -161,7 +168,7 @@ public class BoardComponent extends JPanel implements IBoard {
         } else {
             boolean v = board[xy.getSource()].verifyMovement(xy.getTarget());
             if (!v) {
-                throw new UselessMovement();
+                throw new UselessMovement("Movimento inválido");
             }
             score.sumRound(v);
             if (v) {
