@@ -26,11 +26,9 @@ public class ScoreboardComponent extends JPanel implements IScoreboard, ActionLi
         this.mainPanel = mainPanel;
     }
 
-    public void sumRound(boolean v) {
+    public void sumRound() {
         /*Soma as rodadas se a jogada for válida*/
-        if (v) {
-            round ++;
-        }
+        round ++;
         jRound.setText(String.valueOf(round));
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }

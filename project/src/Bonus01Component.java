@@ -21,15 +21,11 @@ public class Bonus01Component extends Pieces {
     }
 
     public boolean verifyMovement(int target) {
-         /*verifica se as pecas a serem movidas sao adjacentes*/
-        if (((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) || ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 81)) {
-            moves[0] = new MovementComponent();
-            moves[1] = new MovementComponent();
-            moves[0].setMoveType('1');
-            moves[0].setV(true);
-            verifyTargetMovement(target);
-            return true;  //movimentos com os bonus sao sempre validos
-        }
-        return false;
+        moves[0] = new MovementComponent();
+        moves[1] = new MovementComponent();
+        moves[0].setMoveType('1');
+        moves[0].setV(true);
+        verifyTargetMovement(target);
+        return true;  //movimentos com os bonus sao sempre validos
     }
 }

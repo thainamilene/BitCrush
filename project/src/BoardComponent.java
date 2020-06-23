@@ -162,98 +162,95 @@ public class BoardComponent extends JPanel implements IBoard {
                     destroyBonus03plus03(xy.getSource(), xy.getTarget());
                 }
             }
-            score.sumRound(true);
+            score.sumRound();
         } else {
-            boolean v = board[xy.getSource()].verifyMovement(xy.getTarget());
-            if (!v) {
+            if (!board[xy.getSource()].verifyMovement(xy.getTarget())) {
                 throw new UselessMovement("Movimento inválido");
             }
-            score.sumRound(v);
-            if (v) {
-                IPieces aux = new NormalPiecesComponent();
-                IPieces aux2 = new NormalPiecesComponent();
-                boolean s = false,
-                        t = false;
+            score.sumRound();
+            IPieces aux = new NormalPiecesComponent();
+            IPieces aux2 = new NormalPiecesComponent();
+            boolean s = false,
+                    t = false;
 
-                if (board[xy.getSource()] instanceof NormalPiecesComponent) {
-                    aux.setType(board[xy.getSource()].getX());
-                    aux.setIndex(board[xy.getSource()].getIndex());
-                } else if (board[xy.getSource()] instanceof Bonus01Component) {
-                    aux = new Bonus01Component();
-                    aux.setIndex(board[xy.getSource()].getIndex());
+            if (board[xy.getSource()] instanceof NormalPiecesComponent) {
+                aux.setType(board[xy.getSource()].getX());
+                aux.setIndex(board[xy.getSource()].getIndex());
+            } else if (board[xy.getSource()] instanceof Bonus01Component) {
+                aux = new Bonus01Component();
+                aux.setIndex(board[xy.getSource()].getIndex());
 
-                } else if (board[xy.getSource()] instanceof Bonus02Component) {
-                    aux = new Bonus02Component();
-                    aux.setIndex(board[xy.getSource()].getIndex());
-                } else {
-                    aux = new Bonus03Component();
-                    aux.setIndex(board[xy.getSource()].getIndex());
+            } else if (board[xy.getSource()] instanceof Bonus02Component) {
+                aux = new Bonus02Component();
+                aux.setIndex(board[xy.getSource()].getIndex());
+            } else {
+                aux = new Bonus03Component();
+                aux.setIndex(board[xy.getSource()].getIndex());
+            }
+
+            if (board[xy.getTarget()] instanceof NormalPiecesComponent) {
+                aux2.setType(board[xy.getTarget()].getX());
+                aux2.setIndex(board[xy.getTarget()].getIndex());
+            } else if (board[xy.getTarget()] instanceof Bonus01Component) {
+                aux2 = new Bonus01Component();
+                aux2.setIndex(board[xy.getTarget()].getIndex());
+            } else if (board[xy.getTarget()] instanceof Bonus02Component) {
+                aux2 = new Bonus02Component();
+                aux2.setIndex(board[xy.getTarget()].getIndex());
+            } else {
+                aux2 = new Bonus03Component();
+                aux2.setIndex(board[xy.getTarget()].getIndex());
+            }
+
+            if (aux instanceof NormalPiecesComponent) {
+                if (board[xy.getSource()].getMoves()[0].isV()) {
+                    s = true;
+                    destroyNormalPieces(xy.getSource(), 0, xy.getTarget());
                 }
-
-                if (board[xy.getTarget()] instanceof NormalPiecesComponent) {
-                    aux2.setType(board[xy.getTarget()].getX());
-                    aux2.setIndex(board[xy.getTarget()].getIndex());
-                } else if (board[xy.getTarget()] instanceof Bonus01Component) {
-                    aux2 = new Bonus01Component();
-                    aux2.setIndex(board[xy.getTarget()].getIndex());
-                } else if (board[xy.getTarget()] instanceof Bonus02Component) {
-                    aux2 = new Bonus02Component();
-                    aux2.setIndex(board[xy.getTarget()].getIndex());
-                } else {
-                    aux2 = new Bonus03Component();
-                    aux2.setIndex(board[xy.getTarget()].getIndex());
+            } else if (aux instanceof Bonus01Component) {
+                if (board[xy.getSource()].getMoves()[0].isV()) {
+                    s = true;
+                    destroyBonus01(xy.getTarget(),xy.getSource());
                 }
-
-                if (aux instanceof NormalPiecesComponent) {
-                    if (board[xy.getSource()].getMoves()[0].isV()) {
-                        s = true;
-                        destroyNormalPieces(xy.getSource(), 0, xy.getTarget());
-                    }
-                } else if (aux instanceof Bonus01Component) {
-                    if (board[xy.getSource()].getMoves()[0].isV()) {
-                        s = true;
-                        destroyBonus01(xy.getTarget(),xy.getSource());
-                    }
-                } else if (aux instanceof Bonus02Component) {
-                    if (board[xy.getSource()].getMoves()[0].isV()) {
-                        s = true;
-                        destroyBonus02(xy.getTarget(),xy.getSource());
-                    }
-                } else {
-                    if (board[xy.getSource()].getMoves()[0].isV()) {
-                        s = true;
-                        destroyBonus03(xy.getTarget(),xy.getSource());
-                    }
+            } else if (aux instanceof Bonus02Component) {
+                if (board[xy.getSource()].getMoves()[0].isV()) {
+                    s = true;
+                    destroyBonus02(xy.getTarget(),xy.getSource());
                 }
-
-                if (aux2 instanceof NormalPiecesComponent) {
-                    if (board[xy.getSource()].getMoves()[1].isV()) {
-                        t = true;
-                        destroyNormalPieces(xy.getSource(), 1, xy.getTarget());
-                    }
-                } else if (aux2 instanceof Bonus01Component) {
-                     if (board[xy.getSource()].getMoves()[1].isV()) {
-                        t = true;
-                        destroyBonus01(xy.getSource(), xy.getTarget());
-                    }
-                } else if (aux2 instanceof Bonus02Component) {
-                     if (board[xy.getSource()].getMoves()[1].isV()) {
-                        t = true;
-                        destroyBonus02(xy.getSource(), xy.getTarget());
-                    }
-                } else {
-                    if (board[xy.getSource()].getMoves()[1].isV()) {
-                        t = true;
-                        destroyBonus03(xy.getSource(), xy.getTarget());
-                    }
+            } else {
+                if (board[xy.getSource()].getMoves()[0].isV()) {
+                    s = true;
+                    destroyBonus03(xy.getTarget(),xy.getSource());
                 }
+            }
 
-                if (!s || !t) {
-                    if (!s) {
-                        changesPieces(aux, aux2);
-                    } else {
-                        changesPieces(aux2, aux);
-                    }
+            if (aux2 instanceof NormalPiecesComponent) {
+                if (board[xy.getSource()].getMoves()[1].isV()) {
+                    t = true;
+                    destroyNormalPieces(xy.getSource(), 1, xy.getTarget());
+                }
+            } else if (aux2 instanceof Bonus01Component) {
+                 if (board[xy.getSource()].getMoves()[1].isV()) {
+                    t = true;
+                    destroyBonus01(xy.getSource(), xy.getTarget());
+                }
+            } else if (aux2 instanceof Bonus02Component) {
+                 if (board[xy.getSource()].getMoves()[1].isV()) {
+                    t = true;
+                    destroyBonus02(xy.getSource(), xy.getTarget());
+                }
+            } else {
+                if (board[xy.getSource()].getMoves()[1].isV()) {
+                    t = true;
+                    destroyBonus03(xy.getSource(), xy.getTarget());
+                }
+            }
+
+            if (!s || !t) {
+                if (!s) {
+                    changesPieces(aux, aux2);
+                } else {
+                    changesPieces(aux2, aux);
                 }
             }
         }
