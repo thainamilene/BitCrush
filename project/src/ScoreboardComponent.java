@@ -9,11 +9,10 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import static java.lang.System.exit;
 
 
-public class ScoreboardComponent extends JPanel implements IScoreboard, ActionListener {
+public class ScoreboardComponent extends JPanel implements IScoreboard {
     private static final long serialVersionUID = 6251202006907429652L;
     private final Container mainPanel;
     private int score = 0;

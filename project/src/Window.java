@@ -1,10 +1,12 @@
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +15,7 @@ public class Window extends JFrame implements ActionListener {
     private Container mainPanel;
     private BoardComponent BoardPanel;
     private int cont = 0;
-    private JButton back, jump, next;
+    private ButtonStyle01 back, jump, next;
     private JPanel buttons;
     boolean v = false;
 
@@ -31,20 +33,17 @@ public class Window extends JFrame implements ActionListener {
         mainPanel.setBounds(0,0,0,0);
         mainPanel.setLayout(new BorderLayout());
         /*Criando a página inicial*/
-        JPanel imageLabel = new JPanel();
-        imageLabel.setLayout(new BorderLayout());
+        JLabel imageLabel = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Bitcrush.png"));
         imageLabel.setSize(450, 555);
         mainPanel.add(imageLabel, BorderLayout.CENTER);
-        JLabel images = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Bitcrush.png"));
-        imageLabel.add(images);
+        mainPanel.add(imageLabel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout());
         buttonPanel.setSize(450, 50);
-        mainPanel.add(imageLabel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton rules = buttonStyle(new Color(0x2C67BA), "Ver Regras");
+        ButtonStyle01 rules = new ButtonStyle01(new Color(0x2C67BA), "Ver Regras");
         rules.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
@@ -53,7 +52,7 @@ public class Window extends JFrame implements ActionListener {
                     }
                 }
         );
-        JButton play = buttonStyle(new Color(0x4496EC), "Jogar");
+        ButtonStyle01 play = new ButtonStyle01(new Color(0x4496EC), "Jogar");
         play.addActionListener(this);
         buttonPanel.add(rules);
         buttonPanel.add(play);
@@ -66,16 +65,21 @@ public class Window extends JFrame implements ActionListener {
         mainPanel.remove(0);
         mainPanel.remove(0);
         buttons = new JPanel(new GridLayout());
-        back = buttonStyle(new Color(0x4496EC),"Voltar");
+
+        back = new ButtonStyle01(new Color(0x4496EC),"Voltar");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 cont --;
                 tips(); //Volta para a dica anterior
             }
         });
-        jump = buttonStyle(new Color(0x2C67BA),"Pular");
+        buttons.add(back);
+
+        jump = new ButtonStyle01(new Color(0x2C67BA),"Pular");
         jump.addActionListener(this); //Pula as dicas e inicializa o jogo
-        next = buttonStyle(new Color(0x4496EC),"Próxima");
+        buttons.add(jump);
+
+        next = new ButtonStyle01(new Color(0x4496EC),"Próxima");
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -83,12 +87,12 @@ public class Window extends JFrame implements ActionListener {
                 tips(); //Vai para a proxima dica
             }
         });
-        buttons.add(back);
-        buttons.add(jump);
         buttons.add(next);
+
         JLabel tip01 = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/tip01.png"));
         mainPanel.add(buttons, BorderLayout.SOUTH);
         mainPanel.add(tip01, BorderLayout.CENTER);
+
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
@@ -193,12 +197,12 @@ public class Window extends JFrame implements ActionListener {
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
-    private void setGame() {
+    private void startGame() {
         /* Inicializa o jogo */
         mainPanel.remove(0);
-        JButton lvl1 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl1.png"));
-        JButton lvl2 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl2.png"));
-        JButton lvl3 = button2Style (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl3.png"));
+        ButtonStyle02 lvl1 = new ButtonStyle02 (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl1.png"));
+        ButtonStyle02 lvl2 = new ButtonStyle02 (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl2.png"));
+        ButtonStyle02 lvl3 = new ButtonStyle02 (new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lvl3.png"));
 
         /*seleciona os niveis*/
 
@@ -224,47 +228,20 @@ public class Window extends JFrame implements ActionListener {
                 }
         );
         mainPanel.remove(0);
-        JLabel title = titleStyle(Main.class.getResource(".").getPath() +  "/Images/select.png", 40);
+        JLabel title = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/select.png"));
+        JLabel name = new JLabel(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/name.png"));
 
         mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(lvl1, BorderLayout.WEST);
         mainPanel.add(lvl2, BorderLayout.CENTER);
         mainPanel.add(lvl3, BorderLayout.EAST);
-        JLabel name = titleStyle(Main.class.getResource(".").getPath() +  "/Images/name.png", 50);
         mainPanel.add(name, BorderLayout.SOUTH);
+
         SwingUtilities.updateComponentTreeUI(this);
 
     }
 
-    private JLabel titleStyle(String text, int h) {
-        JLabel label = new JLabel(new ImageIcon(text));
-        label.setSize(450, h);
-        label.setBackground(new Color(0));
-        return label;
-    }
-
-    private JButton button2Style(ImageIcon image) {
-        JButton button = new JButton(image);
-        button.setSize(150, 450);
-        button.setMargin(new Insets(-3,-3,-3,-3));
-        button.setBorderPainted(true);
-        return button;
-    }
-
-    private JButton buttonStyle (Color color, String text) {
-        JButton button = new JButton(text);
-        Font font = new Font("Sans Serif", Font.BOLD, 25);
-        button.setSize(225, 50);
-        button.setBorderPainted(false);
-        button.setSelected(false);
-        button.setFont(font);
-        button.setFocusPainted(false);
-        button.setForeground(new Color(0xffffff));
-        button.setBackground(color);
-        return button;
-    }
-
     public void actionPerformed(ActionEvent actionEvent) {
-        setGame(); //inicializa o jogo
+        startGame(); //inicializa o jogo
     }
 }
