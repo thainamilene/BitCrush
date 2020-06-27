@@ -35,20 +35,6 @@ public class BoardComponent extends JPanel implements IBoard {
         assembleBoard();
     }
 
-    public void printBoard() {
-        int c = 0;
-         for (int i=0; i < 9; i++) {
-            System.out.print(i);
-            System.out.print(' ');
-            for (int j = 0; j < 9; j++) {
-                System.out.print(board[c].getType() + " ");
-                c++;
-            }
-            System.out.println(" ");
-        }
-        System.out.println("  a b c d e f g h i\n");
-    }
-
     public void translate(int position){
          try {
              if (counter == 0) { //quando clica na primeira peca
@@ -91,7 +77,6 @@ public class BoardComponent extends JPanel implements IBoard {
         }
         mainPanel.add(this, BorderLayout.CENTER);
         SwingUtilities.updateComponentTreeUI(mainPanel);
-        printBoard();
     }
 
     private void verifyFirstBoard() {
@@ -261,7 +246,6 @@ public class BoardComponent extends JPanel implements IBoard {
             }
         }
         rebuildBoard();
-        printBoard();
         verifyBoard();
         haveMovement();
         SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -322,7 +306,6 @@ public class BoardComponent extends JPanel implements IBoard {
             this.add(board[i].getButton(), i);
         }
         SwingUtilities.updateComponentTreeUI(mainPanel);
-        printBoard();
     }
 
     private char verifyPieceTop(int i) {

@@ -17,7 +17,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard {
     private static final long serialVersionUID = 6251202006907429652L;
     private final Container mainPanel;
     private int score = 0;
-    private int round = 0;
+    private int round = 1;
     private JLabel jScore, jRound;
 
     public ScoreboardComponent(Container mainPanel) {
@@ -67,7 +67,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard {
     }
 
     private void verifyRound() {
-        if (round == 20) {
+        if (round == 21) {
             end(); //termina o jogo
         }
     }

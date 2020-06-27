@@ -1,4 +1,4 @@
-public class MovementComponent implements IMovementAttributes{
+public class MovementComponent implements IMovement{
     private boolean v;
     private char moveType;
     private int[] vct;
@@ -29,7 +29,7 @@ public class MovementComponent implements IMovementAttributes{
         this.moveType = moveType;
     }
 
-    public void setVct(int index) {
+    public void addVct(int index) {
         /*guarda os index das posicoes a serem removidas*/
         vct[cont] = index;
         cont ++;
@@ -52,7 +52,7 @@ public class MovementComponent implements IMovementAttributes{
         return v;
     }
 
-    public void remove() {
+    public void removeVct() {
         /*remove o ultimo elemento a ser adicionado, pois este sera sobrescrito*/
         cont --;
     }

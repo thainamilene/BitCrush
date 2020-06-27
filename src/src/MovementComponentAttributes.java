@@ -1,8 +1,5 @@
-public interface IMovementAttributes {
-
+public interface MovementComponentAttributes {
     void setMoveType(char moveType);
-
-    void setVct(int index);
 
     void setV(boolean v);
 
@@ -12,5 +9,4 @@ public interface IMovementAttributes {
 
     boolean isV();
 
-    void remove();
 }

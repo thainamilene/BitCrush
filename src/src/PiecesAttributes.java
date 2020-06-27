@@ -4,7 +4,7 @@ public interface PiecesAttributes {
     void setType(int x);
     char getType();
     int getX();
-    IMovementAttributes[] getMoves();
+    IMovement[] getMoves();
     void setIndex(int index);
     int getIndex();
     void setBoard(IBoard Board);

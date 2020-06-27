@@ -48,7 +48,6 @@ public class Window extends JFrame implements ActionListener {
         rules.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
-                     cont = 0;
                      rules();
                     }
                 }
@@ -60,8 +59,9 @@ public class Window extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    private void rules() {
+    public void rules() {
         /*Criando a primeira página de dicas*/
+    	cont = 0;
 
         mainPanel.remove(0);
         mainPanel.remove(0);

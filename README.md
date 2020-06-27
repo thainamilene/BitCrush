@@ -1,333 +1,565 @@
 # Projeto Bitcrush
 
+# Descrição Resumida do Projeto/Jogo
+
+Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar duas peças de lugar no tabuleiro para criar combinações de 3 ou mais peças do mesmo tipo.
+
 # Equipe
 * Thaina Milene de Oliveira - 244570
 
-# Descrição Resumida do Projeto
-O BitCrush é um jogo que consiste em trocar duas peças de lugar no tabuleiro para criar combinações de 3 ou mais peças do mesmo tipo.
+# Vídeos do Projeto
 
-# Vídeo do Projeto
-[Link do vídeo](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
+## Vídeo da Prévia
+[Link do vídeo da prévia](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
 
-[Link Apresentação](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
+## Vídeo do Jogo
+> <Coloque um link para o vídeo em que é demonstrada a versão final do jogo. Esse vídeo deve ter em torno de 5 minutos. Este vídeo não apresenta slides, nem substitui a apresentação final do projeto, que será feita por conferência. Ele mostra apenas o jogo em funcionamento.>
 
-# Diagrama Geral de Componentes
-![Diagrama geral de componentes](Diagrama_Geral_de_componentes.png)
+# Slides do Projeto
 
-# Componente BoardComponent
-![BoardComponent](BoardComponent.png)
+## Slides da Prévia
+[Link slides da prévia](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
 
-## Interfaces
+## Slides da Apresentação Final
+`<Coloque um link para os slides da apresentação final do projeto.>`
+
+## Relatório de Evolução
+
+> <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
+
+# Destaques de Código
+
+> <Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.>
+
+~~~java
+// Recorte do seu código
+public void algoInteressante(…) {
+   …
+   trechoInteressante = 100;
+}
+~~~
+
+# Destaques de Pattern
+`<Destaque de patterns adotados pela equipe. Sugestão de estrutura:>`
+
+## Diagrama do Pattern
+`<Diagrama do pattern dentro do contexto da aplicação.>`
+
+## Código do Pattern
+~~~java
+// Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
+public void algoInteressante(…) {
+   …
+   trechoInteressante = 100;
+}
+~~~
+
+> <Explicação de como o pattern foi adotado e quais suas vantagens, referenciando o diagrama.>
+
+# Documentação dos Componentes
+
+# Diagramas
+
+## Diagrama Geral do Projeto
+
+> <Apresente um diagrama geral de organização da organização do seu sistema. O formato é livre. A escolha de um ou mais estilos arquiteturais será considerado um diferencial.>
+
+> <Faça uma breve descrição do diagrama.>
+
+## Diagrama Geral de Componentes
+
+![Diagrama Geral](diagrama-geral.png)
+
+## Componente BoardComponent
+
+O BoardComponent fornece um tabuleiro 9x9, onde serão colocadas peças e toda a função de manipulação destas serão feitas por ele.
+
+![BoardComponent](diagrama-boardcomponent.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | BoardComponent
+Autores | Thaina Milene de Oliveira
+Interfaces | IBoard
+
+### Interfaces
 
 Interfaces associadas a esse componente:
-![Interfaces do BoardComponent](Interfaces_BoardC.png)
 
-Campo | Valor
------ | -----
-Classe | BitCrush.project.BoardComponent
-Autores | Thaina Milene de Oliveira
-Objetivo | Criar e manipular o tabuleiro
-Interface | IBoard
-~~~
-public interface IBoardManager {
-  public void assembleBoard();
-  public void printBoard(ScoreboardComponent data);
-}
-public interface IPiecesManager {
-  public void movePieces(IMovimentC xy);
-  public void transformsPieces(char type);
-}
-public interface IBoard extends IBoardManager, IPiecesManager {
-}
-~~~
+![Diagrama IBoard](diagrama-iboard.png)
 
 ## Detalhamento das Interfaces
 
-### Interface IBoardManager
-Interface para gerenciar as ações feitas no tabuleiro.
+### Interface IBoard
+
+É responsável por toda a comunicação necessária entre as peças e o tabuleiro.
+
+~~~java
+public interface IBoard {
+    void translate(int position) throws InvalidPlay;
+    IPieces[] getBoard();
+}
+~~~
 
 Método | Objetivo
 -------| --------
-assembleBoard | tem como objetivo montar um tabuleiro inicial com peças aleatórias
-printBoard | recebe dados do ScoreboardComponent e tem como objetivo imprimir o tabuleiro e a pontuação e rodada atual
+translate | Reconhece o index das peças clicadas, e envia para uma interface do tipo ITranslateMovimentC para criar um objeto que guarda os movimentos.
+getBoard | Retorna o atributo board, que guarda as peças
 
-### Interface IPiecesManager
-Interface para gerenciar as ações feitas pelo tabuleiro nas peças.
+## Componente NormalPiecesComponent
 
-Método | Objetivo
--------| --------
-movePieces | dado as coordenadas fornecidas pela interface IMovimentC, o tabuleiro trocará duas peças, se for um movimento válido
-transformsPieces | recebe e transforma peças de um tipo normal, em um bonus
+O NormalPiecesComponent fornece peças normais, sendo nove tipos diferentes, cuja quantidade de peças distintas variam de acordo com o nível que o usuário escolher.
 
-# Componente NormalPiecesComponent
-![BoardComponent](NormalPiecesComponent.png)
+![NormalPiecesComponent](diagrama-normalpiecescomponent.png)
 
-## Interfaces
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | NormalPiecesComponent
+Autores | Thaina Milene de Oliveira
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+
+### Interfaces
 
 Interfaces associadas a esse componente:
-![Interfaces do NormalPiecesComponent](Interfaces_NormalPiecesC.png)
 
-Campo | Valor
------ | -----
-Classe | BitCrush.project.NormalPiecesComponents
-Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças normais e diversas
-Interface | IPieces
-~~~
-public interface ICheckMoviment {
-  public boolean verifyMoviment(IMovimentC xy);
-}
-public interface Atributtes {
-  public void setType(int n);
-  public char getType();
-}
-public interface IPieces extends ICheckMoviment, Atributtes {
-}
-~~~
+![Diagrama IPieces](diagrama-ipieces1.png)
 
-## Detalhamento das Interfaces
+Interface agregadora do componente em Java:
 
-### Interface ICheckMoviment
-Interface para verificar se o movimento proposto é válido
-
-Método | Objetivo
--------| --------
-verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
-
-### Interface Atributtes
-Define e retorna o tipo da peça
-
-Método | Objetivo
--------| --------
-setType | Recebe um inteiro e a partir dele, define o tipo da peça
-getType | Retorna o tipo da peça
-
-# Componente Bonus01Component
-![BoardComponent](Bonus01Component.png)
-
-## Interfaces
-
-Interfaces associadas a esse componente:
-![Interfaces do Bonus01Component](Interfaces_Bonus01C.png)
-
-Campo | Valor
------ | -----
-Classe | BitCrush.project.Bonus01Components
-Autores | Thaina Milene de Oliveira
-Objetivo | Criar bonus do tipo 01
-Interface | IPieces
-~~~
-public interface ICheckMoviment {
-  public boolean verifyMoviment(IMovimentC xy);
-}
-public interface Atributtes {
-  public void setType(int n);
-  public char getType();
-}
-public interface IPieces extends ICheckMoviment, Atributtes {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface ICheckMoviment
-Interface para verificar se o movimento proposto é válido
-
-Método | Objetivo
--------| --------
-verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
-
-### Interface Atributtes
-Define e retorna o tipo da peça
-
-Método | Objetivo
--------| --------
-setType | Recebe um inteiro e define o tipo da peça como bonus01
-getType | Retorna o tipo da peça
-
-# Componente Bonus02Component
-![BoardComponent](Bonus02Component.png)
-
-## Interfaces
-
-Interfaces associadas a esse componente:
-![Interfaces do Bonus02Component](Interfaces_Bonus02C.png)
-
-Campo | Valor
------ | -----
-Classe | BitCrush.project.Bonus02Components
-Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças do tipo bonus02
-Interface | IPieces
-~~~
-public interface ICheckMoviment {
-  public boolean verifyMoviment(IMovimentC xy);
-}
-public interface Atributtes {
-  public void setType(int n);
-  public char getType();
-}
-public interface IPieces extends ICheckMoviment, Atributtes {
+~~~java
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
 }
 ~~~
 
 ## Detalhamento das Interfaces
 
 ### Interface ICheckMoviment
-Interface para verificar se o movimento proposto é válido
+
+É responsável por verificar se o movimento é válido.
+
+~~~java
+public interface ICheckMovement {
+    boolean verifyMovement(int target) throws InvalidPlay;
+}
+~~~
 
 Método | Objetivo
 -------| --------
-verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
+verifyMovement | recebe como parâmetro a posição da segunda peça clicada, e compara com a posição da própria peça, verificando se o movimento é válido.
 
-### Interface Atributtes
-Define e retorna o tipo da peça
+### Interface PiecesAttributes
+
+Dá acesso aos atributos das peças.
+
+~~~java
+public interface PiecesAttributes {
+    void setType(int x);
+    char getType();
+    int getX();
+    IMovement[] getMoves();
+    void setIndex(int index);
+    int getIndex();
+    void setBoard(IBoard Board);
+    JButton getButton();
+}
+~~~
 
 Método | Objetivo
 -------| --------
-setType | Recebe um inteiro e define o tipo da peça como bonus02
-getType | Retorna o tipo da peça
+setType | recebe como parâmetro um número inteiro e a partir dele define o tipo da peça
+getType | retorna o tipo da peça
+getX | retorna o número inteiro que foi usado para definir o tipo da peça
+getMoves | retorna o objeto com as informações sobre o movimento de cada jogada
+setIndex | guarda o índice da peça no tabuleiro
+getBoard | retorna o índice da peça no tabuleiro
+getButton | retorna o botão associado a peça
 
-# Componente Bonus03Component
-![BoardComponent](Bonus03Component.png)
+## Componente Bonus01Component
 
-## Interfaces
+O Bonus01Component fornece peças do tipo bonus01.
+
+![Bonus01Component](diagrama-bonus01component.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | Bonus01Component
+Autores | Thaina Milene de Oliveira
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+
+### Interfaces
 
 Interfaces associadas a esse componente:
-![Interfaces do Bonus03Component](Interfaces_Bonus03C.png)
 
-Campo | Valor
------ | -----
-Classe | BitCrush.project.Bonus03Components
-Autores | Thaina Milene de Oliveira
-Objetivo | Criar peças do tipo bonus03
-Interface | IPieces
-~~~
-public interface ICheckMoviment {
-  public boolean verifyMoviment(IMovimentC xy);
-}
-public interface Atributtes {
-  public void setType(int n);
-  public char getType();
-}
-public interface IPieces extends ICheckMoviment, Atributtes {
+![Diagrama IPieces](diagrama-ipieces2.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
 }
 ~~~
 
 ## Detalhamento das Interfaces
 
 ### Interface ICheckMoviment
-Interface para verificar se o movimento proposto é válido
+
+É responsável por verificar se o movimento é válido.
+
+~~~java
+public interface ICheckMovement {
+    boolean verifyMovement(int target) throws InvalidPlay;
+}
+~~~
 
 Método | Objetivo
 -------| --------
-verifyMoviment | verifica se o movimento fornecido pela interface IMovimentC é válido;
+verifyMovement | recebe como parâmetro a posição da segunda peça clicada, e compara com a posição da própria peça, verificando se o movimento é válido.
 
-### Interface Atributtes
-Define e retorna o tipo da peça
+### Interface PiecesAttributes
+
+Dá acesso aos atributos das peças.
+
+~~~java
+public interface PiecesAttributes {
+    void setType(int x);
+    char getType();
+    int getX();
+    IMovement[] getMoves();
+    void setIndex(int index);
+    int getIndex();
+    void setBoard(IBoard Board);
+    JButton getButton();
+}
+~~~
 
 Método | Objetivo
 -------| --------
-setType | Recebe um inteiro e define o tipo da peça como bonus03
-getType | Retorna o tipo da peça
+setType | recebe como parâmetro um número inteiro e a partir dele define o tipo da peça
+getType | retorna o tipo da peça
+getX | retorna o número inteiro que foi usado para definir o tipo da peça
+getMoves | retorna o objeto com as informações sobre o movimento de cada jogada
+setIndex | guarda o índice da peça no tabuleiro
+getBoard | retorna o índice da peça no tabuleiro
+getButton | retorna o botão associado a peça
 
-# Componente ScoreboardComponent
-![BoardComponent](ScoreboardComponent.png)
+## Componente Bonus02Component
 
-## Interfaces
+O Bonus02Component fornece peças do tipo bonus01.
+
+![Bonus02Component](diagrama-bonus02component.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | Bonus02Component
+Autores | Thaina Milene de Oliveira
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+
+### Interfaces
 
 Interfaces associadas a esse componente:
-![Interfaces do ScoreboardComponent](Interfaces_ScoreboardC.png)
 
-Campo | Valor
------ | -----
-Classe | BitCrush.project.ScoreboardComponents
-Autores | Thaina Milene de Oliveira
-Objetivo | Gerenciar o placar do jogo
-Interface | IScoreboard
+![Diagrama IPieces](diagrama-ipieces3.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
+}
 ~~~
-public interface IScore {
-  public void sumScore(int n);
+
+## Detalhamento das Interfaces
+
+### Interface ICheckMoviment
+
+É responsável por verificar se o movimento é válido.
+
+~~~java
+public interface ICheckMovement {
+    boolean verifyMovement(int target) throws InvalidPlay;
 }
-public interface IRound {
-  public void sumRound(boolean v);
-  public void verifyRound();
+~~~
+
+Método | Objetivo
+-------| --------
+verifyMovement | recebe como parâmetro a posição da segunda peça clicada, e compara com a posição da própria peça, verificando se o movimento é válido.
+
+### Interface PiecesAttributes
+
+Dá acesso aos atributos das peças.
+
+~~~java
+public interface PiecesAttributes {
+    void setType(int x);
+    char getType();
+    int getX();
+    IMovement[] getMoves();
+    void setIndex(int index);
+    int getIndex();
+    void setBoard(IBoard Board);
+    JButton getButton();
 }
-public interface Atributtes {
-  public int getScore();
-  public int getRound();
+~~~
+
+Método | Objetivo
+-------| --------
+setType | recebe como parâmetro um número inteiro e a partir dele define o tipo da peça
+getType | retorna o tipo da peça
+getX | retorna o número inteiro que foi usado para definir o tipo da peça
+getMoves | retorna o objeto com as informações sobre o movimento de cada jogada
+setIndex | guarda o índice da peça no tabuleiro
+getBoard | retorna o índice da peça no tabuleiro
+getButton | retorna o botão associado a peça
+
+## Componente Bonus03Component
+
+O Bonus03Component fornece peças do tipo bonus01.
+
+![Bonus03Component](diagrama-bonus03component.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | Bonus03Component
+Autores | Thaina Milene de Oliveira
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama IPieces](diagrama-ipieces4.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
 }
-public interface IScoreboard extends IScore, IRound, Atributtes {
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface ICheckMoviment
+
+É responsável por verificar se o movimento é válido.
+
+~~~java
+public interface ICheckMovement {
+    boolean verifyMovement(int target) throws InvalidPlay;
+}
+~~~
+
+Método | Objetivo
+-------| --------
+verifyMovement | recebe como parâmetro a posição da segunda peça clicada, e compara com a posição da própria peça, verificando se o movimento é válido.
+
+### Interface PiecesAttributes
+
+Dá acesso aos atributos das peças.
+
+~~~java
+public interface PiecesAttributes {
+    void setType(int x);
+    char getType();
+    int getX();
+    IMovement[] getMoves();
+    void setIndex(int index);
+    int getIndex();
+    void setBoard(IBoard Board);
+    JButton getButton();
+}
+~~~
+
+Método | Objetivo
+-------| --------
+setType | recebe como parâmetro um número inteiro e a partir dele define o tipo da peça
+getType | retorna o tipo da peça
+getX | retorna o número inteiro que foi usado para definir o tipo da peça
+getMoves | retorna o objeto com as informações sobre o movimento de cada jogada
+setIndex | guarda o índice da peça no tabuleiro
+getBoard | retorna o índice da peça no tabuleiro
+getButton | retorna o botão associado a peça
+
+## Componente ScoreboardComponent
+
+O ScoreboardComponent é responsável pelo placar e contador de rodadas do jogo, além de verificar ao final, se o jogador ganhou ou perdeu, e encerrando o jogo.
+
+![ScoreboardComponent](diagrama-scoreboardcomponent.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | ScoreboardComponent
+Autores | Thaina Milene de Oliveira
+Interfaces | IRound, IScore, ActionListener
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama IScoreboard](diagrama-iscoreboard.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IScoreboard extends IScore, IRound, ActionListener {
 }
 ~~~
 
 ## Detalhamento das Interfaces
 
 ### Interface IScore
-Manipula pontuação
+
+É responsável por atualizar o placar do jogo.
+
+~~~java
+public interface IScore {
+    void sumScore(int n);
+}
+~~~
 
 Método | Objetivo
 -------| --------
-sumScore | recebe um inteiro e o soma a pontuação atual
+sumScore | recebe como parâmetro a pontuação a ser somada ao placar e a soma
 
 ### Interface IRound
-Gerencia as rodadas
+
+É responsável por atualizar o contador de rodadas
+
+~~~java
+public interface IRound {
+    void sumRound();
+}
+~~~
 
 Método | Objetivo
 -------| --------
-sumRound | recebe um boolean e caso seja verdadeiro, soma mais um na rodada
-verifyRound | verifica se a rodada está abaixo de 20, e quando chega na 20ª, encerra o jogo
+sumRound | soma mais um na rodada
 
-### Interface Atributtes
-Retorna os valores da pontuação e da rodada atual
-Método | Objetivo
--------| --------
-getScore | retorna a pontuação atual
-getRound | retorna a rodada 
+## Componente MovementComponent
 
-# Componente MovimentComponent
-![BoardComponent](MovimentComponent.png)
+O MovementComponent é responsável por guardar as informações da rodada, como se ela é válida, o tipo de movimento, quais peças serão eliminadas.
 
-## Interfaces
+![MovementComponent](diagrama-movementcomponent.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | MovementComponent
+Autores | Thaina Milene de Oliveira
+Interfaces | MovementComponentAttributes, IVector
+
+### Interfaces
 
 Interfaces associadas a esse componente:
-![Interfaces do MovimentComponent](Interfaces_MovimentC.png)
 
-Campo | Valor
------ | -----
-Classe | BitCrush.project.MovimentComponents
-Autores | Thaina Milene de Oliveira
-Objetivo | Manipula os movimentos do jogo
-Interface | IMovimentC
-~~~
-public interface IMoviment {
-  public void move(String move);
-}
+![Diagrama IMovement](diagrama-imovement.png)
 
-public interface Atributtes {
-  public int[] getSource();
-  public int[] getTarget();
-  public String getSource2();
-  public String getTarget2();
-}
-public interface IMovimentC extends IMoviment, Atributtes {
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IMovement extends MovementComponentAttributes, IVector {
 }
 ~~~
 
 ## Detalhamento das Interfaces
 
-### Interface IMoviment
-Transforma uma string de coordenadas, em vetores de inteiros
+### Interface MovementComponentAttributes
+
+
+Dá acesso aos atributos da classe.
+
+~~~java
+public interface MovementComponentAttributes {
+
+    void setMoveType(char moveType);
+    void setV(boolean v);
+    char getMovetype();
+    int[] getVct();
+    boolean isV();
+
+}
+~~~
 
 Método | Objetivo
 -------| --------
-move | recebe uma string com as coordenadas, e as transforma em dois vetores de inteiro
+setMoveType | recebe como parâmetro um char que representa o tipo de movimento que a rodada gerará.
+setV | recebe como parametro um boolean que define a jogada como possível pu não possível
+getMovetype | retorna o tipo de movimento
+getVct | retorna um vetor com as peças a serem eliminadas
+isV() | retorna se a jogada é verdadeira ou falsa
 
-### Interface Atributtes
-Retorna os vetores com as coordenadas e as strings da coordenada
+### Interface IVector
+
+É responsável por manipular o vetor contendo as peças a serem eliminadas
+
+~~~java
+public interface IVector {
+    void addVct(int index);
+    void removeVct();
+}
+~~~
+
 Método | Objetivo
 -------| --------
-getSource | retorna um vetor de inteiros com a posição inicial da peça
-getTarget | retorna um vetor de inteiros com a posição final da peça 
-getSource2 | retorna uma String com a posição inicial da peça
-getTarget2 | retorna uma String com a posição final da peça 
+addVct | adiciona um índice ao vetor, na posição que o contador estivel
+removeVct() | faz um contador voltar uma posição, para assim o último elemento ser sobrescrito por outro
+
+## Componente TranslateMovementComponent
+
+O TranslateMovementComponent é responsável por traduzir e guardar em um objeto os índices das peças trocadas.
+
+![TranslateMovementComponent](diagrama-translatemovementcomponent.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | TranslateMovementComponent
+Autores | Thaina Milene de Oliveira
+Interfaces | ITranslateMovementC
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama ITranslateMovementC](diagrama-itranslatemovementc.png)
+
+## Detalhamento da Interface
+
+### Interface ITranslateMovementC
+
+
+Dá acesso aos atributos da classe.
+
+~~~java
+public interface ITranslateMovementC {
+    int getSource();
+    int getTarget();
+    void setTarget(int target) throws NonAdjacentPieces;
+    void setSource(int source);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+setSource | recebe como parâmetro um inteiro que representa a posição da primeira peça clicada
+setTarget | recebe como parâmetro um inteiro que representa a posição da segunda peça clicada
+getSource| retorna a posição da primeira peça
+getTarget| retorna a posição da segunda peça
+
+# Plano de Exceções1
+
+## Diagrama da hierarquia de exceções
+
+![Hierarquia Exceções](exception-hierarchy.png)
+
+## Descrição das classes de exceção
+
+Classe | Descrição
+----- | -----
+InvalidPlay | Engloba todas as exceções de jogadas não aceitas.
+NonAdjacentPieces | Indica que foi clicado duas peças não adjacentes.
+UselessMovement | Indica que o movimento não gera uma jogada válida
