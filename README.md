@@ -29,13 +29,63 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 
 # Destaques de Código
 
-> <Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.>
-
 ~~~java
-// Recorte do seu código
-public void algoInteressante(…) {
-   …
-   trechoInteressante = 100;
+ public boolean verifyMovement(int target) {
+
+        moves[0] = new MovementComponent();
+        moves[1] = new MovementComponent();
+        if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
+            if (type == getPieceOnTop(target) && type == getPieceOnTop(target - 9)) {
+                moves[0].setV(true);
+                moves[0].setMoveType('c');
+                moves[0].addVct(target);
+                moves[0].addVct(target - 9);
+                moves[0].addVct(target - 18);
+                if (type == getPieceInBottom(target)) {
+                    moves[0].setMoveType('1');
+                    moves[0].addVct(target + 9);
+                }
+            }
+            if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
+                if (moves[0].isV()) {
+                    moves[0].setMoveType('b');
+                    moves[0].addVct(target + 18);
+                } else {
+                    moves[0].setV(true);
+                    moves[0].setMoveType('c');
+                    moves[0].addVct(target);
+                    moves[0].addVct(target + 9);
+                    moves[0].addVct(target + 18);
+                    if (type == getPieceOnTop(target)) {
+                        moves[0].setMoveType('1');
+                        moves[0].addVct(target - 9);
+                    }
+                }
+            } else if (!moves[0].isV() && type == getPieceOnTop(target) && type == getPieceInBottom(target)) {
+                moves[0].setV(true);
+                moves[0].setMoveType('c');
+                moves[0].addVct(target);
+                moves[0].addVct(target + 9);
+                moves[0].addVct(target - 9);
+            }
+            if (moves[0].getMovetype() != 'b') {
+                if (type == getPieceInRight(target) && type == getPieceInRight(target + 1)) {
+                    if (moves[0].getMovetype() == '1') {
+                        moves[0].removeVct();
+                    }
+                    if (moves[0].isV()) {
+                        moves[0].setMoveType('2');
+                    } else {
+                        moves[0].setV(true);
+                        moves[0].setMoveType('l');
+                        moves[0].addVct(target);
+                    }
+                    moves[0].addVct(target + 1);
+                    moves[0].addVct(target + 2);
+                }
+            }
+        }
+        ...
 }
 ~~~
 
@@ -140,6 +190,26 @@ public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListene
 É responsável por verificar se o movimento é válido.
 
 ~~~java
+        moves[0] = new MovementComponent();
+        moves[1] = new MovementComponent();
+        if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
+            if (type == getPieceOnTop(target) && type == getPieceOnTop(target - 9)) {
+                moves[0].setV(true);
+                moves[0].setMoveType('c');
+                moves[0].addVct(target);
+                moves[0].addVct(target - 9);
+                moves[0].addVct(target - 18);
+                if (type == getPieceInBottom(target)) {
+                    moves[0].setMoveType('1');
+                    moves[0].addVct(target + 9);
+                }
+            }
+            if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
+                if (moves[0].isV()) {
+                    moves[0].setMoveType('b');
+                    moves[0].addVct(target + 18);
+                } else {
+                    moves[0].setV(true);
 public interface ICheckMovement {
     boolean verifyMovement(int target) throws InvalidPlay;
 }
