@@ -10,18 +10,19 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 # Vídeos do Projeto
 
 ## Vídeo da Prévia
-[Link do vídeo da prévia](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
+[vídeo da prévia](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
 
 ## Vídeo do Jogo
+[vídeo do jogo]
 > <Coloque um link para o vídeo em que é demonstrada a versão final do jogo. Esse vídeo deve ter em torno de 5 minutos. Este vídeo não apresenta slides, nem substitui a apresentação final do projeto, que será feita por conferência. Ele mostra apenas o jogo em funcionamento.>
 
 # Slides do Projeto
 
 ## Slides da Prévia
-[Link slides da prévia](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
+[slides da prévia](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
 
 ## Slides da Apresentação Final
-`<Coloque um link para os slides da apresentação final do projeto.>`
+[slides finais]`<Coloque um link para os slides da apresentação final do projeto.>`
 
 ## Relatório de Evolução
 
@@ -85,6 +86,7 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
                 }
             }
         }
+
         ...
 }
 ~~~
@@ -112,9 +114,9 @@ public void algoInteressante(…) {
 
 ## Diagrama Geral do Projeto
 
-> <Apresente um diagrama geral de organização da organização do seu sistema. O formato é livre. A escolha de um ou mais estilos arquiteturais será considerado um diferencial.>
+![diagrama geral de organização](diagrama-organizacao)
 
-> <Faça uma breve descrição do diagrama.>
+O usuário clica em duas peças no tabuleiro, que enviam os dados para serem traduzidos, e devolve ao tabuleiro que pede a peça para verificar o movimento, enviando os dados destes para Movement que guarda as informações do movimento e depois as enviam para o tabuleiro atualizar a tela.
 
 ## Diagrama Geral de Componentes
 
