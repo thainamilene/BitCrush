@@ -114,7 +114,7 @@ public void algoInteressante(…) {
 
 ## Diagrama Geral do Projeto
 
-![diagrama geral de organização](diagrama-organizacao)
+![diagrama geral de organização](diagrama)
 
 O usuário clica em duas peças no tabuleiro, que enviam os dados para serem traduzidos, e devolve ao tabuleiro que pede a peça para verificar o movimento, enviando os dados destes para Movement que guarda as informações do movimento e depois as enviam para o tabuleiro atualizar a tela.
 
