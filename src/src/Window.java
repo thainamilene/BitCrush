@@ -237,7 +237,7 @@ public class Window extends JFrame implements ActionListener {
         mainPanel.add(lvl2, BorderLayout.CENTER);
         mainPanel.add(lvl3, BorderLayout.EAST);
         mainPanel.add(name, BorderLayout.SOUTH);
-
+        
         SwingUtilities.updateComponentTreeUI(this);
 
     }

@@ -1,9 +1,14 @@
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 
 public abstract class Pieces implements IPieces {
-    protected int x;
+    private Container mainPanel;
+	protected int x;
     protected char type;
     protected int index;
     protected JButton button;
@@ -41,19 +46,19 @@ public abstract class Pieces implements IPieces {
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
-        try {
-            Board.translate(index); //envia ao tabuleiro o indice da peca clicada
+    	try {
+           TranslateMovement.addIndex(index);
         } catch (NonAdjacentPieces error) {
-            System.out.println(error.getMessage());
-
+           JOptionPane.showMessageDialog(mainPanel, new ImageIcon(Main.class.getResource(".").getPath() + "/Images/image1.png"), "SELECIONE PEÇAS ADJACENTES", JOptionPane.PLAIN_MESSAGE);
         } catch (UselessMovement error) {
-            System.out.println(error.getMessage());
-        } catch (Exception error) {
-            System.out.println("erro: " + error.getMessage());
-        }
+           JOptionPane.showMessageDialog(mainPanel, new ImageIcon(Main.class.getResource(".").getPath() + "/Images/image2.png"), "MOVIMENTO INVÁLIDO", JOptionPane.PLAIN_MESSAGE);
+       } catch (Exception error) {
+           System.out.println("erro: " + error.getMessage());
+       }
     }
 
-    public void setBoard(IBoard Board) {
+    public void setBoard(IBoard Board, Container mainPanel) {
+    	this.mainPanel = mainPanel;
         this.Board = Board;
         this.board = Board.getBoard();
     }
