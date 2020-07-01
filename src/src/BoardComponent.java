@@ -837,5 +837,4 @@ public class BoardComponent extends JPanel implements IBoard {
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
-
 }
