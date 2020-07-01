@@ -10,7 +10,15 @@ public class Tips extends JLabel{
 	private Color color02;
 	
 	public Tips(ImageIcon image) {
+		super();
 		setIcon(image);
+	}
+	
+	public Tips(ImageIcon image, Color color01, Color color02) {
+		super();
+		setIcon(image);
+		this.color01 = color01;
+		this.color02 = color02;
 	}
 	
 	public void setImage(ImageIcon image) {

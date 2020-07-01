@@ -1,6 +1,4 @@
 
-public interface IBoard {
+public interface IBoard extends IBoardManager, IImages{
 
-    IPieces[] getBoard();
-    void movePieces() throws InvalidPlay;
 }

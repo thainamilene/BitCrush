@@ -1,3 +1,5 @@
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
@@ -23,6 +25,10 @@ public class BoardComponent extends JPanel implements IBoard {
         mainPanel.remove(0);
         mainPanel.remove(0);
         score = new ScoreboardComponent(mainPanel);
+        score.addImage(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/round.png"));
+        score.addImage(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/score.png"));
+        score.addLoseImage(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/lose.png"));
+        score.addWinImage(new ImageIcon(Main.class.getResource(".").getPath() +  "/Images/win.png"));
         mainPanel.add(score, BorderLayout.NORTH);
         board = new Pieces[81];
         setSize(450, 450);
@@ -159,6 +165,10 @@ public class BoardComponent extends JPanel implements IBoard {
         verifyBoard();
         haveMovement();
         SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+
+    public void addImage(ImageIcon image) {
+    	add(new JLabel(image));
     }
 
     private void assembleBoard() {

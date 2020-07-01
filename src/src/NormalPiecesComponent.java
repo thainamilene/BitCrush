@@ -2,9 +2,13 @@ import javax.swing.ImageIcon;
 
 public class NormalPiecesComponent extends Pieces {
 
+	static ImageIcon[] pieces;
+	
+	
     public NormalPiecesComponent() {
         super();
         style();
+        pieces = new ImageIcon[9];
     }
 
     public void setType(int x) {
@@ -13,7 +17,6 @@ public class NormalPiecesComponent extends Pieces {
         switch (x) {
             case -1:
                 this.type = 'D';
-                button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/field.png"));
                 break;
             case 0:
                 this.type = '1';
@@ -163,4 +166,14 @@ public class NormalPiecesComponent extends Pieces {
         verifyTargetMovement(target); //verifica o movimento da segunda peca selecionada
         return moves[0].isV() || moves[1].isV(); //se um dos dois movimentos sao verdadeiro, entao o movimento final e valido
     }
+
+	public void addImage(ImageIcon image) {
+		int i = 0;
+		while (pieces[i] != null) {
+			i++;
+		}
+		if (i < 9) {
+			pieces[i] = image;
+		}
+	}
 }

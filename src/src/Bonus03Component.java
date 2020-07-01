@@ -2,6 +2,8 @@ import javax.swing.ImageIcon;
 
 public class Bonus03Component extends Pieces {
 
+	private static ImageIcon image = new ImageIcon();
+	
     public Bonus03Component() {
         super();
         style();
@@ -11,12 +13,11 @@ public class Bonus03Component extends Pieces {
     public void setType(int x) {
         if (x == -1) {
             this.x = -1;
-            button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/field.png"));
             type = 'D';
         } else {
             this.x = x;
             type = 'o';
-            button.setIcon(new ImageIcon(Main.class.getResource(".").getPath() + "/Images/Bonus03.png"));
+            button.setIcon(image);
         }
     }
 
@@ -28,4 +29,12 @@ public class Bonus03Component extends Pieces {
         verifyTargetMovement(target);
         return true; //movimentos com os bonus sao sempre validos
     }
+    
+    public void addImage(ImageIcon image) {
+		Bonus03Component.image = image;
+		button.setIcon(image);
+	}
+    
+    
+    
 }
