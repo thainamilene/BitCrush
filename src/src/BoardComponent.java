@@ -364,7 +364,7 @@ public class BoardComponent extends JPanel implements IBoard {
     }
 
     private void destroyNormalPieces(int s, int k, int t) {
-        /*define as pecas a serem mortas como o tipo morta (setType(-1), e verifica se a peca deve trnasformar-se em um bonus*/
+        /*define as pecas a serem mortas como o tipo morta (setType(-1)), e verifica se a peca deve transformar-se em um bonus*/
         int i = 0;
         while (i<5 && board[s].getMoves()[k].getVct()[i] != -1) {
             board[board[s].getMoves()[k].getVct()[i]].setType(-1);

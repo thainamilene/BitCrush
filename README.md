@@ -1,6 +1,6 @@
 # Projeto Bitcrush
 
-# Descrição Resumida do Projeto/Jogo
+# Descrição Resumida do Jogo
 
 Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar duas peças de lugar no tabuleiro para criar combinações de 3 ou mais peças do mesmo tipo.
 
@@ -26,6 +26,61 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 ## Relatório de Evolução
 
 > <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
+
+###Introdução
+
+Nos tópicos abaixo serão detalhados as principais evoluções do projeto:
+
+###Interface gráfica
+> Quando planejei o projeto, não tinha pensado em fazer uma interface gráfica, iria apenas imprimir as informações necessárias pelo terminal, assim, quando fui fazer a interface gráfica, não tinha definido um tema, e nem como as coisas seriam organizadas na tela. O primeiro passo que fiz foi pensar no tema, inicialmente, queria fazer algo relacionado a TI, por já ter nomeado o projeto com "Bit", porém, não achei nada que combinassse, assim, após achar um pack de ícones de monstrinhos no site flaticon.com, decidi trabalhar nesse tema, e a partir disso desenhei como eu queria as telas, e isso mudou bem pouco até o fim do projeto, mudando apenas o design de alguns botões e nada mais. Além disso, criei diversas outras classe que não tinha pensado inicialmente, como a Tips, que guarda as informações das dicas, as classes ButtonStyle01 e ButtonStyle02, que definem dois tipos de botões, e a própria classe Window, que cria a janela principal.
+
+###Componentes
+> Inicialmente, estava planejado ter sete componentes, quatro representando as peças, um para o tabuleiro, um para o placar e um que traduzia as coordenadas movimento, porém no decorrer do projeto vi a necessidade de criar mais um componente para guardar as informações do movimento, enquanto já verificava se este era possível, antes disso estava verificando se era possível e depois verificando que tipo de movimento era, fazendo o mesmo trabalho duas vezes. Além disso, decidi que o componente de traduzir as coordenadas, não seria mais um componente, mas sim uma classe com atributos e métodos estático, pois nesse caso também estava fazendo trabalhos desnecessário por conta de quando o jogador clicava nas peças, estas tinham que enviar as coordenadas ao tabuleiro e este enviar a tradutor, com esta mudança, as peças enviam diretamente ao tradutor, sem passar pelo tabuleiro.
+
+###Interfaces
+> As interfaces foram umas das coisas que mais mudaram no projeto, diversas delas tinham coisas que podiam muito bem ser métodos privados, sem prejudicar o funcionamento do jogo um exemplo é as interfaces do BoardComponent, antes a interface IBoard, extendia as interfaces IPieceManager e IBoardManager, a primeira delas, eu exclui completamente, pois todas as ações necessárias eram chamadas pela própria classe, já as interfaces das classes que representam as peças, IPieces, extendia duas outras interfaces, a Atributtes e ICheckMovement, agora, esta além dessas duas, extende mais outras duas, a IImages e ActionListener, além disso, a primeira teve uma mudança significativa nos métodos, como detalhado abaixo: 
+
+
+Antes:
+
+~~~java
+
+public interface Atributtes {
+  public void setType(int n);
+  public char getType();
+}
+~~~
+ 
+Agora:
+
+~~~java
+import javax.swing.JButton;
+import java.awt.Container;
+
+public interface PiecesAttributes {
+    void setType(int x);
+    char getType();
+    int getX();
+    IMovement[] getMoves();
+    void setIndex(int index);
+    int getIndex();
+    void setBoard(IBoard Board, Container mainPanel);
+    JButton getButton();
+}
+~~~
+
+> As mudanças nas interfaces ocorreram principalmente devido a implementação da interface gráfica, por causa das peças serem botões, que facilitava a retornar a posição desta, mas também precisava de outras informações para conseguir atualizar o tabuleiro.
+
+###Design Pattern
+> A minha maior dificuldade no projeto foi na implementação de um pattern no meu projeto, primeiro, porque, não fiz isso desde o ínicio, decidi colocar quando o projeto já estava quase finalizado; inicialmente quis implementar o observer, mas por conta de o jogador clicar na peça e esta mesma peça ter que dar o seu índice para o tradutor, não consegui implementar este, depois disso, tentei outros, como o prototype, singleton, ambos sem sucesso. No fim, percebi que o meu projeto era dividido em objetos dentro de objetos, e implementei o composite, para isso, coloquei métodos cujo usuário conseguisse mudar o design da maioria dos itens, além de que foi nesse momento que criei as classes Tips, ButtonStyle01, ButtonStyle02, e também adicionei algumas imagens pela main, que antes a única coisas que fazia, era criar um objeto da classe Window, e todo o resto do design era decidido pelos outros componentes, sem possíveis alterações.
+
+
+###Exceções
+> A única evolução em relação as exceções, é que antes, quando uma ocorria, o programa imprimia uma mensagem de erro, e agora aparece um popup alertando o jogador, porém quando planejei, não tinha pensado em fazer nenhum dos dois.
+###Código
+
+###Considerações Finais
+
 
 # Destaques de Código
 
@@ -115,7 +170,7 @@ private void assembleBoard() {
 
 ~~~java
  private void destroyNormalPieces(int s, int k, int t) {
-        /*define as pecas a serem mortas como o tipo morta (setType(-1), e verifica se a peca deve trnasformar-se em um bonus*/
+        /*define as pecas a serem mortas como o tipo morta (setType(-1)), e verifica se a peca deve transformar-se em um bonus*/
         int i = 0;
         while (i<5 && board[s].getMoves()[k].getVct()[i] != -1) {
             board[board[s].getMoves()[k].getVct()[i]].setType(-1);
@@ -388,7 +443,7 @@ public class Bonus03Component extends Pieces {
 
 ## Diagrama Geral do Projeto
 
-![diagrama geral de organização](diagrama-orgazinacao.png)
+![diagrama geral de organização](diagrama-organizacao.png)
 
 > O usuário clica em duas peças no tabuleiro, que enviam os dados para serem traduzidos, e devolve ao tabuleiro que pede a peça para verificar o movimento, enviando os dados destes para Movement que guarda as informações do movimento e depois as enviam para o tabuleiro atualizar a tela.
 
