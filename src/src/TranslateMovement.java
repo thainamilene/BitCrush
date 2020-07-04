@@ -1,5 +1,3 @@
-
-
 public class TranslateMovement{
     private static int source; //index da primeira peca selecionada
     private static int target; //index da primeira segunda selecionada

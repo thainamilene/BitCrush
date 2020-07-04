@@ -13,8 +13,7 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 [vídeo da prévia](https://drive.google.com/file/d/1cZREXR3dypyyvbGZF23Ii20eB0uwlEGt/view?usp=sharing)
 
 ## Vídeo do Jogo
-[vídeo do jogo]
-> <Coloque um link para o vídeo em que é demonstrada a versão final do jogo. Esse vídeo deve ter em torno de 5 minutos. Este vídeo não apresenta slides, nem substitui a apresentação final do projeto, que será feita por conferência. Ele mostra apenas o jogo em funcionamento.>
+[vídeo do jogo](https://drive.google.com/file/d/1-Gm4EdbqBJ_Lt2ERqS7QH-4Tb_wh8NE9/view?usp=sharing)
 
 # Slides do Projeto
 
@@ -22,13 +21,36 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 [slides da prévia](https://docs.google.com/presentation/d/1AGrgW_72BtfeeAorsiIWryYgMXez1P_BmrZlbxnDQlE/edit?usp=sharing)
 
 ## Slides da Apresentação Final
-[slides finais]`<Coloque um link para os slides da apresentação final do projeto.>`
+[slides finais](https://docs.google.com/presentation/d/1X-TS3S5HG9MwJB3k2zf_FLTThtU5w_E21qw7oEUxDRQ/edit?usp=sharing)
 
 ## Relatório de Evolução
 
 > <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
 
 # Destaques de Código
+
+~~~java
+private void assembleBoard() {
+        /*monta o tabuleiro inicial*/
+        Random random = new Random();
+        int x;
+        for (int i = 0; i < 81; i++) {
+            board[i] = new NormalPiecesComponent();
+            x = random.nextInt(lv); //cria um numero aleatorio que gerara uma peca
+            board[i].setType(x);    //o lv e definido pelo nivel que a pessoa escolher: nivel 01 - lv = 05; nivel 02 - lv = 07; nivel 03 - lv = 09
+            board[i].setIndex(i);
+            board[i].setBoard(this, mainPanel);
+        }
+        verifyFirstBoard(); // verifica se ja ha combinacoes de 3 pecas no tabuleiro e a elimina
+        for (int i = 0; i < 81; i++) {
+            /*adiciona os botoes no tabuleiro*/
+            this.add(board[i].getButton(), i);
+        }
+        mainPanel.add(this, BorderLayout.CENTER);
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+~~~
+
 
 ~~~java
  public boolean verifyMovement(int target) {
@@ -91,22 +113,274 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 }
 ~~~
 
+~~~java
+ private void destroyNormalPieces(int s, int k, int t) {
+        /*define as pecas a serem mortas como o tipo morta (setType(-1), e verifica se a peca deve trnasformar-se em um bonus*/
+        int i = 0;
+        while (i<5 && board[s].getMoves()[k].getVct()[i] != -1) {
+            board[board[s].getMoves()[k].getVct()[i]].setType(-1);
+            i ++;
+        }
+
+        if (i == 4) { //movimento que gera bonus 01
+            int aux;
+            if (k == 0) {
+                aux = board[t].getIndex();
+                remove(aux);
+                board[t] = new Bonus01Component();
+                board[t].setIndex(aux);
+                board[t].setBoard(this, mainPanel);
+                add(board[t].getButton(), aux);
+            } else {
+                aux = board[s].getIndex();
+                remove(aux);
+                board[s] = new Bonus01Component();
+                board[s].setIndex(aux);
+                board[s].setBoard(this, mainPanel);
+                add(board[s].getButton(), aux);
+            }
+            score.sumScore(7);
+        } else if (board[s].getMoves()[k].getMovetype() == 'b') { //movimento que gera bonus 03
+            if (k == 0) {
+                int aux = board[t].getIndex();
+                remove(aux);
+                board[t] = new Bonus03Component();
+                board[t].setIndex(aux);
+                board[t].setBoard(this, mainPanel);
+                add(board[t].getButton(), aux);
+            } else {
+                int aux = board[s].getIndex();
+                remove(aux);
+                board[s] = new Bonus03Component();
+                board[s].setIndex(aux);
+                board[s].setBoard(this, mainPanel);
+                add(board[s].getButton(), aux);
+            }
+            score.sumScore(12);
+        } else if (i == 5) { //movimento que gera bonus 02
+            if (k == 0) {
+                int aux = board[t].getIndex();
+                remove(aux);
+                board[t] = new Bonus02Component();
+                board[t].setIndex(aux);
+                board[t].setBoard(this, mainPanel);
+                add(board[t].getButton(), aux);
+            } else {
+                int aux = board[s].getIndex();
+                remove(aux);
+                board[s] = new Bonus02Component();
+                board[s].setIndex(aux);
+                board[s].setBoard(this, mainPanel);
+                add(board[s].getButton(), aux);
+            }
+            score.sumScore(10);
+        } else {
+            score.sumScore(5);
+        }
+    }
+~~~
+
 # Destaques de Pattern
-`<Destaque de patterns adotados pela equipe. Sugestão de estrutura:>`
 
 ## Diagrama do Pattern
-`<Diagrama do pattern dentro do contexto da aplicação.>`
+ ![Diagrama-composite](diagrama-composite.png)
 
 ## Código do Pattern
 ~~~java
-// Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
-public void algoInteressante(…) {
-   …
-   trechoInteressante = 100;
+
+public interface IImages {
+	void addImage(ImageIcon image);
 }
 ~~~
 
-> <Explicação de como o pattern foi adotado e quais suas vantagens, referenciando o diagrama.>
+~~~java
+
+public class Window extends JFrame implements IImages, ActionListener  {
+    private ButtonStyle01 back, jump, next;
+    private JPanel buttons, buttonPanel;
+    private JLabel imageLabel, title, logo;
+    private ButtonStyle01 play, rules;
+    private ButtonStyle02 lvl1, lvl2, lvl3;
+    private Vector<Tips> tips;
+    private int tipsLength = 0;
+    private ImageIcon image;
+   
+    ...
+   
+    public void addImage(ImageIcon image) {
+    	imageLabel.setIcon(image);
+    	this.image = image;
+    } 
+    
+    public Component getButton01(int index) {
+    	return buttonPanel.getComponent(index);
+    }
+    
+    public void removeButton01 (int index) {
+	   buttonPanel.remove(index);
+    }
+    
+    public Tips getTip (int index) {
+        return tips.get(index);
+    }
+    
+    public void addTips(Tips tip) {
+    	tips.add(tip);
+    	tipsLength ++;
+    }
+    
+    public void removeTips (int index) {
+    	tips.remove(index);
+    }
+    
+    public Component getTipsButtons (int index) {
+    	return buttons.getComponent(index);
+    }
+    
+    public void removeTipsButton (int index) {
+ 	   buttons.remove(index);
+    }
+    
+    public ButtonStyle02 getLvlButton (int lv) {
+    	if (lv == 1) {
+    		return lvl1;
+    	} 
+    	if (lv == 2) {
+    		return lvl2;
+    	}
+    	if (lv == 3) {
+    		return lvl3;
+    	}
+		return null;
+    }
+
+    public void setTitle (Icon icon) {
+    	title.setIcon(icon);
+    }
+    
+    public void setTitle (String text) {
+    	title.setText(text);
+    }
+   
+    public void setLogo (Icon icon) {
+    	logo.setIcon(icon);
+    }
+   
+    public void setLogo (String text) {
+    	logo.setText(text);
+    }
+    
+    ...
+}
+~~~
+
+~~~java
+
+public class ScoreboardComponent extends JPanel implements IScoreboard {
+	private Vector <JLabel> scoreboard;
+	private int scoreboardlength = 0;
+   	private JLabel win, lose;
+
+  	...
+
+	public void addImage(ImageIcon image) {
+		scoreboard.get(scoreboardlength).setIcon(image);
+		scoreboardlength ++;
+	}
+	
+	public void addWinImage(ImageIcon image) {
+		win.setIcon(image);
+	}
+	public void addLoseImage(ImageIcon image) {
+		lose.setIcon(image);
+	}
+}
+~~~
+~~~ java
+
+public class BoardComponent extends JPanel implements IBoard {
+    private final IPieces[] board;
+
+	...
+
+    public IPieces[] getBoard() {
+        return board;
+    }
+
+	public void addImage(ImageIcon image) {
+    	add(new JLabel(image));
+    }
+
+    public IPieces getPiece(int index) {
+		return index < 81 ? board[index]: null;
+    }
+    
+    ...
+}
+~~~
+
+~~~java
+public class NormalPiecesComponent extends Pieces {
+
+	static ImageIcon[] pieces;
+
+   ...
+
+	public void addImage(ImageIcon image) {
+		int i = 0;
+		while (pieces[i] != null) {
+			i++;
+		}
+		if (i < 9) {
+			pieces[i] = image;
+		}
+	}
+}
+~~~
+
+~~~java
+public class Bonus01Component extends Pieces {
+
+	private static ImageIcon image = new ImageIcon();
+	
+   ...
+
+	public void addImage(ImageIcon image) {
+		Bonus01Component.image = image;
+		button.setIcon(image);
+	}
+}
+~~~
+
+~~~java
+public class Bonus02Component extends Pieces {
+
+	private static ImageIcon image = new ImageIcon();
+	
+   ...
+
+	public void addImage(ImageIcon image) {
+		Bonus01Component.image = image;
+		button.setIcon(image);
+	}
+}
+~~~
+
+~~~java
+public class Bonus03Component extends Pieces {
+
+	private static ImageIcon image = new ImageIcon();
+	
+   ...
+
+	public void addImage(ImageIcon image) {
+		Bonus01Component.image = image;
+		button.setIcon(image);
+	}
+}
+~~~
+
+> Primeiramente, organizei o projeto de modo que houvesse uma hierarquia de componentes, assim, a janela principal é composta, na parte principal do jogo, por um placar em cima, o tabuleiro no centro, e o logo embaixo, o placar pode ser composto por diversas imagens, o tabuleiro é composto por até 81 peças, de quatro tipos diferentes. Já nas demais etapas do jogo, a janela é compostas por imagens diversas e botões, Para implementar isso, escolhi colocar uma interface mínima para definir as imagens dos itens, obtando por segurança, ao invés de transparência. A vantagem disso, é o maior controle dos componentes da janela, podendo ser removidos ou adicionados novos, como por exemplo, você consegue colocar quantas dicas quiser, ou não colocar nenhuma e eliminar os botões associados a isso.
 
 # Documentação dos Componentes
 
@@ -116,7 +390,7 @@ public void algoInteressante(…) {
 
 ![diagrama geral de organização](diagrama.png)
 
-O usuário clica em duas peças no tabuleiro, que enviam os dados para serem traduzidos, e devolve ao tabuleiro que pede a peça para verificar o movimento, enviando os dados destes para Movement que guarda as informações do movimento e depois as enviam para o tabuleiro atualizar a tela.
+> O usuário clica em duas peças no tabuleiro, que enviam os dados para serem traduzidos, e devolve ao tabuleiro que pede a peça para verificar o movimento, enviando os dados destes para Movement que guarda as informações do movimento e depois as enviam para o tabuleiro atualizar a tela.
 
 ## Diagrama Geral de Componentes
 

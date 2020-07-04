@@ -111,6 +111,7 @@ public class ScoreboardComponent extends JPanel implements IScoreboard {
 		scoreboard.get(scoreboardlength).setIcon(image);
 		scoreboardlength ++;
 	}
+	
 	public void addWinImage(ImageIcon image) {
 		win.setIcon(image);
 	}

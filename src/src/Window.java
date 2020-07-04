@@ -242,12 +242,15 @@ public class Window extends JFrame implements IImages, ActionListener  {
     public void setTitle (Icon icon) {
     	title.setIcon(icon);
     }
+    
     public void setTitle (String text) {
     	title.setText(text);
     }
+   
     public void setLogo (Icon icon) {
     	logo.setIcon(icon);
     }
+   
     public void setLogo (String text) {
     	logo.setText(text);
     }

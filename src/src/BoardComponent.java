@@ -182,7 +182,7 @@ public class BoardComponent extends JPanel implements IBoard {
             board[i].setIndex(i);
             board[i].setBoard(this, mainPanel);
         }
-        verifyFirstBoard(); // verifica se ja ha combinacoes de 3 pecas no tabuleiro e ha elimina
+        verifyFirstBoard(); // verifica se ja ha combinacoes de 3 pecas no tabuleiro e a elimina
         for (int i = 0; i < 81; i++) {
             /*adiciona os botoes no tabuleiro*/
             this.add(board[i].getButton(), i);
@@ -371,7 +371,7 @@ public class BoardComponent extends JPanel implements IBoard {
             i ++;
         }
 
-        if (i == 4) {
+        if (i == 4) { //movimento que gera bonus 01
             int aux;
             if (k == 0) {
                 aux = board[t].getIndex();
@@ -389,7 +389,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 add(board[s].getButton(), aux);
             }
             score.sumScore(7);
-        } else if (board[s].getMoves()[k].getMovetype() == 'b') {
+        } else if (board[s].getMoves()[k].getMovetype() == 'b') { //movimento que gera bonus 03
             if (k == 0) {
                 int aux = board[t].getIndex();
                 remove(aux);
@@ -406,7 +406,7 @@ public class BoardComponent extends JPanel implements IBoard {
                 add(board[s].getButton(), aux);
             }
             score.sumScore(12);
-        } else if (i == 5) {
+        } else if (i == 5) { //movimento que gera bonus 02
             if (k == 0) {
                 int aux = board[t].getIndex();
                 remove(aux);
@@ -847,4 +847,7 @@ public class BoardComponent extends JPanel implements IBoard {
         SwingUtilities.updateComponentTreeUI(mainPanel);
     }
 
+    public IPieces getPiece(int index) {
+		return index < 81 ? board[index]: null;
+    }
 }
