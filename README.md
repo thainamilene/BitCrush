@@ -388,7 +388,7 @@ public class Bonus03Component extends Pieces {
 
 ## Diagrama Geral do Projeto
 
-![diagrama geral de organização](diagrama.png)
+![diagrama geral de organização](diagrama-orgazinacao.png)
 
 > O usuário clica em duas peças no tabuleiro, que enviam os dados para serem traduzidos, e devolve ao tabuleiro que pede a peça para verificar o movimento, enviando os dados destes para Movement que guarda as informações do movimento e depois as enviam para o tabuleiro atualizar a tela.
 
@@ -398,7 +398,7 @@ public class Bonus03Component extends Pieces {
 
 ## Componente BoardComponent
 
-O BoardComponent fornece um tabuleiro 9x9, onde serão colocadas peças e toda a função de manipulação destas serão feitas por ele.
+> O BoardComponent fornece um tabuleiro 9x9, onde serão colocadas peças e toda a função de manipulação destas serão feitas por ele.
 
 ![BoardComponent](diagrama-boardcomponent.png)
 
@@ -407,7 +407,7 @@ item | detalhamento
 ----- | -----
 Classe | BoardComponent
 Autores | Thaina Milene de Oliveira
-Interfaces | IBoard
+Interfaces | IBoardManager, IImages
 
 ### Interfaces
 
@@ -415,23 +415,48 @@ Interfaces associadas a esse componente:
 
 ![Diagrama IBoard](diagrama-iboard.png)
 
-## Detalhamento das Interfaces
-
-### Interface IBoard
-
-É responsável por toda a comunicação necessária entre as peças e o tabuleiro.
+Interface agregadora do componente em Java:
 
 ~~~java
-public interface IBoard {
-    void translate(int position) throws InvalidPlay;
-    IPieces[] getBoard();
+public interface IBoard extends IBoardManager, IImages{
+}
+~~~
+
+## Detalhamento das Interfaces
+### Interface IImages
+
+É a interface do pattern, responsável por adicionar imagens.
+
+~~~java
+import javax.swing.ImageIcon;
+
+public interface IImages {
+	void addImage(ImageIcon image);
 }
 ~~~
 
 Método | Objetivo
 -------| --------
-translate | Reconhece o index das peças clicadas, e envia para uma interface do tipo ITranslateMovimentC para criar um objeto que guarda os movimentos.
+addImages | adiciona uma imagem, sem estar associada a nenhuma peça no tabuleiro.
+
+### Interface IBoardManager
+
+É responsável por toda a comunicação necessária entre as peças e o tabuleiro.
+
+~~~java
+public interface IBoard {
+    IPieces[] getBoard();
+    void movePieces() throws InvalidPlay;
+}
+~~~
+
+Método | Objetivo
+-------| --------
+movePieces | move as peças de acordo com o tipo de movimento
 getBoard | Retorna o atributo board, que guarda as peças
+
+
+
 
 ## Componente NormalPiecesComponent
 
@@ -444,7 +469,8 @@ item | detalhamento
 ----- | -----
 Classe | NormalPiecesComponent
 Autores | Thaina Milene de Oliveira
-Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener, IImages
+
 
 ### Interfaces
 
@@ -455,37 +481,33 @@ Interfaces associadas a esse componente:
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener, IImages {
 }
 ~~~
 
 ## Detalhamento das Interfaces
+
+### Interface IImages
+
+É a interface do pattern, responsável por adicionar imagens.
+
+~~~java
+import javax.swing.ImageIcon;
+
+public interface IImages {
+	void addImage(ImageIcon image);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+addImages | define os ícones das peças normais, adicionando imagens em um vetor.
 
 ### Interface ICheckMoviment
 
 É responsável por verificar se o movimento é válido.
 
 ~~~java
-        moves[0] = new MovementComponent();
-        moves[1] = new MovementComponent();
-        if ((index - board[target].getIndex()) * (index - board[target].getIndex()) == 1) { // pecas movendo na mesma linha
-            if (type == getPieceOnTop(target) && type == getPieceOnTop(target - 9)) {
-                moves[0].setV(true);
-                moves[0].setMoveType('c');
-                moves[0].addVct(target);
-                moves[0].addVct(target - 9);
-                moves[0].addVct(target - 18);
-                if (type == getPieceInBottom(target)) {
-                    moves[0].setMoveType('1');
-                    moves[0].addVct(target + 9);
-                }
-            }
-            if (type == getPieceInBottom(target) && type == getPieceInBottom(target + 9)) {
-                if (moves[0].isV()) {
-                    moves[0].setMoveType('b');
-                    moves[0].addVct(target + 18);
-                } else {
-                    moves[0].setV(true);
 public interface ICheckMovement {
     boolean verifyMovement(int target) throws InvalidPlay;
 }
@@ -533,7 +555,7 @@ item | detalhamento
 ----- | -----
 Classe | Bonus01Component
 Autores | Thaina Milene de Oliveira
-Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener, IImages
 
 ### Interfaces
 
@@ -544,11 +566,27 @@ Interfaces associadas a esse componente:
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener, IImages {
 }
 ~~~
 
 ## Detalhamento das Interfaces
+
+### Interface IImages
+
+É a interface do pattern, responsável por adicionar imagens.
+
+~~~java
+import javax.swing.ImageIcon;
+
+public interface IImages {
+	void addImage(ImageIcon image);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+addImages | define os ícones das peças do tipo bônus 01
 
 ### Interface ICheckMoviment
 
@@ -602,7 +640,7 @@ item | detalhamento
 ----- | -----
 Classe | Bonus02Component
 Autores | Thaina Milene de Oliveira
-Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener, IImages
 
 ### Interfaces
 
@@ -613,11 +651,29 @@ Interfaces associadas a esse componente:
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener, IImages {
 }
 ~~~
 
 ## Detalhamento das Interfaces
+
+
+### Interface IImages
+
+É a interface do pattern, responsável por adicionar imagens.
+
+~~~java
+import javax.swing.ImageIcon;
+
+public interface IImages {
+	void addImage(ImageIcon image);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+addImages | define os ícones das peças do tipo bônus 02
+
 
 ### Interface ICheckMoviment
 
@@ -671,7 +727,7 @@ item | detalhamento
 ----- | -----
 Classe | Bonus03Component
 Autores | Thaina Milene de Oliveira
-Interfaces | ICheckMovement, PiecesAttributes, ActionListener
+Interfaces | ICheckMovement, PiecesAttributes, ActionListener, IImages
 
 ### Interfaces
 
@@ -682,11 +738,29 @@ Interfaces associadas a esse componente:
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener {
+public interface IPieces extends ICheckMovement, PiecesAttributes, ActionListener, IImages {
 }
 ~~~
 
 ## Detalhamento das Interfaces
+
+
+### Interface IImages
+
+É a interface do pattern, responsável por adicionar imagens.
+
+~~~java
+import javax.swing.ImageIcon;
+
+public interface IImages {
+	void addImage(ImageIcon image);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+addImages | define os ícones das peças do tipo bônus 03
+
 
 ### Interface ICheckMoviment
 
@@ -740,7 +814,7 @@ item | detalhamento
 ----- | -----
 Classe | ScoreboardComponent
 Autores | Thaina Milene de Oliveira
-Interfaces | IRound, IScore, ActionListener
+Interfaces | IRound, IScore, ActionListener, IImages
 
 ### Interfaces
 
@@ -751,11 +825,27 @@ Interfaces associadas a esse componente:
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IScoreboard extends IScore, IRound, ActionListener {
+public interface IScoreboard extends IScore, IRound, ActionListener, IImages {
 }
 ~~~
 
 ## Detalhamento das Interfaces
+
+### Interface IImages
+
+É a interface do pattern, responsável por adicionar imagens.
+
+~~~java
+import javax.swing.ImageIcon;
+
+public interface IImages {
+	void addImage(ImageIcon image);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+addImages | define as imagens do placar, e do contador de rodadas
 
 ### Interface IScore
 
@@ -854,47 +944,7 @@ Método | Objetivo
 addVct | adiciona um índice ao vetor, na posição que o contador estivel
 removeVct() | faz um contador voltar uma posição, para assim o último elemento ser sobrescrito por outro
 
-## Componente TranslateMovementComponent
 
-O TranslateMovementComponent é responsável por traduzir e guardar em um objeto os índices das peças trocadas.
-
-![TranslateMovementComponent](diagrama-translatemovementcomponent.png)
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | TranslateMovementComponent
-Autores | Thaina Milene de Oliveira
-Interfaces | ITranslateMovementC
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama ITranslateMovementC](diagrama-itranslatemovementc.png)
-
-## Detalhamento da Interface
-
-### Interface ITranslateMovementC
-
-
-Dá acesso aos atributos da classe.
-
-~~~java
-public interface ITranslateMovementC {
-    int getSource();
-    int getTarget();
-    void setTarget(int target) throws NonAdjacentPieces;
-    void setSource(int source);
-}
-~~~
-
-Método | Objetivo
--------| --------
-setSource | recebe como parâmetro um inteiro que representa a posição da primeira peça clicada
-setTarget | recebe como parâmetro um inteiro que representa a posição da segunda peça clicada
-getSource| retorna a posição da primeira peça
-getTarget| retorna a posição da segunda peça
 
 # Plano de Exceções1
 
