@@ -2,7 +2,7 @@
 
 # Descrição Resumida do Jogo
 
-Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar duas peças de lugar no tabuleiro para criar combinações de 3 ou mais peças do mesmo tipo.
+> Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar duas peças de lugar no tabuleiro para criar combinações de 3 ou mais peças do mesmo tipo.
 
 # Equipe
 * Thaina Milene de Oliveira - 244570
@@ -25,19 +25,15 @@ Bitcrush é um jogo de puzzle baseado em Candy Crush, o jogo consiste em trocar 
 
 ## Relatório de Evolução
 
-> <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
+> Durante a produção do projeto, houve diversas mudanças na estrutura do código, nos tópicos abaixo serão detalhados as principais evoluções do projeto:
 
-###Introdução
-
-Nos tópicos abaixo serão detalhados as principais evoluções do projeto:
-
-###Interface gráfica
+### Interface gráfica
 > Quando planejei o projeto, não tinha pensado em fazer uma interface gráfica, iria apenas imprimir as informações necessárias pelo terminal, assim, quando fui fazer a interface gráfica, não tinha definido um tema, e nem como as coisas seriam organizadas na tela. O primeiro passo que fiz foi pensar no tema, inicialmente, queria fazer algo relacionado a TI, por já ter nomeado o projeto com "Bit", porém, não achei nada que combinassse, assim, após achar um pack de ícones de monstrinhos no site flaticon.com, decidi trabalhar nesse tema, e a partir disso desenhei como eu queria as telas, e isso mudou bem pouco até o fim do projeto, mudando apenas o design de alguns botões e nada mais. Além disso, criei diversas outras classe que não tinha pensado inicialmente, como a Tips, que guarda as informações das dicas, as classes ButtonStyle01 e ButtonStyle02, que definem dois tipos de botões, e a própria classe Window, que cria a janela principal.
 
-###Componentes
+### Componentes
 > Inicialmente, estava planejado ter sete componentes, quatro representando as peças, um para o tabuleiro, um para o placar e um que traduzia as coordenadas movimento, porém no decorrer do projeto vi a necessidade de criar mais um componente para guardar as informações do movimento, enquanto já verificava se este era possível, antes disso estava verificando se era possível e depois verificando que tipo de movimento era, fazendo o mesmo trabalho duas vezes. Além disso, decidi que o componente de traduzir as coordenadas, não seria mais um componente, mas sim uma classe com atributos e métodos estático, pois nesse caso também estava fazendo trabalhos desnecessário por conta de quando o jogador clicava nas peças, estas tinham que enviar as coordenadas ao tabuleiro e este enviar a tradutor, com esta mudança, as peças enviam diretamente ao tradutor, sem passar pelo tabuleiro.
 
-###Interfaces
+### Interfaces
 > As interfaces foram umas das coisas que mais mudaram no projeto, diversas delas tinham coisas que podiam muito bem ser métodos privados, sem prejudicar o funcionamento do jogo um exemplo é as interfaces do BoardComponent, antes a interface IBoard, extendia as interfaces IPieceManager e IBoardManager, a primeira delas, eu exclui completamente, pois todas as ações necessárias eram chamadas pela própria classe, já as interfaces das classes que representam as peças, IPieces, extendia duas outras interfaces, a Atributtes e ICheckMovement, agora, esta além dessas duas, extende mais outras duas, a IImages e ActionListener, além disso, a primeira teve uma mudança significativa nos métodos, como detalhado abaixo: 
 
 
@@ -71,15 +67,15 @@ public interface PiecesAttributes {
 
 > As mudanças nas interfaces ocorreram principalmente devido a implementação da interface gráfica, por causa das peças serem botões, que facilitava a retornar a posição desta, mas também precisava de outras informações para conseguir atualizar o tabuleiro.
 
-###Design Pattern
+### Design Pattern
 > A minha maior dificuldade no projeto foi na implementação de um pattern no meu projeto, primeiro, porque, não fiz isso desde o ínicio, decidi colocar quando o projeto já estava quase finalizado; inicialmente quis implementar o observer, mas por conta de o jogador clicar na peça e esta mesma peça ter que dar o seu índice para o tradutor, não consegui implementar este, depois disso, tentei outros, como o prototype, singleton, ambos sem sucesso. No fim, percebi que o meu projeto era dividido em objetos dentro de objetos, e implementei o composite, para isso, coloquei métodos cujo usuário conseguisse mudar o design da maioria dos itens, além de que foi nesse momento que criei as classes Tips, ButtonStyle01, ButtonStyle02, e também adicionei algumas imagens pela main, que antes a única coisas que fazia, era criar um objeto da classe Window, e todo o resto do design era decidido pelos outros componentes, sem possíveis alterações.
 
 
-###Exceções
-> A única evolução em relação as exceções, é que antes, quando uma ocorria, o programa imprimia uma mensagem de erro, e agora aparece um popup alertando o jogador, porém quando planejei, não tinha pensado em fazer nenhum dos dois.
-###Código
+### Exceções
+> A única evolução em relação as exceções, é que antes, quando uma ocorria, o programa imprimia uma mensagem de erro, e agora aparece um popup alertando o jogador, porém quando planejei, não tinha pensado em fazer nenhum dos dois. Porém após a implementação disso, eu consegui tirar algumas verificações que fazia, como se o movimento era de peças adjacentes quando eu ia verificar se o movimento era possível, pois assim que as duas peças eram clicadas, a própria classe do tradutor, verifica e já informa o erro, suspendendo o resto da operação.
 
-###Considerações Finais
+### Código
+> Outra dificuldade enfrentada no projeto, foi o que relatei acima, no ínicio não pensei em fazer uma interface gráfica, e comecei o código pensando nisso, assim, na hora de implementar ela, as coisas não deram muito certo, assim, tive que refazer diversos métodos, e reestruturar algumas coisas, como o vetor de tabuleiro, anteriormente, eu usava um vetor 9x9, porém, após implementar o gridLayout, passei a usar um vetor com 81 posições, por conta do gridLayout usar algo parecido. Além disso, mudei algumas hierarquia das classes, fiz a classe que representa o tabuleiro e o placar, extenderem a classe JPanel, e fiz todos os tipos de peças, extenderem uma classe abstrata Pieces, para explorar o polimorfismo. Ainda em relações as peças, tentei fazer com que estas extendessem a classe JButton, porém ao fazer isso, quando ia adiciona-las ao tabuleiro, por algum motivo, este adicionava as peças em apenas uma coluna, uma em cima da outra, assim, depois disso, decidi não fazer isso e apenas criar um atributo que representasse o botão, e fazer a classe retorna-lo. 
 
 
 # Destaques de Código
@@ -436,6 +432,10 @@ public class Bonus03Component extends Pieces {
 ~~~
 
 > Primeiramente, organizei o projeto de modo que houvesse uma hierarquia de componentes, assim, a janela principal é composta, na parte principal do jogo, por um placar em cima, o tabuleiro no centro, e o logo embaixo, o placar pode ser composto por diversas imagens, o tabuleiro é composto por até 81 peças, de quatro tipos diferentes. Já nas demais etapas do jogo, a janela é compostas por imagens diversas e botões, Para implementar isso, escolhi colocar uma interface mínima para definir as imagens dos itens, obtando por segurança, ao invés de transparência. A vantagem disso, é o maior controle dos componentes da janela, podendo ser removidos ou adicionados novos, como por exemplo, você consegue colocar quantas dicas quiser, ou não colocar nenhuma e eliminar os botões associados a isso.
+
+# Conclusões e Trabalhos Futuros
+> A principal lição aprendida por mim, é a importância de estruturar bem o projeto no ínicio do mesmo, já pensando nos patterns a serem implementados, para evitar ter que refazer partes do código, além de nos casos do pattern, é bem díficil implementa-lo após a estrutura do código estar quase pronta. Além disso, algo que gostaria de ter implementado era um timer, ou algo do tipo, para conseguir visualizar melhor as mudanças de peças, porém não o fiz por conta do tempo. Um pattern que gostaria de ter implementado, era o prototype, por conta do jogo fazer diversas cópias de peças, e este ter que ficar verificando sempre qual tipo de peça é, e o pattern permite a cópia de objetos sem haver distinção destes. 
+
 
 # Documentação dos Componentes
 
