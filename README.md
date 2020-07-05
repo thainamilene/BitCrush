@@ -432,7 +432,7 @@ public class Bonus03Component extends Pieces {
 
 > Primeiramente, organizei o projeto de modo que houvesse uma hierarquia de componentes, assim, a janela principal é composta, na parte principal do jogo, por um placar em cima, o tabuleiro no centro, e o logo embaixo, o placar pode ser composto por diversas imagens, o tabuleiro é composto por até 81 peças, de quatro tipos diferentes. Já nas demais etapas do jogo, a janela é compostas por imagens diversas e botões, Para implementar isso, escolhi colocar uma interface mínima para definir as imagens dos itens, obtando por segurança, ao invés de transparência. A vantagem disso, é o maior controle dos componentes da janela, podendo ser removidos ou adicionados novos, como por exemplo, você consegue colocar quantas dicas quiser, ou não colocar nenhuma e eliminar os botões associados a isso.
 
-# Conclusões e Trabalhos Futuros
+# Conclusões
 > A principal lição aprendida por mim, é a importância de estruturar bem o projeto no ínicio do mesmo, já pensando nos patterns a serem implementados, para evitar ter que refazer partes do código, além de nos casos do pattern, é bem díficil implementa-lo após a estrutura do código estar quase pronta. Além disso, algo que gostaria de ter implementado era um timer, ou uma variação do mesmo, para conseguir visualizar melhor as mudanças de peças, de uma forma mais lenta, porém não o fiz por conta do tempo. Um pattern que gostaria de ter implementado, era o prototype, por conta do jogo fazer diversas cópias de peças, e este ter que ficar verificando sempre qual tipo de peça é, e o pattern permite a cópia de objetos sem haver distinção destes. 
 
 
@@ -1000,7 +1000,7 @@ removeVct() | faz um contador voltar uma posição, para assim o último element
 
 
 
-# Plano de Exceções1
+# Plano de Exceções
 
 ## Diagrama da hierarquia de exceções
 
