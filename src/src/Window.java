@@ -172,7 +172,7 @@ public class Window extends JFrame implements IImages, ActionListener  {
         lvl3.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
-                    	IBoard BoardPanel = new BoardComponent(8, mainPanel); //cria o campo celular que se da o jogo
+                    	IBoard BoardPanel = new BoardComponent(9, mainPanel); //cria o campo celular que se da o jogo
                     }
                 }
         );
